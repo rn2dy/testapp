@@ -1,10 +1,13 @@
 Testapp::Application.routes.draw do
-  resources :topics
+
+  match 'home/dashboard' => 'home#dashboard'
 
   authenticated :user do
-    root :to => 'home#index'
+    root :to => 'home#dashboard'
   end
   root :to => "home#index"
+
   devise_for :users
-  resources :users, :only => :show
+  
+  resources :topics
 end

@@ -1,0 +1,8 @@
+- content_for :content do
+  .container-fluid
+    .row-fluid
+      .span10
+        = content_for :main_col
+      .span2
+        = content_for :side_col
+= render template: 'layouts/application'
