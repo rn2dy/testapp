@@ -40,6 +40,12 @@ class User
   ## Token authenticatable
   # field :authentication_token, :type => String
   field :name
+  has_many :owned_topics, class_name: 'Topic', inverse_of: :owner
+  has_and_belongs_to_many :shared_topics, 
+                          class_name: 'Topic', inverse_of: :invitees
+  has_many :links                          
+  
+
   validates_presence_of :name
   validates_uniqueness_of :name, :email, :case_sensitive => false
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me
