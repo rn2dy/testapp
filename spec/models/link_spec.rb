@@ -20,12 +20,6 @@ describe Link do
     link.title.should == "Google"
   end
   
-  it "should be able to add image src" do
-    link = Link.create! @attr.merge(url: "http://google.com", 
-                             image: File.new(Rails.root + "app/assets/images/rails.png"))
-    link.image.url.empty?.should == false
-  end
-
   it "should has clicks default to 0" do
     link = Link.create! @attr.merge(url: "http://google.com")
     link.clicks.should == 0
@@ -35,4 +29,10 @@ describe Link do
     pending "need to create a fake url"
   end
 
+  it "should be able to add image src" do
+    pending "image should be able to extracted from the page"
+    #link = Link.create! @attr.merge(url: "http://google.com", 
+    #                         image: File.new(Rails.root + "app/assets/images/rails.png"))
+    #link.image.url.empty?.should == false
+  end
 end

@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe Topic do
   before(:each) do
+    @user = FactoryGirl.create(:user)
     @attr = FactoryGirl.attributes_for(:topic)
+    @topic = @user.topics.create(@attr.merge(starter_id: @user.id, starter_name: @user.name))
   end
 
   it "should create a new instance given a valid attribute" do
@@ -18,34 +20,36 @@ describe Topic do
     topic = Topic.create! @attr
     topic.is_public.should == false
   end
-
-  it "should belongs to an user" do
-    asso = FactoryGirl.create(:user_with_owned_topics, topic_count: 1) 
-    asso.owned_topics.first.should be_an_instance_of(Topic)
+ 
+  it "should have a starter" do
+    puts @topic.inspect
+    @topic.starter_name.should == @user.name
   end
 
-  it "should be able to has_many invitees(user)" do
-    owner = FactoryGirl.create(:topic_with_invitees, invitee_count: 3)
-    owner.owned_topics[0].invitees.count.should == 3
+  ## add invitees
+  it "should be able to add multiple invitees" do
+    users = FactoryGirl.create_list(:user, 3)
+    @topic.add_invitees(users)
+    @topic.participants.count.should == 4 # plus 1 starter
   end
 
   ## commenting
-  it "should allow owner or invitees to add comment" do
-    owner = FactoryGirl.create(:topic_with_invitees, invitee_count: 1)  
-    topic = owner.owned_topics[0]
-    invitees = topic.invitees
-    topic.add_comment(owner, "comment 1").should be_valid 
-    topic.add_comment(invitees.first, "comment 2").should be_valid
+  it "should allow participants to add comment" do
+    users = FactoryGirl.create_list(:user, 3)
+    @topic.add_invitees(users)
+    people = @topic.participants
+    people.each do |person|
+      @topic.add_comment(person, "comment...").should be_valid 
+    end
   end
 
   it "should not allow visiters to add comment" do
     visiter = FactoryGirl.create(:user)
-    topic = FactoryGirl.create(:user_with_owned_topics, 
-                                topic_count: 1).owned_topics.first
     lambda do
-      topic.add_comment(visiter, "comment 1")
+      @topic.add_comment(visiter, "comment...")
     end.should raise_error
   end
+
 
 
 end

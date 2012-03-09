@@ -49,18 +49,6 @@ describe User do
     user_with_duplicate_email.should_not be_valid
   end
   
-
-  it "should be able to own some topics" do
-    owned_topics = FactoryGirl.create( 
-      :user_with_owned_topics, topic_count: 3).owned_topics
-    owned_topics.count.should == 3 
-  end
-
-  it "should be able to be invitee of a topic" do
-    owner = FactoryGirl.create(:topic_with_invitees, invitee_count: 3)
-    owner.owned_topics[0].invitees[0].should be_an_instance_of(User)
-  end
-
   describe "passwords" do
 
     before(:each) do

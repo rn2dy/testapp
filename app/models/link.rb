@@ -3,13 +3,14 @@ require 'open-uri'
 class Link
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::Paperclip
+  #include Mongoid::Paperclip
 
   field :url, type: String
   field :title, type: String
   field :notes, type: String
   field :clicks, type: Integer, default: 0
-  has_mongoid_attached_file :image
+  field :image_src, type: String
+  #has_mongoid_attached_file :image
 
   belongs_to :topic
   belongs_to :user

@@ -1,14 +1,10 @@
-- content_for :main_col do
-  %h3 +New Topic
-  = render 'topics/form'
-
-- content_for :side_col do
-  %section
-    - 5.times do |n|
-      %article
-        %header
-          %h1 comments #{n}
-        %p
-          Lorem ipsum dolor sit amet, quam risus, vestibulum donec, 
-          diam pede ridiculus volutpat vivamus dolor et. Tempor et 
-          sint sapien mattis, sed dapibus facilisi tellus in
+- if @topics.count == 0
+  .dashbox
+    %h3 You're not involved in any topics. 
+    %h1 Why wait? <b style="color:red">Get started!</b>
+    %a#newTopic2{href: '#'} +New Topic
+- else
+  %ul.topicNavBox
+    - @topics.each do |topic|
+      %li{href: '#', data: {topic: "#{topic.id}"} }
+        = link_to topic.name, topic

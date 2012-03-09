@@ -1,15 +1,30 @@
-%p#notice= notice
+- content_for :main_col
+  %section.topic
+    %p#notice= notice
+    .topLinks
+      %a#backTopic{href: '#'} Back to topics
+      %a#leaveTopic{href: '#'} Leave Topic
+    %article
+      %header
+        %h2= @topic.name
+        %span#startBy= @topic.starter_name
+        %span#members= @topic.@participants.count
+      .urlInput 
+        = text_field_tag 'url', nil, placeholder: 'Paste URL in this field... 
+        = button_tag 'Add to Topic', type: 'button'    
+  
+- content_for :side_col
+  %section.comments
+    %header
+      %h3#commhead Topic comments
+      %span#commCount= @topic.comments.count  
+    - @topic.comments.each do |comment|
+      %articles
+        %header
+          %span.userName= comment.user_name 
+          %span.timeStamp= comment.created_at
+        %p= comment.content
+    = text_area_tag 'comment', 
+      'Put you comment here and press Enter to add.', size: '25x10'
+      
 
-%p
-  %b Name:
-  = @topic.name
-%p
-  %b Notes:
-  = @topic.notes
-%p
-  %b Is public:
-  = @topic.is_public
-
-= link_to 'Edit', edit_topic_path(@topic)
-\|
-= link_to 'Back', topics_path

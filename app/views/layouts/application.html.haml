@@ -14,10 +14,21 @@
   %body
     %header.navbar.navbar-fixed-top
       %nav.navbar-inner
-        .container
-          = link_to "Klipt", root_path, :class => 'brand'
-          %ul.nav
-            = render 'shared/navigation'
+        .container-fluid
+          .span4
+            .row-fluid
+              .span4
+                %a#drop1{href: '#'} My Topics
+                %ul
+                  - @topics.each do |topic|
+                    %li= link_to topic.name, topic
+              .span3
+                %a#newTopic1{href: '#'} +New Topic
+          .span4
+            = link_to "Klipt", root_path, :class => 'brand'
+          .span4
+            %ul
+              = render 'shared/navigation'
     #main{:role => "main"}
       .content= content_for?(:content) ? yield(:content) : yield
     %footer
