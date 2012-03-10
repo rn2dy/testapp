@@ -17,6 +17,7 @@
         .container-fluid
           .span4
             .row-fluid
+
               - if user_signed_in?
                 .span4
                   %a#drop1{href: '#'} My Topics
@@ -24,28 +25,31 @@
                     - current_user.topics.each do |topic|
                       %li= link_to topic.name, topic
                 .span4
-                  %a#newTopic1{href: '#newTopicBox', data: {toggle: 'modal'} } +New Topic
+                  %a{href: '#newTopicBox', data: {toggle: 'modal'} } +New Topic
+
           .span4
             = link_to "Klipt", root_path, :class => 'brand'
           .span4
             %ul
               = render 'shared/navigation'
+
     #main{:role => "main"}
       .content= content_for?(:content) ? yield(:content) : yield
+
     - if user_signed_in?
       #newTopicBox{class: "modal hide fade"} 
         .modal-header
           %a.close{data: {dismiss: 'modal'}} x
           %h2 Creating topic is super-easy!
         .modal-body
-          = form_for @topic do |f|
+          = form_tag  '/topics', method: :post do
             .field
-              = f.label 'Name your topic'
-              = f.text_field :name 
+              = label_tag 'Name your topic'
+              = text_field :topic, :name 
             .field
               = label_tag 'Invite more friends to this topic'
               = text_area_tag 'invitees', nil, placeholder: 'Enter their emails and separate the addresses by commans (like "me@klippd.com, you@klippd.com")', size: '30x6'
             = invitee_opt_field
             .actions
-              = f.submit 'Create'
+              = submit_tag 'Create'
     %footer

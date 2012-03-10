@@ -10,7 +10,13 @@ Testapp::Application.routes.draw do
   devise_for :users
   
   resources :topics do
-    post 'add_invitees', on: :member 
+    member do
+      post 'add_invitees'
+      post 'add_comments'
+    end
   end
-  resources :links
+
+  resources :links do
+    post 'add_notes', on: :member
+  end
 end

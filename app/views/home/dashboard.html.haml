@@ -4,14 +4,18 @@
     %h1 Why wait? <b style="color:red">Get started!</b>
     %a#newTopic2{href: '#newTopicBox', data: {toggle: "modal"}} +New Topic
 - else
-  %ul.topicNavBox
+  .topicNavBox
     - @topics.each do |topic|
-      %li{href: '#', data: {topic: "#{topic.id}"} }
-        = link_to topic.name, topic
-        %span #{topic.links.count}
-        = image_tag "", alt: "rails" 
-        %span Comments: #{topic.comments.count}
-        %span Members: #{topic.participants.count} 
-        = link_to 'Leave Topic', '#'
-    .dashbox
-      %a#newTopic2{href: '#'} +New Topic
+      .topicBox 
+        .boxTop
+          = link_to topic.name, topic
+          %span Links #{topic.links.count}
+        .boxMid
+          = image_tag "rails.png", size: '100x150'
+        .boxBut
+          %span Comments: #{topic.comments.count}
+          %span Members: #{topic.participants.count} 
+        .boxExt 
+          = link_to '-x- Leave Topic', topic_path(topic), method: :delete
+    .topicBox
+      %a{href: '#newTopicBox', data: {toggle: 'modal'}} +New Topic

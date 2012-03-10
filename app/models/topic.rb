@@ -19,9 +19,9 @@ class Topic
   validates :name, presence: true
   
   ## API 
-  def add_comment(commentor, content)
+  def add_comments(commentor, content)
     raise unless participants.include? commentor 
-    comments.create content: content
+    comments.create!(content: content, user_name: commentor.name, user_id: commentor.id)
   end
 
   def add_invitees(invitees_emails)
@@ -32,7 +32,7 @@ class Topic
         next if participants.include?(candidate)
         participants << candidate
       else
-        self.unavailable_users << e
+        unavailable_users << e
       end
     end
   end

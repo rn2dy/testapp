@@ -16,10 +16,10 @@ class Link
   belongs_to :topic
   belongs_to :user
 
-  validates :url, presence: true, uniqueness: true , format: { with: /.*/ }
+  validates :url, presence: true, format: { with: /.*/ }
   validate :check_url # custom validation
 
-  before_create :extract_title
+  before_create :extract_title, :extract_image_src
 
   private
     def check_url 

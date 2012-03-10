@@ -1,9 +1,9 @@
 class TopicsController < ApplicationController
   layout 'fluid', only: [:show]
+  before_filter :find_topic, except: [:index, :create]
   
   def index
     @topics = current_user.topics
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @topics }
@@ -11,16 +11,10 @@ class TopicsController < ApplicationController
   end
 
   def show
-    @topic = current_user.topics.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @topic }
     end
-  end
-
-  def edit
-    @topic = current_user.topics.find(params[:id])
   end
 
   def create
@@ -40,7 +34,6 @@ class TopicsController < ApplicationController
 
 
   def destroy
-    @topic = current_user.topics.find(params[:id])
     respond_to do |format|
       if current_user.topics.delete(@topic)
         format.html { redirect_to home_dashboard_path, notice: 'Left the topic...' }
@@ -49,7 +42,6 @@ class TopicsController < ApplicationController
   end
 
   def add_invitees
-    @topic = current_user.topics.find(params[:id])
     @topic.add_invitees(params[:invitees])
 
     respond_to do |format|
@@ -61,6 +53,17 @@ class TopicsController < ApplicationController
         format.json { render json: @topic.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def add_comments
+    new_comment = @topic.add_comments(current_user, params[:content])
+    respond_to do |format|
+      format.json { render json: new_comment }
+    end
+  end
+
+  def find_topic
+    @topic ||= current_user.topics.find(params[:id])
   end
 
 end

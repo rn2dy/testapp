@@ -3,9 +3,9 @@
     %p#notice= notice
     .row-fluid
       .span8
-        = link_to '<- Back to topics', home_dashboard_path, id: 'tl1'
+        = link_to '<- Back to topics', home_dashboard_path
       .span4
-        = link_to '-x- Leave Topic', topic_path(@topic), method: :delete, id: 'tl2'
+        = link_to '-x- Leave Topic', topic_path(@topic), method: :delete
     %article
       %header
         .row-fluid
@@ -16,7 +16,7 @@
             %span#members= @topic.participants.count
             %a{href: '#inviteBox', data: {toggle: 'modal'} } + Invite!
       .span12
-        = text_field_tag 'url', nil, placeholder: 'Paste URL in this field...', size: 50, id: 'urlBar'
+        = text_field_tag 'url', 'http://', placeholder: 'Paste URL in this field...', size: 50, id: 'urlBar'
         = hidden_field_tag 'topicId', @topic.id
         = button_tag 'Add to Topic', type: 'button', id: 'submitUrl'
       #loading{style: "display:none"}
@@ -40,16 +40,18 @@
       
 - content_for :side_col do
   %section.comments
-    %header
+    %header.l1
       %h3 Topic comments
-      %span= @topic.comments.count  
+      %span#commCount= @topic.comments.count  
     - @topic.comments.each do |comment|
-      %articles
+      %article
         %header
           %span= comment.user_name 
           %span= comment.created_at
         %p= comment.content
-    = text_area_tag 'comment', nil, placeholder: 'Put you comment here and press Enter to add.', size: '25x10'
+    = text_area_tag 'comment', nil, placeholder: 'Put you comment here and press Enter to add.', size: '25x10', id: 'commSubmit'
+    #loadingComment{style: "display:none"}
+      = image_tag "loading.gif", alt: "Loading..."
 
 
 
