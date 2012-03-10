@@ -39,6 +39,22 @@ class Link
       end
     end
 
+    def extract_image_src
+      open(self.url) do |f|
+        srcs = f.grep(/<img(.*?)>/)
+        if srcs.empty?
+          self.image_src = 'rails.png'
+        else
+          src = srcs.first.match(/src="(.*?)"/)[1]
+          if src =~ /http:\/\/.*/
+            self.image_src = src 
+          else
+            self.image_src = self.url + (src[0] == '/' ? src : '/' + src)
+          end
+        end
+      end
+    end
+
     def make_title
       url[/http:\/\/(.*)\.com/, 1] || "Unknown"
     end

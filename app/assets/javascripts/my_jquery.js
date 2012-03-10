@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
   $('#submitUrl').click(createLink);
+  $(document).on('click', '.removeLink', removeLink);
   $('#commSubmit').keypress(createComment);
 
 });
@@ -34,6 +35,18 @@ function createComment(e) {
   }
 }
 
+// remove link
+function removeLink(e) {
+  link_id = $(this).data('link');
+  $.ajax('/links/'+link_id, {
+    data: {_method: 'delete'},
+    type: 'POST',
+    success: function(json) {
+      $('#'+link_id).remove(); 
+    }
+  });
+}
+
 // new link
 function createLink(e){
   if (!$.trim($('#urlBar').val()) || $('#urlBar').val() == 'http://') {
@@ -53,7 +66,7 @@ function createLink(e){
       complete: function() {
         $('#submitUrl').removeAttr('disabled');
         $('#urlBar').removeAttr('disabled');
-        $('#urlBar').val("");
+        $('#urlBar').val("http://");
         $('#loading').hide();
 
       },
@@ -83,7 +96,7 @@ function linkPartial(link){
   }else{
     link_notes += "<p>There is no notes for this link</p>" + "<a href='#'>Add Notes</a>";
   }
-  return "<div class='row-fluid'>" +   
+  return "<div class='row-fluid eachLink' id='" + link._id + "'>" +   
             "<div class='span3'>" +
               "<image src='" + link.image_src + "' height='100' width='150' alt='/assets/rails.png'/>" + 
             "</div>" +
@@ -91,6 +104,7 @@ function linkPartial(link){
               "<article>" + 
                 "<header>" +
                   "<h3><a href='" + link.url + "'>" + link.title + "</a></h3>" + 
+                  "<a href='#' class='removeLink' data-link='"+link._id+"' style='float:right'>-x- remove link</a>"+ 
                 "</header>" +
                 "<div class='linkNotes'>" + 
                   link_notes +

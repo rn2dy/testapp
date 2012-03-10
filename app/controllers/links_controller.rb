@@ -7,15 +7,21 @@ class LinksController < ApplicationController
     @link.user = current_user
     
     if @link.save!
-      respond_with @link
+      respond_with @link, { id: @link.id }
     else
       respond_with @link.errors, status: :unprocessable_entity
     end
   end
 
-  def delete
+  def destroy 
+    @link = Link.find(params[:id])
+    @link.delete
+    respond_to do |format|
+      format.json { head :no_content }
+    end
   end
 
-  def update
+  def add_notes 
   end
+
 end

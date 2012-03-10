@@ -1,11 +1,12 @@
 - @topic.links.each do |link|
-  .row-fluid
+  .row-fluid.eachLink{id: link.id}
     .span3
-      = image_tag link.image_src.nil? ? nil : link.image_src, alt: "rails.png", size: '70x120' 
+      = image_tag link.image_src, alt: "rails.png", size: '180x120' 
     .span7
       %article
         %header
-          %h3= link_to link.title, link.url
+          %h3{style: "display:inline"}= link_to link.title, link.url
+          %a.removeLink{href: '#', style: "float:right", data: {link: link.id}}-x- remove link
         .linkNotes 
           - if link.notes.nil?
             %p 
