@@ -1,0 +1,18 @@
+- @topic.links.each do |link|
+  .row-fluid
+    .span3
+      = image_tag link.image_src.nil? ? nil : link.image_src, alt: "rails.png", size: '70x120' 
+    .span7
+      %article
+        %header
+          %h3= link_to link.title, link.url
+        .linkNotes 
+          - if link.notes.nil?
+            %p 
+              There is no notes for this link 
+              = link_to 'Add Notes', '#' 
+          - else
+            %p link.notes
+          %span Posted by: #{link.creator_name} #{link.created_at}
+
+

@@ -7,6 +7,7 @@ class Topic
   field :is_public, type: Boolean, default: false
   field :starter_id, type: String
   field :starter_name, type: String
+  field :unavailable_users, type: Array, default: []
 
   #belongs_to :owner, class_name: 'User', inverse_of: :owned_topics
   #has_and_belongs_to_many :invitees, 
@@ -23,10 +24,16 @@ class Topic
     comments.create content: content
   end
 
-  def add_invitees(invitees)
-    rest = invitees - participants 
-    rest.each do |invitee|
-      participants << invitee
+  def add_invitees(invitees_emails)
+    emails = invitees_emails.gsub(/\s+/, "").split(',')
+    emails.each do |e|
+      candidate = User.where(email: e).first
+      if candidate
+        next if participants.include?(candidate)
+        participants << candidate
+      else
+        self.unavailable_users << e
+      end
     end
   end
 

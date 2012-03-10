@@ -9,7 +9,8 @@ class Link
   field :title, type: String
   field :notes, type: String
   field :clicks, type: Integer, default: 0
-  field :image_src, type: String
+  field :image_src, type: String, default: "rails.png"
+  field :creator_name, type: String
   #has_mongoid_attached_file :image
 
   belongs_to :topic

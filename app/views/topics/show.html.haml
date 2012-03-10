@@ -1,30 +1,55 @@
-- content_for :main_col
+- content_for :main_col do
   %section.topic
     %p#notice= notice
-    .topLinks
-      %a#backTopic{href: '#'} Back to topics
-      %a#leaveTopic{href: '#'} Leave Topic
+    .row-fluid
+      .span8
+        = link_to '<- Back to topics', home_dashboard_path, id: 'tl1'
+      .span4
+        = link_to '-x- Leave Topic', topic_path(@topic), method: :delete, id: 'tl2'
     %article
       %header
-        %h2= @topic.name
-        %span#startBy= @topic.starter_name
-        %span#members= @topic.@participants.count
-      .urlInput 
-        = text_field_tag 'url', nil, placeholder: 'Paste URL in this field... 
-        = button_tag 'Add to Topic', type: 'button'    
-  
-- content_for :side_col
+        .row-fluid
+          .span8
+            %h2= @topic.name
+          .span4
+            %span#startBy= @topic.starter_name
+            %span#members= @topic.participants.count
+            %a{href: '#inviteBox', data: {toggle: 'modal'} } + Invite!
+      .span12
+        = text_field_tag 'url', nil, placeholder: 'Paste URL in this field...', size: 50, id: 'urlBar'
+        = hidden_field_tag 'topicId', @topic.id
+        = button_tag 'Add to Topic', type: 'button', id: 'submitUrl'
+      #loading{style: "display:none"}
+        = image_tag "loading.gif", alt: "Loading..."
+      %section.links
+        = render 'shared/topic_links'
+  #inviteBox{class: "modal hide fade"} 
+    .modal-header
+      %a.close{data: {dismiss: 'modal'}} x
+      %h2 Invite More!
+    .modal-body
+      %ul
+        - @topic.participants.each do |person|
+          %li= person.name
+      = form_tag add_invitees_topic_path(@topic), method: 'post' do
+        .field
+          = label_tag 'Invite more friends to this topic'
+          = text_area_tag 'invitees', nil, placeholder: 'Enter their emails and separate the addresses by commans (like "me@klippd.com, you@klippd.com")', size: '30x6'
+        .actions
+          = submit_tag 'Invite'
+      
+- content_for :side_col do
   %section.comments
     %header
-      %h3#commhead Topic comments
-      %span#commCount= @topic.comments.count  
+      %h3 Topic comments
+      %span= @topic.comments.count  
     - @topic.comments.each do |comment|
       %articles
         %header
-          %span.userName= comment.user_name 
-          %span.timeStamp= comment.created_at
+          %span= comment.user_name 
+          %span= comment.created_at
         %p= comment.content
-    = text_area_tag 'comment', 
-      'Put you comment here and press Enter to add.', size: '25x10'
-      
+    = text_area_tag 'comment', nil, placeholder: 'Put you comment here and press Enter to add.', size: '25x10'
+
+
 

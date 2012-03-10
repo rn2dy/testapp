@@ -9,5 +9,8 @@ Testapp::Application.routes.draw do
 
   devise_for :users
   
-  resources :topics
+  resources :topics do
+    post 'add_invitees', on: :member 
+  end
+  resources :links
 end

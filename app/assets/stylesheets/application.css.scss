@@ -8,8 +8,8 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
  *= require_tree .
+ *= require_self
 */
 
 .content {
@@ -39,3 +39,12 @@
   border-radius: 5px;
   border: 2px dotted #333;
 }
+.modal-backdrop, .modal-backdrop.fade.in {
+  opacity: 0.2;
+}
+input#urlBar { 
+  height: 32px;
+  font-size: 18px;
+  width: 500px;
+} 
+

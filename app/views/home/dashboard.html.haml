@@ -2,9 +2,16 @@
   .dashbox
     %h3 You're not involved in any topics. 
     %h1 Why wait? <b style="color:red">Get started!</b>
-    %a#newTopic2{href: '#'} +New Topic
+    %a#newTopic2{href: '#newTopicBox', data: {toggle: "modal"}} +New Topic
 - else
   %ul.topicNavBox
     - @topics.each do |topic|
       %li{href: '#', data: {topic: "#{topic.id}"} }
         = link_to topic.name, topic
+        %span #{topic.links.count}
+        = image_tag "", alt: "rails" 
+        %span Comments: #{topic.comments.count}
+        %span Members: #{topic.participants.count} 
+        = link_to 'Leave Topic', '#'
+    .dashbox
+      %a#newTopic2{href: '#'} +New Topic
