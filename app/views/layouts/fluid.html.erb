@@ -1,0 +1,15 @@
+<!-- Fluid layout force yeild content with 'main' and 'side' structure  -->
+<% content_for :content do %>
+	
+	<!-- Main content starts -->
+	<div class="content clearfix">
+		<%= yield :main %>
+		<%= yield :side %>
+	</div>
+	<!-- Main content ends -->
+	
+	<%= yield :hidden_content %>
+	
+<% end %>
+
+<%= render template: 'layouts/application' %>

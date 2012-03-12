@@ -1,0 +1,16 @@
+<!-- Default layout simply yeild whatever for the content -->
+
+<% content_for :content do %>
+	
+	<!-- Main content starts -->
+	<div class="content clearfix">
+		<%= yield %>
+	</div>
+	<!-- Main content ends -->
+	
+	
+	<%= yield :hidden_content %>
+	
+	
+<% end %>
+<%= render template: 'layouts/application' %>

@@ -1,0 +1,71 @@
+/* @group Meyer */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	background: transparent;
+	border: 0;
+	font-family: inherit;
+	font-size: 100%;
+	font-style: inherit;
+	margin: 0;
+	outline: 0;
+	padding: 0;
+	text-align: left;
+	vertical-align: baseline;
+	text-decoration: none;
+}
+body {
+	background: #fff;
+	color: #000;
+	line-height: 1;
+}
+
+ol, ul { list-style: none; }
+ input { vertical-align: middle; }
+   del { text-decoration: line-through; }
+   ins { text-decoration: none; } /* <ins> would be underlined by default */
+:focus { outline: 0; } /* remember to define focus styles! */
+i { font-style: italic; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+blockquote, q { quotes: none; }
+
+table { /* tables still need 'cellspacing="0"' in the markup */
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* @end */
+
+/* @group IE fixes */
+
+img { -ms-interpolation-mode: bicubic; }
+
+input { overflow: visible; }
+
+/* @end */
+
+/* @group YUI */
+
+h1, h2, h3, h4, h5, h6 {
+	font-size: 100%;
+	font-weight: normal;
+}
+abbr, acronym { border: 0; }
+caption, th {
+	font-weight: normal;
+	text-align: left;
+}
+
+/* @end */

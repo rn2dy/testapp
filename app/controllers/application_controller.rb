@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   layout "default"
 
   def after_sign_out_path_for(resource)
-    new_user_session_path  
+    new_user_session_path
   end
 
 end

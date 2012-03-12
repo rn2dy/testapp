@@ -1,0 +1,260 @@
+<!--
+- content_for :main_col do
+  %section.topic
+    %p#notice= notice
+    .row-fluid
+      .span8
+        = link_to '<- Back to topics', home_dashboard_path
+      .span4
+        = link_to '-x- Leave Topic', topic_path(@topic), method: :delete
+    %article
+      %header
+        .row-fluid
+          .span8
+            %h2= @topic.name
+          .span4
+            %span#startBy= @topic.starter_name
+            %span#members= @topic.participants.count
+            %a{href: '#inviteBox', data: {toggle: 'modal'} } + Invite!
+      .span12
+        = text_field_tag 'url', 'http://', placeholder: 'Paste URL in this field...', size: 50, id: 'urlBar'
+        = hidden_field_tag 'topicId', @topic.id
+        = button_tag 'Add to Topic', type: 'button', id: 'submitUrl'
+      #loading{style: "display:none"}
+        = image_tag "loading.gif", alt: "Loading..."
+      %section.links
+        = render 'shared/topic_links'
+  #inviteBox{class: "modal hide fade"} 
+    .modal-header
+      %a.close{data: {dismiss: 'modal'}} x
+      %h2 Invite More!
+    .modal-body
+      %ul
+        - @topic.participants.each do |person|
+          %li= person.name
+      = form_tag add_invitees_topic_path(@topic), method: 'post' do
+        .field
+          = label_tag 'Invite more friends to this topic'
+          = text_area_tag 'invitees', nil, placeholder: 'Enter their emails and separate the addresses by commans (like "me@klippd.com, you@klippd.com")', size: '30x6'
+        .actions
+          = submit_tag 'Invite'
+      
+- content_for :side_col do
+  %section.comments
+    %header.l1
+      %h3 Topic comments
+      %span#commCount= @topic.comments.count  
+    - @topic.comments.each do |comment|
+      %article
+        %header
+          %span= comment.user_name 
+          %span= comment.created_at
+        %p= comment.content
+    = text_area_tag 'comment', nil, placeholder: 'Put you comment here and press Enter to add.', size: '25x10', id: 'commSubmit'
+    #loadingComment{style: "display:none"}
+      = image_tag "loading.gif", alt: "Loading..."
+-->
+
+<%= content_for :head do %>
+	<!-- tipsy.js plugin -->
+	<%= javascript_include_tag "plugins/tipsy/jquery.tipsy" %>
+	<%= stylesheet_link_tag "./app/assets/javascripts/plugins/tipsy/tipsy" %>
+	<script type="text/javascript">
+		jQuery(document).ready(function(){
+			$('.tip-bubble').tipsy({gravity: 's'});
+		});
+	</script>
+	<!-- jScrollPanel.js plugin -->
+	<%= javascript_include_tag "plugins/jScrollPane/jquery.jscrollpane.min" %>
+	<%= stylesheet_link_tag "./app/assets/javascripts/plugins/jScrollPane/jquery.jscrollpane" %>
+	<script type="text/javascript" id='sourcecode'>
+		jQuery(document).ready(function(){
+			$('.topic-links-list, .topic-comments-list').jScrollPane();
+		});
+	</script>
+<% end %>
+
+<% content_for :main do %>
+	<div class="content-topic-main">
+		<div class="topic-page-actions clearfix">
+			<a href="#" class="content-btn" style="float: left"><i class="btn-icon back-i"></i> Back to topics </a>
+			<a href="#" class="content-btn" style="margin-left: 10px;"><i class="btn-icon delete-i"></i> Leave Topic </a>
+			<a href="#editTopicPopup" class="content-btn popup-trigger"><i class="btn-icon edit-i"></i> Edit Topic </a>
+		</div><!-- Topic actions -->
+		
+		<div class="topic-main-holder clearfix">
+		
+			<div class="topic-main-header clearfix">
+				<h2><i class="icon title-i"></i>Hotel to book for 2012 vacation</h2>
+				<div class="count-invited" style="margin-top: 6px;">
+					<a href="#inviteMore" class="invite-more popup-trigger">
+						<i class="icon more-i tip-bubble" title="Invite more people"></i></a> <span>6</span> <i class="icon users-i"></i> </div> <!-- Invited friends counter -->
+				<div class="topic-author"><i class="icon user-i"></i><span>Started by: Vinny</span></div>
+			</div> <!-- Header of main topic info -->
+		
+			<div class="content-divider"></div>
+			
+			<div class="topic-add-link clearfix">
+				<form>
+					<input type="text" class="url-field" placeholder="Paste URL in this field" />
+					<input type="submit" class="content-btn" value="Add to Topic" />
+				</form>
+			</div><!-- Add link to topic end -->
+		
+			<div class="content-divider"></div>
+		
+			<div class="topic-links-list">
+				<ul>
+					<li><!-- Single link info -->
+						<div class="link-preview-img-holder"><img src="example-img.jpg" /></div>
+						
+						<div class="link-text-info">
+						
+							<div class="link-title">
+								<i class="icon clip-i"></i>
+								<span><a href="#">Book a Better Hotel Room With Room 77</a></span>
+							</div>
+						
+							<div class="link-note">
+								<a href="#linkNotePopup" class="popup-trigger tip-bubble" title="Edit Note"><i class="icon edit-i"></i></a>
+								<span>A cool article on Mashable.</span>
+							</div>
+							
+							<div class="link-posted">
+								<div class="link-author">
+									<i class="icon user-i"></i>
+									<span>Posted by: Vinny</span>
+								</div>
+								<div class="link-time">
+									<i class="icon time-i"></i>
+									<span>3 Hours Ago</span>
+								</div>
+							</div>
+						
+							<a href="#" class="link-del tip-bubble" title="Remove link" ></a>
+					
+						</div> <!-- All info except preview image -->
+					
+					</li><!-- Single link info ends -->
+				</ul>
+			</div><!-- Links list ends -->
+		</div> <!-- Main topic info holder -->
+	</div> <!-- Main contents of topic page -->
+<% end %>
+
+<% content_for :side do %>
+	<div class="topic-comments">
+		<div class="topic-comments-header">Topic Comments</div>
+	
+		<div class="content-divider"></div>
+		
+		<div class="topic-comments-list">
+			<ul>
+				<!-- Single Comment -->
+				<li>
+					<div class="comment-header">
+						<b>Vinny</b>
+						<span>3 Hours Ago</span>
+					</div>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis </p>
+				</li>
+				<!-- Single Comment Ends -->
+			</ul>
+		</div> <!-- Comments list -->
+		
+		<div class="content-divider"></div>
+		
+		<form>
+			<textarea placeholder="Write comment and press 'Enter' to submit"></textarea>
+		</form><!-- Comment form end -->
+	</div> <!-- Topic comments end -->
+<% end %>
+
+<% content_for :hidden_content do %>
+	<!-- Popup window for inviting more people -->
+	<div style="display: none;">
+		<div id="inviteMore" class="pop-content">
+	        <div class="pop-content-header">
+	        	<div class="pop-content-container">Creating topic is super-easy</div>
+	        </div> 
+	        <!-- Pop header ends-->
+	        <div class="pop-content-form pop-content-container clearfix">
+		        <form>
+			        <div>
+				        <label>Currently Invited (6)</label>
+				        <ul class="currently-invited-list">
+					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
+					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
+					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
+					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
+					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
+					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
+				        </ul>
+			        </div>
+			        <div>
+				        <label>Invite more friends to join you</label>
+				        <textarea type="text" placeholder="Enter their emails and separate the addresses by commas. (like 'me@klipt.com, you@klipt.com') "></textarea>
+			        </div>
+			        <div class="content-divider"></div>
+			        <div>
+				        <input type="submit" class="pop-content-form-button" value="Invite" />
+				        <span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
+			        </div>
+	       		 </form>        
+	    	</div><!-- Pop content ends -->
+		</div>
+	</div><!-- End popup window for inviting more people -->
+	
+	<!-- Popup window for editing topic -->
+	<div style="display: none;">
+		<div id="editTopicPopup" class="pop-content">
+	        <div class="pop-content-header">
+	        	<div class="pop-content-container">Quick editing</div>
+	        </div> 
+	        <!-- Pop header ends-->
+	        <div class="pop-content-form pop-content-container clearfix">
+		        <form>
+			        <div>
+				        <label>Edit topic name</label>
+				        <input type="text" placeholder="For example 'Places to visit on vacation' "  maxlength="35" value="Hotel to book for 2012 vacation" />
+			        </div>
+			        <div class="content-divider"></div>
+			        <div>
+				        <input type="submit" class="pop-content-form-button" value="Finish" />
+				        <span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
+			        </div>
+	        	</form>        
+	        </div><!-- Pop content ends -->
+		</div>
+	</div>
+	
+	<!-- Popup window for adding or editing note -->
+	<div style="display: none;">
+		<div id="linkNotePopup" class="pop-content">
+	        <div class="pop-content-header">
+	        	<div class="pop-content-container">Add or edit note</div>
+	        </div> 
+	        <!-- Pop header ends-->	        
+	        <div class="pop-content-form pop-content-container clearfix">
+		        <form>
+			        <div>
+			        	<label>Enter additional notes to the added link</label>
+			        	<textarea type="text" placeholder="Enter note here"></textarea>
+			        </div>			       			        
+			        <div class="content-divider"></div>			        
+			        <div>
+			        	<input type="submit" class="pop-content-form-button" value="Finish" />
+			       		 <span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
+			        </div>			        
+		        </form>        
+	        </div><!-- Pop content ends -->       
+		</div>
+	</div>
+
+<% end %>
+
+
+
+
+
+

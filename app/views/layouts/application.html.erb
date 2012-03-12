@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <title>Klipt</title>
+	    <!-- jQuery -->    
+	    <%= javascript_include_tag "jquery", "jquery_ujs" %>
+	    
+	    <!-- jQuery plugins --> 
+	    <!-- Fancybox--> 
+	    <%= javascript_include_tag "plugins/fancybox/jquery.mousewheel-3.0.4.pack",
+	    	"plugins/fancybox/jquery.fancybox-1.3.4.pack" %>
+	    <%= stylesheet_link_tag "./app/assets/javascripts/plugins/fancybox/jquery.fancybox-1.3.4" %>
+	    
+	    <script type="text/javascript">
+	        $(document).ready(function() {
+	          $(".popup-trigger").fancybox({
+	            'titlePosition'   : 'none',
+	            'transitionIn'    : 'fade',
+	            'transitionOut'   : 'fade'
+	          });
+	        });
+	    </script>
+	    
+	    <!-- Stylesheets -->
+		<%= stylesheet_link_tag "application" %>
+		
+		<!-- rails stuff -->
+	    <%= csrf_meta_tags %>
+	    <%= yield(:head) %>
+  	</head>
+  
+  	<body id="loggedin">
+		<!-- Header -->
+		<div id="header">
+			<div class="header-container clearfix">
+				<% if user_signed_in? %>
+					<div id="topics-quick">
+						<div class="topics-btn"><i class="btn-icon topics-i"></i> No Topics </div>
+					</div><!-- Quick Topics Dropdown -->
+					
+					<a class="new-topic-btn popup-trigger" href="#newTopicPopup" ><i class="btn-icon new-topic-i"></i>New Topic</a>
+				<% end %>
+				<a id="logo"></a> <!-- Logo -->
+				<% if user_signed_in? %>
+					<div id="profile">
+					
+						<div class="profile-btn">
+							<i class="btn-icon user-i"></i> <%= truncate(current_user.email, length: 23) %> <i class="btn-icon arrow down"></i>
+						</div>
+						<ul class="h-dropdown">
+	    					<li><%= link_to raw('<i class="settings-i"></i>Settings'), edit_user_registration_path %></li>
+	    					<li><%= link_to raw('<i class="logout-i"></i>Logout'), destroy_user_session_path, :method=>'delete' %></li>
+							<li class="last"><a href="#">About Klipt</a></li>
+						</ul>
+					</div><!-- Account Dropdown -->
+					
+					<span>Logged in as</span>
+				<% else %>
+					<span><a href="#">About Klipt</a></span>
+					<span><%= link_to raw('<i class="logout-i"></i>Sign up'), new_user_registration_path %></span>
+
+				<% end %>
+				
+			
+			</div>
+		</div><!-- Header ends -->
+		<!-- Content -->
+		<%= content_for?(:content) ? yield(:content) : yield %>
+		<!-- Popup window for creating new topic -->
+		<div style="display: none;">
+			<div id="newTopicPopup" class="pop-content">
+			    <div class="pop-content-header">
+			    	<div class="pop-content-container">Creating topic is super-easy</div>
+			    </div><!-- Pop header ends-->
+			    
+			    <div class="pop-content-form pop-content-container clearfix">
+				    <form>
+					    <div>
+					    	<label>Enter topic name</label>
+					    	<input type="text" placeholder="For example 'Places to visit on vacation' " maxlength="35" />
+					    </div>
+					    <div>
+					    	<label>Invite friends to discuss it with you</label>
+					    	<textarea type="text" placeholder="Enter their emails and separate the addresses by commas. (like 'me@klipt.com, you@klipt.com') "></textarea>
+					    </div>
+					    <div class="content-divider"></div>
+					    <div>
+					    	<input type="submit" class="pop-content-form-button" value="Create" />
+					    	<span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
+					    </div>
+				    </form>        
+			    </div><!-- Pop content ends -->
+			</div>
+		</div>
+	
+	</body>
+</html>  
+  
+  
+<!-- 
+  %body
+    %header.navbar.navbar-fixed-top
+      %nav.navbar-inner
+        .container-fluid
+          .span4
+            .row-fluid
+
+              - if user_signed_in?
+                .span4
+                  %a#drop1{href: '#'} My Topics
+                  %ul
+                    - current_user.topics.each do |topic|
+                      %li= link_to topic.name, topic
+                .span4
+                  %a{href: '#newTopicBox', data: {toggle: 'modal'} } +New Topic
+
+          .span4
+            = link_to "Klipt", root_path, :class => 'brand'
+          .span4
+            %ul
+              = render 'shared/navigation'
+
+    #main{:role => "main"}
+      .content= content_for?(:content) ? yield(:content) : yield
+
+    - if user_signed_in?
+      #newTopicBox{class: "modal hide fade"} 
+        .modal-header
+          %a.close{data: {dismiss: 'modal'}} x
+          %h2 Creating topic is super-easy!
+        .modal-body
+          = form_tag  '/topics', method: :post do
+            .field
+              = label_tag 'Name your topic'
+              = text_field :topic, :name 
+            .field
+              = label_tag 'Invite more friends to this topic'
+              = text_area_tag 'invitees', nil, placeholder: 'Enter their emails and separate the addresses by commans (like "me@klippd.com, you@klippd.com")', size: '30x6'
+            = invitee_opt_field
+            .actions
+              = submit_tag 'Create'
+    %footer
+-->

@@ -31,7 +31,6 @@ GEM
     addressable (2.2.7)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
-    bootstrap-sass (2.0.1)
     bson (1.6.0)
     bson_ext (1.6.0)
       bson (= 1.6.0)
@@ -84,12 +83,6 @@ GEM
     ffi (1.0.11)
     gherkin (2.9.0)
       json (>= 1.4.6)
-    haml (3.1.4)
-    haml-rails (0.3.4)
-      actionpack (~> 3.0)
-      activesupport (~> 3.0)
-      haml (~> 3.0)
-      railties (~> 3.0)
     hike (1.2.1)
     i18n (0.6.0)
     journey (1.0.3)
@@ -196,7 +189,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap-sass (>= 2.0.1)
   bson_ext (>= 1.5.2)
   capybara (>= 1.1.2)
   coffee-rails (~> 3.2.1)
@@ -205,8 +197,6 @@ DEPENDENCIES
   devise (>= 2.0.4)
   email_spec (>= 1.2.1)
   factory_girl_rails (>= 1.7.0)
-  haml (>= 3.1.4)
-  haml-rails (>= 0.3.4)
   jquery-rails
   launchy (>= 2.0.5)
   mongoid (>= 2.4.6)

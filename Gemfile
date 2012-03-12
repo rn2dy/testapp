@@ -9,9 +9,6 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem "haml", ">= 3.1.4"
-
-gem "haml-rails", ">= 0.3.4", :group => :development
 
 group :development, :test do
   gem "rspec-rails", ">= 2.8.1"
@@ -32,4 +29,3 @@ gem "mongoid", ">= 2.4.6"
 gem "mongoid-paperclip", :require => "mongoid_paperclip"
 
 gem "devise", ">= 2.0.4"
-gem "bootstrap-sass", ">= 2.0.1"
