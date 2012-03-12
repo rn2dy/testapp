@@ -75,21 +75,21 @@
 			    </div><!-- Pop header ends-->
 			    
 			    <div class="pop-content-form pop-content-container clearfix">
-				    <form>
+				    <%= form_tag '/topics', method: :post do %>
 					    <div>
 					    	<label>Enter topic name</label>
-					    	<input type="text" placeholder="For example 'Places to visit on vacation' " maxlength="35" />
+					    	<%= text_field :topic, :name, value: '', placeholder: "For example 'Places to visit on vacation", maxlength: 35 %>
 					    </div>
 					    <div>
 					    	<label>Invite friends to discuss it with you</label>
-					    	<textarea type="text" placeholder="Enter their emails and separate the addresses by commas. (like 'me@klipt.com, you@klipt.com') "></textarea>
+					    	<%= text_area_tag :invitees, nil, placeholder: "Enter their emails and separate the addresses by commas. (like 'me@klipt.com, you@klipt.com') " %>
 					    </div>
 					    <div class="content-divider"></div>
 					    <div>
-					    	<input type="submit" class="pop-content-form-button" value="Create" />
+					    	<%= submit_tag 'Create', class: 'pop-content-form-button' %>
 					    	<span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
 					    </div>
-				    </form>        
+				    <% end %>        
 			    </div><!-- Pop content ends -->
 			</div>
 		</div>
