@@ -1,7 +1,7 @@
 <%= content_for :head do %>
 	<!-- tipsy.js plugin -->
 	<%= javascript_include_tag "plugins/tipsy/jquery.tipsy" %>
-	<%= stylesheet_link_tag "./app/assets/javascripts/plugins/tipsy/tipsy" %>
+	<%= stylesheet_link_tag "tipsy" %>
 	<script type="text/javascript">
 		jQuery(document).ready(function(){
 			$('.tip-bubble').tipsy({gravity: 's'});
@@ -9,7 +9,7 @@
 	</script>
 	<!-- jScrollPanel.js plugin -->
 	<%= javascript_include_tag "plugins/jScrollPane/jquery.jscrollpane.min" %>
-	<%= stylesheet_link_tag Rails.root + "assets/plugins/jScrollPane/jquery.jscrollpane" %>
+	<%= stylesheet_link_tag "jquery.jscrollpane" %>
 	<script type="text/javascript" id='sourcecode'>
 		jQuery(document).ready(function(){
 			$('.topic-links-list, .topic-comments-list').jScrollPane();
