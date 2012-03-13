@@ -1,16 +1,9 @@
 class TopicsController < ApplicationController
   layout 'fluid', only: [:show]
-  before_filter :find_topic, except: [:index, :create]
-  
-  def index
-    @topics = current_user.topics
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @topics }
-    end
-  end
+  before_filter :find_topic, except: [:create]
 
   def show
+    @email_list = { @topic.id => @topic.participants.map { |p| p.email } }
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @topic }
@@ -20,7 +13,6 @@ class TopicsController < ApplicationController
   def create
     @topic = current_user.topics.new params[:topic].merge(starter_name: current_user.name, starter_id: current_user.id)
     @topic.add_invitees(params[:invitees])
-
     respond_to do |format|
       if @topic.save
         format.html { redirect_to @topic, notice: 'Topic was successfully created.' }
@@ -32,7 +24,15 @@ class TopicsController < ApplicationController
     end
   end
 
-
+  def update 
+    respond_to do |format|
+      if @topic.update_attributes(name: params[:topic][:name])
+        format.html { redirect_to @topic, notice: 'Topic name succesfully updated!' }
+        format.js
+      end
+    end
+  end
+  
   def destroy
     respond_to do |format|
       if current_user.topics.delete(@topic)
@@ -54,14 +54,31 @@ class TopicsController < ApplicationController
       end
     end
   end
-
+  
+  # add_comments.js.erb
   def add_comments
-    new_comment = @topic.add_comments(current_user, params[:content])
+    @comment = @topic.add_comments(current_user, params[:content])
     respond_to do |format|
-      format.json { render json: new_comment }
+      format.html { redirect_to @topic, notice: 'New comment added!' }
+      format.js
     end
   end
-
+  
+  # add_links.js.erb
+  def add_links
+    @new_link = @topic.links.build url: params[:url], creator_name: current_user.name
+    @new_link.user = current_user
+    
+    respond_to do |format|
+      if @new_link.save
+        format.html { redirect_to @topic, notice: 'Links added!' }
+        format.js
+      end
+    end
+  end
+  
+  private 
+  
   def find_topic
     @topic ||= current_user.topics.find(params[:id])
   end

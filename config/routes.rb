@@ -13,6 +13,7 @@ Testapp::Application.routes.draw do
     member do
       post 'add_invitees'
       post 'add_comments'
+      post 'add_links'
     end
   end
 

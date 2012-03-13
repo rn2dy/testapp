@@ -1,27 +1,23 @@
 class LinksController < ApplicationController
-  respond_to :json
-
-  def create
-    @topic = Topic.find(params[:topic_id])
-    @link = @topic.links.build(params[:link].merge(creator_name: current_user.name))
-    @link.user = current_user
-    
-    if @link.save!
-      respond_with @link, { id: @link.id }
-    else
-      respond_with @link.errors, status: :unprocessable_entity
-    end
-  end
 
   def destroy 
-    @link = Link.find(params[:id])
-    @link.delete
+    link = Link.find(params[:id])
+    link.delete
+    @link_id = params[:id]
     respond_to do |format|
-      format.json { head :no_content }
+      format.html { redirect_to @topic, notice: 'Links deleted!' }
+      format.js
     end
   end
 
-  def add_notes 
+  def add_notes
+    @link = Link.find(params[:id])
+    respond_to do |format|
+      if @link.update_attributes(notes: params[:notes])
+        format.html {redirect_to @link, notice: 'Notes added!' }
+        format.js
+      end
+     end   
   end
 
 end

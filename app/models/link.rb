@@ -9,7 +9,7 @@ class Link
   field :title, type: String
   field :notes, type: String
   field :clicks, type: Integer, default: 0
-  field :image_src, type: String, default: "rails.png"
+  field :image_src, type: String, default: "example-img.jpg"
   field :creator_name, type: String
   #has_mongoid_attached_file :image
 
@@ -41,16 +41,21 @@ class Link
 
     def extract_image_src
       open(self.url) do |f|
-        srcs = f.grep(/<img(.*?)>/)
-        if srcs.empty?
-          self.image_src = 'rails.png'
-        else
-          src = srcs.first.match(/src="(.*?)"/)[1]
-          if src =~ /http:\/\/.*/
-            self.image_src = src 
+        begin
+          srcs = f.grep(/<img(.*?)>/)
+        
+          if srcs.empty?
+            self.image_src = 'rails.png'
           else
-            self.image_src = self.url + (src[0] == '/' ? src : '/' + src)
+            src = srcs.first.match(/src="(.*?)"/)[1]
+            if src =~ /http:\/\/.*/
+              self.image_src = src 
+            else
+              self.image_src = self.url + (src[0] == '/' ? src : '/' + src)
+            end
           end
+        rescue
+          self.image_src = default_image_src
         end
       end
     end
@@ -66,5 +71,9 @@ class Link
         return true
       end
       false
+    end
+    
+    def default_image_src
+      "example-img.jpg"
     end
 end
