@@ -1,60 +1,3 @@
-<!--
-- content_for :main_col do
-  %section.topic
-    %p#notice= notice
-    .row-fluid
-      .span8
-        = link_to '<- Back to topics', home_dashboard_path
-      .span4
-        = link_to '-x- Leave Topic', topic_path(@topic), method: :delete
-    %article
-      %header
-        .row-fluid
-          .span8
-            %h2= @topic.name
-          .span4
-            %span#startBy= @topic.starter_name
-            %span#members= @topic.participants.count
-            %a{href: '#inviteBox', data: {toggle: 'modal'} } + Invite!
-      .span12
-        = text_field_tag 'url', 'http://', placeholder: 'Paste URL in this field...', size: 50, id: 'urlBar'
-        = hidden_field_tag 'topicId', @topic.id
-        = button_tag 'Add to Topic', type: 'button', id: 'submitUrl'
-      #loading{style: "display:none"}
-        = image_tag "loading.gif", alt: "Loading..."
-      %section.links
-        = render 'shared/topic_links'
-  #inviteBox{class: "modal hide fade"} 
-    .modal-header
-      %a.close{data: {dismiss: 'modal'}} x
-      %h2 Invite More!
-    .modal-body
-      %ul
-        - @topic.participants.each do |person|
-          %li= person.name
-      = form_tag add_invitees_topic_path(@topic), method: 'post' do
-        .field
-          = label_tag 'Invite more friends to this topic'
-          = text_area_tag 'invitees', nil, placeholder: 'Enter their emails and separate the addresses by commans (like "me@klippd.com, you@klippd.com")', size: '30x6'
-        .actions
-          = submit_tag 'Invite'
-      
-- content_for :side_col do
-  %section.comments
-    %header.l1
-      %h3 Topic comments
-      %span#commCount= @topic.comments.count  
-    - @topic.comments.each do |comment|
-      %article
-        %header
-          %span= comment.user_name 
-          %span= comment.created_at
-        %p= comment.content
-    = text_area_tag 'comment', nil, placeholder: 'Put you comment here and press Enter to add.', size: '25x10', id: 'commSubmit'
-    #loadingComment{style: "display:none"}
-      = image_tag "loading.gif", alt: "Loading..."
--->
-
 <%= content_for :head do %>
 	<!-- tipsy.js plugin -->
 	<%= javascript_include_tag "plugins/tipsy/jquery.tipsy" %>
@@ -72,70 +15,55 @@
 			$('.topic-links-list, .topic-comments-list').jScrollPane();
 		});
 	</script>
+	<!-- fancybox.js extra -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#newCommentField').keypress(function(e){
+				if (e.keyCode == 13 && !e.shiftKey ) {
+					e.preventDefault();
+					$.ajax({
+						url: $(this).parent().attr('action') + '.js',
+						type: 'POST',
+						data: { content: $(this).val() },
+					});
+				}
+			});
+		});
+	</script>
 <% end %>
 
 <% content_for :main do %>
 	<div class="content-topic-main">
 		<div class="topic-page-actions clearfix">
-			<a href="#" class="content-btn" style="float: left"><i class="btn-icon back-i"></i> Back to topics </a>
-			<a href="#" class="content-btn" style="margin-left: 10px;"><i class="btn-icon delete-i"></i> Leave Topic </a>
+			<%= link_to raw('<i class="btn-icon back-i"></i> Back to topics '), home_dashboard_path, class: 'content-btn', style: "float:left" %> 
+			<%= link_to raw('<i class="btn-icon delete-i"></i> Leave Topic '), topic_path(@topic), method: :delete, class: 'content-btn', style: "margin-left: 10px" %>
 			<a href="#editTopicPopup" class="content-btn popup-trigger"><i class="btn-icon edit-i"></i> Edit Topic </a>
 		</div><!-- Topic actions -->
 		
 		<div class="topic-main-holder clearfix">
 		
 			<div class="topic-main-header clearfix">
-				<h2><i class="icon title-i"></i>Hotel to book for 2012 vacation</h2>
+				<h2><i class="icon title-i"></i><%= @topic.name %></h2>
 				<div class="count-invited" style="margin-top: 6px;">
-					<a href="#inviteMore" class="invite-more popup-trigger">
-						<i class="icon more-i tip-bubble" title="Invite more people"></i></a> <span>6</span> <i class="icon users-i"></i> </div> <!-- Invited friends counter -->
-				<div class="topic-author"><i class="icon user-i"></i><span>Started by: Vinny</span></div>
+					<a href="#inviteMore" class="invite-more popup-trigger" data-topic-id="<%= @topic.id %>">
+						<i class="icon more-i tip-bubble" title="Invite more people"></i></a> <span><%= @topic.participants.count %></span> <i class="icon users-i"></i> </div> <!-- Invited friends counter -->
+				<div class="topic-author"><i class="icon user-i"></i><span>Started by: <%= @topic.starter_name %></span></div>
 			</div> <!-- Header of main topic info -->
 		
 			<div class="content-divider"></div>
 			
 			<div class="topic-add-link clearfix">
-				<form>
-					<input type="text" class="url-field" placeholder="Paste URL in this field" />
-					<input type="submit" class="content-btn" value="Add to Topic" />
-				</form>
+				<%= form_tag add_links_topic_path(@topic), method: :post, remote: true do %>
+					<%= text_field_tag "url", nil, placeholder: "Paste URL in this field", class: "url-field" %>
+					<%= submit_tag "submit", class: "content-btn" %>
+				<% end %>
 			</div><!-- Add link to topic end -->
 		
 			<div class="content-divider"></div>
 		
 			<div class="topic-links-list">
 				<ul>
-					<li><!-- Single link info -->
-						<div class="link-preview-img-holder"><%= image_tag "example-img.jpg", alt: ": (" %></div>
-						
-						<div class="link-text-info">
-						
-							<div class="link-title">
-								<i class="icon clip-i"></i>
-								<span><a href="#">Book a Better Hotel Room With Room 77</a></span>
-							</div>
-						
-							<div class="link-note">
-								<a href="#linkNotePopup" class="popup-trigger tip-bubble" title="Edit Note"><i class="icon edit-i"></i></a>
-								<span>A cool article on Mashable.</span>
-							</div>
-							
-							<div class="link-posted">
-								<div class="link-author">
-									<i class="icon user-i"></i>
-									<span>Posted by: Vinny</span>
-								</div>
-								<div class="link-time">
-									<i class="icon time-i"></i>
-									<span>3 Hours Ago</span>
-								</div>
-							</div>
-						
-							<a href="#" class="link-del tip-bubble" title="Remove link" ></a>
-					
-						</div> <!-- All info except preview image -->
-					
-					</li><!-- Single link info ends -->
+					<%= render @topic.links %>
 				</ul>
 			</div><!-- Links list ends -->
 		</div> <!-- Main topic info holder -->
@@ -150,27 +78,22 @@
 		
 		<div class="topic-comments-list">
 			<ul>
-				<!-- Single Comment -->
-				<li>
-					<div class="comment-header">
-						<b>Vinny</b>
-						<span>3 Hours Ago</span>
-					</div>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis </p>
-				</li>
-				<!-- Single Comment Ends -->
+				<% @topic.comments.each do |comment| %>
+					<%= render partial: 'comment', locals: { comment: comment } %>
+				<% end %>
 			</ul>
 		</div> <!-- Comments list -->
 		
 		<div class="content-divider"></div>
 		
-		<form>
-			<textarea placeholder="Write comment and press 'Enter' to submit"></textarea>
-		</form><!-- Comment form end -->
+		<%= form_tag add_comments_topic_path(@topic), method: :post do %>
+			<%= text_area_tag "content", nil, placeholder: "Write comment and press 'Enter' to submit", id: "newCommentField" %>
+		<% end %><!-- Comment form end -->
 	</div> <!-- Topic comments end -->
 <% end %>
 
 <% content_for :hidden_content do %>
+	<%= content_tag "div", class: "invited-list", data: { participants: @email_list } do %><% end %>
 	<!-- Popup window for inviting more people -->
 	<div style="display: none;">
 		<div id="inviteMore" class="pop-content">
@@ -179,28 +102,17 @@
 	        </div> 
 	        <!-- Pop header ends-->
 	        <div class="pop-content-form pop-content-container clearfix">
-		        <form>
-			        <div>
-				        <label>Currently Invited (6)</label>
-				        <ul class="currently-invited-list">
-					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
-					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
-					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
-					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
-					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
-					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
-				        </ul>
-			        </div>
+	        	<%= form_tag "#", method: :post, class: 'invite-more-form', remote: true do %>		        
 			        <div>
 				        <label>Invite more friends to join you</label>
-				        <textarea type="text" placeholder="Enter their emails and separate the addresses by commas. (like 'me@klipt.com, you@klipt.com') "></textarea>
+				        <%= text_area_tag 'invitees', nil, placeholder: "Enter their emails and separate the addresses by commas. (like 'me@klipt.com, you@klipt.com') "%>
 			        </div>
 			        <div class="content-divider"></div>
 			        <div>
-				        <input type="submit" class="pop-content-form-button" value="Invite" />
+ 				        <%= submit_tag "Invite", class: "pop-content-form-button", onclick: "$.fancybox.close();"%>
 				        <span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
 			        </div>
-	       		 </form>        
+	       		 <% end %>	  
 	    	</div><!-- Pop content ends -->
 		</div>
 	</div><!-- End popup window for inviting more people -->
@@ -213,17 +125,17 @@
 	        </div> 
 	        <!-- Pop header ends-->
 	        <div class="pop-content-form pop-content-container clearfix">
-		        <form>
+		        <%= form_for @topic, method: :put, remote: true do |f| %>
 			        <div>
 				        <label>Edit topic name</label>
-				        <input type="text" placeholder="For example 'Places to visit on vacation' "  maxlength="35" value="Hotel to book for 2012 vacation" />
+				        <%= f.text_field :name, placeholder: "For example 'Places to visit on vacation' ",maxlength: 35  %>
 			        </div>
 			        <div class="content-divider"></div>
 			        <div>
-				        <input type="submit" class="pop-content-form-button" value="Finish" />
+				        <input type="submit" class="pop-content-form-button" value="Finish" onclick="$.fancybox.close();"/>
 				        <span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
 			        </div>
-	        	</form>        
+	        	<% end %> 
 	        </div><!-- Pop content ends -->
 		</div>
 	</div>
@@ -236,17 +148,17 @@
 	        </div> 
 	        <!-- Pop header ends-->	        
 	        <div class="pop-content-form pop-content-container clearfix">
-		        <form>
+	        	<%= form_tag "#", method: :post, remote: true, class: 'add-notes-form' do %>
 			        <div>
 			        	<label>Enter additional notes to the added link</label>
-			        	<textarea type="text" placeholder="Enter note here"></textarea>
+			        	<%= text_area_tag "notes", nil, placeholder: "Enter notes here" %>
 			        </div>			       			        
 			        <div class="content-divider"></div>			        
 			        <div>
-			        	<input type="submit" class="pop-content-form-button" value="Finish" />
-			       		 <span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
+			        	<%= submit_tag "submit", onclick: "$.fancybox.close();", class: "pop-content-form-button" %>
+			       		<span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
 			        </div>			        
-		        </form>        
+		        <% end %>
 	        </div><!-- Pop content ends -->       
 		</div>
 	</div>

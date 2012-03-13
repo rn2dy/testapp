@@ -1,0 +1,4 @@
+$("<%= escape_javascript(render partial: "comment", locals: { comment: @comment }) %>")
+	.hide().prependTo(".topic-comments-list ul").show('slow');
+var api = $('.topic-comments-list').data('jsp');
+api.reinitialise();

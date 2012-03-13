@@ -1,34 +1,9 @@
-<!--
-- if @topics.count == 0
-  .dashbox
-    %h3 You're not involved in any topics. 
-    %h1 Why wait? <b style="color:red">Get started!</b>
-    %a#newTopic2{href: '#newTopicBox', data: {toggle: "modal"}} +New Topic
-- else
-  .topicNavBox
-    - @topics.each do |topic|
-      .topicBox 
-        .boxTop
-          = link_to topic.name, topic
-          %span Links #{topic.links.count}
-        .boxMid
-          = image_tag "rails.png", size: '100x150'
-        .boxBut
-          %span Comments: #{topic.comments.count}
-          %span Members: #{topic.participants.count} 
-        .boxExt 
-          = link_to '-x- Leave Topic', topic_path(topic), method: :delete
-    .topicBox
-      %a{href: '#newTopicBox', data: {toggle: 'modal'}} +New Topic
--->
-
 <% if @topics.count == 0 %>
 	<div class="content-no-topics clearfix">
 		<p>You're not involved in any topic.<br />
-			Why wait? <b>Get started!</b></p>
-		
+			Why wait? <b>Get started!</b></p>		
 		<div class="content-new-topic">
-			<a href="#newTopicPopup" class="new-topic-btn"><i class="btn-icon new-topic-i"></i>New Topic</a>
+			<a href="#newTopicPopup" class="new-topic-btn popup-trigger"><i class="btn-icon new-topic-i"></i>New Topic</a>
 		</div><!-- New Topic ends -->
 		
 		<small>Click the button and follow instructions.</small>
@@ -42,15 +17,19 @@
 					<div class="topics-list-item">
 						<div class="topics-list-item-holder">		
 							<div>
-								<h3><a href="topics/<%= topic.id %>">Restaurant Picks</a></h3> <!-- Topic title -->
-								<div class="count-clips"><span>3 </span><i class="icon clip-i"></i></div> <!-- Clips counter -->
+								<h3><a href="/topics/<%= topic.id %>"><%= topic.name %></a></h3> <!-- Topic title -->
+								<div class="count-clips"><span><%= topic.links.count %> </span><i class="icon clip-i"></i></div> <!-- Clips counter -->
 							</div>
 							
 							<div class="topic-preview-img-holder"></div><!-- Topic preview img holder -->
 							
 							<div>
-								<div class="count-comments"><i class="icon comment-i"></i><span>27</span></div> <!-- Comments counter -->
-								<div class="count-invited"><a href="#inviteMore" class="invite-more popup-trigger"><i class="icon more-i"></i></a> <span>6</span> <i class="icon users-i"></i> </div> <!-- Invited friends counter -->
+								<div class="count-comments"><i class="icon comment-i"></i><span><%= topic.comments.count %></span></div> <!-- Comments counter -->
+								<div class="count-invited">
+									<a href="#inviteMore" class="invite-more popup-trigger" data-topic-id="<%= topic.id %>"><i class="icon more-i"></i></a> 
+									<span><%= topic.participants.count %></span> 
+									<i class="icon users-i"></i> 
+								</div> <!-- Invited friends counter -->
 							</div> 
 						</div> <!-- Single topic preview holder ends -->
 						<div class="topics-list-item-shadow"></div><!-- Shadow below the holder -->
@@ -71,6 +50,7 @@
 
 
 <% content_for :hidden_content do %>
+	<%= content_tag "div", class: "invited-list", data: { participants: @email_list } do %><% end %>
 	<!-- Popup window for inviting more people -->
 	<div style="display: none;">
 		<div id="inviteMore" class="pop-content">
@@ -79,28 +59,18 @@
 	        </div> 
 	        <!-- Pop header ends-->
 	        <div class="pop-content-form pop-content-container clearfix">
-		        <form>
-			        <div>
-				        <label>Currently Invited (6)</label>
-				        <ul class="currently-invited-list">
-					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
-					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
-					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
-					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
-					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
-					        <li><i class="icon user-i"></i>adisdesigner@gmail.com</li>
-				        </ul>
-			        </div>
+		        <%= form_tag "#", method: :post, class: 'invite-more-form' do %>
+					<!-- Hold Invited List Here -->
 			        <div>
 				        <label>Invite more friends to join you</label>
-				        <textarea type="text" placeholder="Enter their emails and separate the addresses by commas. (like 'me@klipt.com, you@klipt.com') "></textarea>
+				       	<%= text_area_tag 'invitees', nil, placeholder: "Enter their emails and separate the addresses by commas. (like 'me@klipt.com, you@klipt.com') "%>
 			        </div>
 			        <div class="content-divider"></div>
-			        <div>
-				        <input type="submit" class="pop-content-form-button" value="Invite" />
+			        <div>				  
+				        <%= submit_tag "Invite", class: "pop-content-form-button" %>
 				        <span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
 			        </div>
-	       		 </form>        
+			     <% end %>	       		         
 	    	</div><!-- Pop content ends -->
 		</div>
 	</div><!-- End popup window for inviting more people -->

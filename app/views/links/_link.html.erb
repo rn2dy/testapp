@@ -1,0 +1,31 @@
+<li id="link-<%= link.id %>"><!-- Single link info -->
+	<div class="link-preview-img-holder"><%= image_tag link.image_src, alt: "example-img.jpg" %></div>
+	
+	<div class="link-text-info">
+	
+		<div class="link-title">
+			<i class="icon clip-i"></i>
+			<span><%= link_to link.title, link.url %></span>
+		</div>
+	
+		<div class="link-note">
+			<a href="#linkNotePopup" class="popup-trigger tip-bubble" data-link-id="<%= link.id %>" title="Edit Note">
+				<i class="icon edit-i"></i></a>
+			<span><%= link.notes %></span>
+		</div>
+		
+		<div class="link-posted">
+			<div class="link-author">
+				<i class="icon user-i"></i>
+				<span>Posted by: <%= link.creator_name %></span>
+			</div>
+			<div class="link-time">
+				<i class="icon time-i"></i>
+				<span><%= time_ago_in_words(link.created_at).titleize %> Ago</span>
+			</div>
+		</div>
+		<%= link_to '', link_path(link), method: :delete, remote: true, class: "link-del", title: "Remove link" %>
+	
+	</div> <!-- All info except preview image -->
+
+</li><!-- Single link info ends -->

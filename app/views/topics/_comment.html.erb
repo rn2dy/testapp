@@ -1,0 +1,7 @@
+<li>
+	<div class="comment-header">
+		<b><%= comment.user_name %></b>
+		<span><%= time_ago_in_words(comment.created_at).titleize %> Ago</span>
+	</div>
+	<p><%= comment.content %> </p>
+</li>
