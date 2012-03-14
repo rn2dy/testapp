@@ -73,3 +73,7 @@ db/*.sqlite3
 
 # vim artifacts
 **.swp
+
+# myself
+/task.git
+/gittask.rb
