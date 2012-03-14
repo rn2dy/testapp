@@ -1,3 +1,7 @@
 $("<%= escape_javascript( render @new_link )%>").hide().prependTo('.topic-links-list ul').show('slow');
+$('input#url').val("");
+$('.topic-link-loading').hide();
+$('.topic-add-link form').show();
+$('#url').blur();
 var api = $('.topic-links-list').data('jsp');
 api.reinitialise();

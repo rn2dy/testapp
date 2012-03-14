@@ -1,4 +1,4 @@
-$("<%= escape_javascript(render partial: "comment", locals: { comment: @comment }) %>")
-	.hide().prependTo(".topic-comments-list ul").show('slow');
+$("<%= escape_javascript(render partial: "comment", locals: { comment: @comment }) %>").appendTo(".topic-comments-list ul");
+$("textarea#newCommentField").val("");
 var api = $('.topic-comments-list').data('jsp');
 api.reinitialise();

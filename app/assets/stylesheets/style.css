@@ -1157,7 +1157,8 @@ i.icon.users-i {
 	width: 100%;
 	margin-top: 20px;
 	width: 220px;
-	max-height: 620px;
+	height: 600px;
+	/*max-height: 620px;*/
 	overflow: auto;
 	padding: 0 10px 1px 0;
 	float: left;
@@ -1225,7 +1226,7 @@ i.icon.users-i {
 	padding: 12px ;
 	border: solid 1px #e4e4e4;
 	float: left;
-	height: 90px;
+	height: 60px;
 	resize: none;
 	margin-top: 15px;
 	

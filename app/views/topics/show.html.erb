@@ -21,9 +21,16 @@
 			$('#newCommentField').keypress(function(e){
 				if (e.keyCode == 13 && !e.shiftKey ) {
 					e.preventDefault();
+					var form = $(this).parent();
 					$.ajax({
-						url: $(this).parent().attr('action') + '.js',
+						url: form.attr('action') + '.js',
 						type: 'POST',
+						beforeSend: function(){ form.hide(); form.next().show(); },
+						complete: function(){ 
+							form.next().hide(); 
+							form.show(); 
+							form.find('textarea').blur(); 
+						},
 						data: { content: $(this).val() },
 					});
 				}
@@ -55,10 +62,14 @@
 			<div class="topic-add-link clearfix">
 				<%= form_tag add_links_topic_path(@topic), method: :post, remote: true do %>
 					<%= text_field_tag "url", nil, placeholder: "Paste URL in this field", class: "url-field" %>
-					<%= submit_tag "submit", class: "content-btn" %>
+					<%= submit_tag "submit", class: "content-btn", onclick: "loading(this)"%>
 				<% end %>
+				<div class="topic-link-loading" style="display:none;text-align:center;">
+					<%= image_tag "loading.gif", alt: "loading..." %>
+				</div>
 			</div><!-- Add link to topic end -->
-		
+			
+			
 			<div class="content-divider"></div>
 		
 			<div class="topic-links-list">
@@ -73,10 +84,15 @@
 <% content_for :side do %>
 	<div class="topic-comments">
 		<div class="topic-comments-header">Topic Comments</div>
-	
+		<%= form_tag add_comments_topic_path(@topic), method: :post do %>
+			<%= text_area_tag "content", nil, placeholder: "Write comment and press 'Enter' to submit", id: "newCommentField" %>
+		<% end %><!-- Comment form end -->
+		<div class="topic-link-loading" style="display:none;text-align:center;">
+			<%= image_tag "loading.gif", alt: "loading..." %>
+		</div>
 		<div class="content-divider"></div>
 		
-		<div class="topic-comments-list">
+		<div class="topic-comments-list" >
 			<ul>
 				<% @topic.comments.each do |comment| %>
 					<%= render partial: 'comment', locals: { comment: comment } %>
@@ -84,11 +100,6 @@
 			</ul>
 		</div> <!-- Comments list -->
 		
-		<div class="content-divider"></div>
-		
-		<%= form_tag add_comments_topic_path(@topic), method: :post do %>
-			<%= text_area_tag "content", nil, placeholder: "Write comment and press 'Enter' to submit", id: "newCommentField" %>
-		<% end %><!-- Comment form end -->
 	</div> <!-- Topic comments end -->
 <% end %>
 

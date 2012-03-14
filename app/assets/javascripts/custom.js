@@ -31,3 +31,9 @@ function clean_up(ary, idx) {
 		$('.invite-more-form div:first-child').remove();
 	}
 }
+
+function loading(me){
+	var p = $(me).parent();
+	p.hide();
+	p.next().show();
+}

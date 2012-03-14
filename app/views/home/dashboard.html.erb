@@ -21,7 +21,11 @@
 								<div class="count-clips"><span><%= topic.links.count %> </span><i class="icon clip-i"></i></div> <!-- Clips counter -->
 							</div>
 							
-							<div class="topic-preview-img-holder"></div><!-- Topic preview img holder -->
+							<div class="topic-preview-img-holder">
+								<% if topic.links.count > 0 %>
+									<%= image_tag topic.links.first.image_src, alt: "example-img.jpg", size: "200x110" %>
+								<% end %>
+							</div><!-- Topic preview img holder -->
 							
 							<div>
 								<div class="count-comments"><i class="icon comment-i"></i><span><%= topic.comments.count %></span></div> <!-- Comments counter -->
