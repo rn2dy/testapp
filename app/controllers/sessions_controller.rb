@@ -1,6 +1,6 @@
 class SessionsController < Devise::SessionsController
   def create
-    resource = warden.authenticate!(:scope => resource_name, :recall => :failure)
+    resource = warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
     return sign_in_and_redirect(resource_name, resource)
   end
   
@@ -11,7 +11,7 @@ class SessionsController < Devise::SessionsController
     return render :json => {:success => true, :redirect => stored_location_for(scope) || after_sign_in_path_for(resource)}
   end
 
-  def failure
+  def failure      
     return render :json => { :success => false }
   end
 

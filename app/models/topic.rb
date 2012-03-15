@@ -9,9 +9,7 @@ class Topic
   field :starter_name, type: String
   field :unavailable_users, type: Array, default: []
 
-  #belongs_to :owner, class_name: 'User', inverse_of: :owned_topics
-  #has_and_belongs_to_many :invitees, 
-  #                        class_name: 'User', inverse_of: :shared_topics
+  default_scope :order => "created_at DESC"
   has_and_belongs_to_many :participants, class_name: 'User'
   has_many :links                        
   embeds_many :comments

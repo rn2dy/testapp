@@ -15,7 +15,10 @@ class RegistrationsController < Devise::RegistrationsController
       end
     else
       clean_up_passwords resource
-      return render :json => { :success => false }
+      errors = resource.errors.inject({}) do |h, kv|
+        kv[1].is_a?(Array) ? h.merge(kv[0] => kv[1].uniq.join(",")) : h.merge(kv[0] => kv[1])        
+      end 
+      return render :json => { :success => false, :errors => errors }
     end
   end
   

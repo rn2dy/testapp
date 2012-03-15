@@ -11,11 +11,12 @@ class Link
   field :clicks, type: Integer, default: 0
   field :image_src, type: String, default: "example-img.jpg"
   field :creator_name, type: String
-  #has_mongoid_attached_file :image
+
+  scope :recent, order_by(created_at: :desc)
 
   belongs_to :topic
   belongs_to :user
-
+  
   validates :url, presence: true, format: { with: /.*/ }
   validate :check_url # custom validation
 

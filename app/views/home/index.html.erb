@@ -1,10 +1,10 @@
 <% content_for :head do %>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('#loginForm').bind("ajax:success", function(e, data, status, xhr){
+			$('#loginForm').bind("ajax:success", function(e, data, status, xhr){				
 				if(data.success){
 					window.location = data.redirect;
-				}else{
+				}else{				
 					$('#loginForm .error-message').show();	
 				}
 			});
@@ -12,10 +12,14 @@
 				if(data.success){
 					window.location = data.redirect;
 				}else{
-					$('#signupForm .error-message').show();	
+					var error_msg = "";  
+					for (var key in data.errors) {
+						error_msg += capitalize(key) + ": " + data.errors[key] + ". ";
+					}
+					$('#signupForm .error-message').html("<i class='icon error-i'></i>" + error_msg).show();	
 				}
 			});
-			$('#resendPassForm').bind("ajax:success", function(e, data, status, xhr){
+			$('#resendPassForm').bind("ajax:success", function(e, data, status, xhr){				
 				if(data.success){
 					$('#resendPassFormField').hide();
 					$('#resendPassFormConfirm').show();		
@@ -81,7 +85,7 @@
 			        
 			        <div>
 				        <%= f.submit "Login", class: "pop-content-form-button" %>
-				        <span class="error-message" style="display:none;"><i class="icon error-i"></i> Fill all the fields and try again!</span>
+				        <span class="error-message" style="display:none;"><i class="icon error-i"></i> Incorrect combination of email and password! Try again.</span>
 			        </div>
 		        <% end %>
 	        </div><!-- Pop content ends -->
