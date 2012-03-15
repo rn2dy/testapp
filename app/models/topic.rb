@@ -31,7 +31,7 @@ class Topic
       if candidate
         next if participants.include?(candidate)
         participants << candidate
-        Notifier.invited self, candidate 
+        Notifier.invited(self, candidate).deliver 
       else
         unavailable_users << e
       end
