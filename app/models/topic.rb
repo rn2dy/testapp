@@ -45,7 +45,7 @@ class Topic
     if res.empty?
       "example-img.jpg"
     else
-      res.first
+      res.first.image_src
     end
   end
 
