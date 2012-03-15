@@ -1,41 +1,120 @@
-<!--
-%h1 Welcome to klipt
-%h2 Sign up now, it's FREE!
-= form_for(resource, as: resource_name, url: user_registration_path) do |f|
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :email
-    = f.email_field :email
-  .field
-    = f.label :password
-    = f.password_field :password
-  .field
-    = f.label :password_confirmation
-    = f.password_field :password_confirmation
-  .actions
-    = f.submit 'Sign Up'
--->
-<h2>Sign up now, it's FREE!'</h2>
-<%= form_for resource, as: resource_name, url: user_registration_path do |f| %>
-	<div>
-		<%= f.label :name %>
-		<%= f.text_field :name %>		
+<% content_for :head do %>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#loginForm').bind("ajax:success", function(e, data, status, xhr){
+				if(data.success){
+					window.location = data.redirect;
+				}else{
+					$('#loginForm .error-message').show();	
+				}
+			});
+			$('#signupForm').bind("ajax:success", function(e, data, status, xhr){				
+				if(data.success){
+					window.location = data.redirect;
+				}else{
+					$('#signupForm .error-message').show();	
+				}
+			});
+			$('#resendPassForm').bind("ajax:success", function(e, data, status, xhr){
+				if(data.success){
+					$('#resendPassFormField').hide();
+					$('#resendPassFormConfirm').show();		
+				}else{
+					$('#signupForm .error-message').show();	
+				}
+			});
+		});
+	</script>
+<% end %>
+<div class="content clearfix">
+	<div class="intro-content">	
+		<div class="intro-text">
+			<h1>Share, follow and discuss topics.</h1>	
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>	
+		</div><!-- Intro text -->
+		<div class="intro-signup">
+			<h2><span>Sign up</span> in seconds!</h2>	
+			<%= form_for "user", url: user_registration_path, remote: true, format: :json, html: { id: "signupForm" } do |f| %>
+				<div>
+					<label>Enter your e-mail</label>
+					<%= f.email_field :email %>	
+				</div>				
+				<div>
+					<label>Enter password</label>
+					<%= f.password_field :password, maxlength: 30 %>
+				</div>
+				
+				<div>
+					<span class="error-message" style="display:none;"><i class="icon error-i"></i>Fill all the fields and try again!</span>
+					<%= f.submit "Get Started", class: "signup-form-button" %>
+				</div>				
+			<% end %>
+		</div><!-- Signup -->	
+	</div> <!-- Intro cotnent -->
+</div> <!-- Content Ends -->
+
+<% content_for :hidden_content do %>
+	<!-- login form -->
+	<div style="display: none;">
+		<div id="loginPopup" class="pop-content">
+	        <div class="pop-content-header"><div class="pop-content-container">Welcome back!</div></div> 
+	        <!-- Pop header ends-->
+	        
+	        <div class="pop-content-form pop-content-container clearfix">
+	        	<%= form_for "user", url: new_user_session_path, remote: true, format: :json, html: { id: "loginForm" } do |f| %>
+			        <div>
+				        <label>Enter account e-mail</label>
+				        <%= f.email_field :email %>
+			        </div>   
+			        
+			        <div>
+				        <label>Enter account password <a href="#retrievePassPopup" class="popup-trigger">Forgot password?</a></label>
+				        <%= f.password_field :password %>
+			        </div>     
+			        
+			        <div class="remember-login">
+				        <%= f.check_box :remember_me %>
+				        <p>Remember me</p>
+			        </div>    
+			        
+			        <div class="content-divider"></div>
+			        
+			        <div>
+				        <%= f.submit "Login", class: "pop-content-form-button" %>
+				        <span class="error-message" style="display:none;"><i class="icon error-i"></i> Fill all the fields and try again!</span>
+			        </div>
+		        <% end %>
+	        </div><!-- Pop content ends -->
+		</div>
 	</div>
-	<div>
-		<%= f.label :email %>
-		<%= f.email_field :email %>		
-	</div>
-	<div>
-		<%= f.label :password %>
-		<%= f.password_field :password %>		
-	</div>
-	<div>
-		<%= f.label :password_confirmation %>
-		<%= f.password_field :password_confirmation %>
-	</div>
-	<div>
-		<%= f.submit 'Sign Up' %>	
+	<div style="display: none;">
+		<div id="retrievePassPopup" class="pop-content">
+	        <div class="pop-content-header"><div class="pop-content-container">Retrieve password</div></div> 
+	        <!-- Pop header ends-->
+	        <div class="pop-content-form pop-content-container clearfix">
+		        <%= form_tag '/resend_password', method: :post, remote: true, id: "resendPassForm" do %>
+			        <div id="resendPassFormField">					 						
+				        <div>
+					        <label>Enter account e-mail</label>
+					        <%= text_field_tag :email %>
+				        </div>
+				        <div class="content-divider"></div>
+				        <div>				        
+					        <%= submit_tag "Send", class: "pop-content-form-button" %>
+					        <span class="error-message" style="display:none;"><i class="icon error-i"></i> Invalid email address, try again!</span>
+				        </div>
+			        </div>
+			        <div id="resendPassFormConfirm" style="display:none;">
+			        	<div>
+			        		<p>The password has been send to your account, check your emails.</p>
+			        	</div>
+			        	<div class="content-divider"></div>
+			        	<div>
+						  <%= button_tag "Ok", type: "button", onclick: "$.fancybox.close(); return false;", class: "pop-content-form-button" %>
+						</div>
+			        </div>			        
+		        <% end %>  
+	        </div><!-- Pop content ends -->
+		</div>
 	</div>
 <% end %>

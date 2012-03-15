@@ -1,7 +1,12 @@
 class HomeController < ApplicationController
+  before_filter :authenticate_user!, except: [:index]
+  
   def index
   end
-
+  
+  def about
+  end
+  
   def dashboard
     @topics = current_user.topics
     if @topics
@@ -11,4 +16,5 @@ class HomeController < ApplicationController
       end
     end       
   end
+  
 end

@@ -23,7 +23,7 @@
 							
 							<div class="topic-preview-img-holder">
 								<% if topic.links.count > 0 %>
-									<%= image_tag topic.links.first.image_src, alt: "example-img.jpg", size: "200x110" %>
+									<%= image_tag topic.find_image_src, alt: "example-img.jpg", size: "200x110" %>
 								<% end %>
 							</div><!-- Topic preview img holder -->
 							
@@ -48,7 +48,17 @@
 					</div><!-- New Topic -->
 				<% end %>
 			</div><!-- One row ends -->
-		<% end %>	
+		<% end %>
+		<% if @topics.count % 4 == 0 %>
+			<div class="topics-list-row">
+				<!-- New Topic -->
+				<div class="topics-list-item">
+					<div class="content-new-topic">
+						<a href="#newTopicPopup" class="new-topic-btn popup-trigger"><i class="btn-icon new-topic-i"></i>New Topic</a>
+					</div>
+				</div><!-- New Topic -->		
+			</div>
+		<% end %>
 	</div>
 <% end %>
 

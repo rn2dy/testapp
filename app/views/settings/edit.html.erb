@@ -1,0 +1,37 @@
+<div class="content clearfix">
+	<div class="content-settings clearfix">
+		<div class="content-settings-header">
+			<b>Account Settings</b>
+		</div>	
+		<div class="content-divider"></div>	
+		<div>			
+			<%= form_for current_user, url: '/settings', method: :put do |f| %>
+		        <div>
+			        <label>Your alias name</label>
+					<%= f.text_field :name, placeholder: "Enter new name to change", maxlength: 15 %>
+		        </div>
+		        <div>
+			        <label>Your e-mail</label>
+			        <%= f.email_field :email, placeholder: "Enter new e-mail to change", disabled: true %>
+			        <%= f.email_field :email, style: "display:none" %>
+		        </div>
+		        <div>
+			        <label>Your new password</label>
+					<%= f.password_field :password, placeholder: "New password", maxlength: 30 %>					
+		        </div>
+		        <div>
+			        <label>Confirm your new password</label>
+					<%= f.password_field :password_confirmation, placeholder: "Confirm new password", maxlength: 30 %>
+		        </div>
+		        <div>			        
+			        <%= f.submit "Save", class: "settings-form-button" %>
+			        <span class="error-message"><i class="icon error-i"></i>Fill all the fields and try again!</span>
+		        </div>		        
+			<% end %>  
+		</div>	
+		<div class="content-divider"></div>	
+		<div>
+			<a href="#" class="content-btn"><i class="btn-icon delete-i"></i> Delete Account </a>
+		</div>	
+	</div><!-- Settings section ends -->
+</div> <!-- Content Ends -->

@@ -39,7 +39,7 @@
 		<%= yield(:head) %>
   	</head>
   
-  	<body id="loggedin">
+  	<body id="<%= controller.action_name == "index" ? "intro" : "loggedin" %>">
 		<!-- Header -->
 		<div id="header">
 			<div class="header-container clearfix">
@@ -68,7 +68,7 @@
 							<i class="btn-icon user-i"></i> <%= truncate(current_user.email, length: 23) %> <i class="btn-icon arrow down"></i>
 						</div>
 						<ul class="h-dropdown">
-	    					<li><%= link_to raw('<i class="settings-i"></i>Settings'), edit_user_registration_path %></li>
+	    					<li><%= link_to raw('<i class="settings-i"></i>Settings'), settings_edit_path %></li>
 	    					<li><%= link_to raw('<i class="logout-i"></i>Logout'), destroy_user_session_path, :method=>'delete' %></li>
 							<li class="last"><a href="#">About Klipt</a></li>
 						</ul>
@@ -76,10 +76,9 @@
 					
 					<span>Logged in as</span>
 				<% else %>
-					<span><a href="#">About Klipt</a></span>
-					<span><%= link_to raw('<i class="logout-i"></i>Login'), new_user_session_path %></span>
+					<%= link_to "Login", "#loginPopup", class: "login-btn popup-trigger" %>
+					<span>Already a member?</span>
 				<% end %>
-				
 			
 			</div>
 		</div><!-- Header ends -->
@@ -88,6 +87,7 @@
 		<%= content_for?(:content) ? yield(:content) : yield %>
 		
 		<!-- Popup window for creating new topic -->
+		<!-- Might be factored into specific view as needed, but since just a few pages, who cares. -->
 		<div style="display: none;">
 			<div id="newTopicPopup" class="pop-content">
 			    <div class="pop-content-header">

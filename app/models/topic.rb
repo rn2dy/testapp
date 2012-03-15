@@ -31,9 +31,21 @@ class Topic
       if candidate
         next if participants.include?(candidate)
         participants << candidate
+        Notifier.invited self, candidate 
       else
         unavailable_users << e
       end
+    end
+  end
+  
+  def find_image_src
+    res = links.select do |link|
+      link.image_src != 'example-img.jpg'
+    end
+    if res.empty?
+      "example-img.jpg"
+    else
+      res.first
     end
   end
 
