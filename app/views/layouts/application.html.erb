@@ -70,7 +70,7 @@
 						<ul class="h-dropdown">
 	    					<li><%= link_to raw('<i class="settings-i"></i>Settings'), settings_edit_path %></li>
 	    					<li><%= link_to raw('<i class="logout-i"></i>Logout'), destroy_user_session_path, :method=>'delete' %></li>
-							<li class="last"><a href="#">About Klipt</a></li>
+							<li class="last"><% link_to "About Klipt", home_about_path %></li>
 						</ul>
 					</div><!-- Account Dropdown -->
 					
