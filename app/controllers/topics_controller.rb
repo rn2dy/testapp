@@ -14,7 +14,7 @@ class TopicsController < ApplicationController
     @topic = current_user.topics.new params[:topic].merge(starter_name: current_user.name, starter_id: current_user.id)
     @topic.add_invitees(params[:invitees])
     respond_to do |format|
-      if @topic.save
+      if @topic.save        
         format.html { redirect_to @topic, notice: 'Topic was successfully created.' }
         format.json { render json: @topic, status: :created, location: @topic }
       else

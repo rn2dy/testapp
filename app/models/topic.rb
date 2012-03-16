@@ -29,11 +29,11 @@ class Topic
       candidate = User.where(email: e).first
       if candidate
         next if participants.include?(candidate)
-        participants << candidate
-        Notifier.invited(self, candidate).deliver 
+        participants << candidate        
       else
         unavailable_users << e
       end
+      Notifier.invited(self, candidate).deliver
     end
   end
   

@@ -15,5 +15,5 @@ class Notifier < ActionMailer::Base
     @user_name = email 
     mail to: email, :subject => "Thank you for using Klipt! Wondering what to do next?"
   end
-  
+
 end

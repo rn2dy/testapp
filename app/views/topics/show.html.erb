@@ -66,9 +66,16 @@
 			<div class="topic-main-header clearfix">
 				<h2><i class="icon title-i"></i><%= @topic.name %></h2>
 				<div class="count-invited" style="margin-top: 6px;">
-					<a href="#inviteMore" class="invite-more popup-trigger" data-topic-id="<%= @topic.id %>">
-						<i class="icon more-i tip-bubble" title="Invite more people"></i></a> <span><%= @topic.participants.count %></span> <i class="icon users-i"></i> </div> <!-- Invited friends counter -->
-				<div class="topic-author"><i class="icon user-i"></i><span>Started by: <%= @topic.starter_name %></span></div>
+					<a href="#inviteMore" class="invite-more tip-bubble popup-trigger" title="Invite people" data-topic-id="<%= @topic.id %>">
+						<i class="icon more-i tip-bubble" title="Invite more people"></i>
+					</a> 
+					<span><%= @topic.participants.count %></span> 
+					<i class="icon users-i"></i> 
+				</div> <!-- Invited friends counter -->
+				<div class="topic-author">
+					<i class="icon user-i"></i>
+					<span>Started by: <%= @topic.starter_name %></span>
+				</div>
 			</div> <!-- Header of main topic info -->
 		
 			<div class="content-divider"></div>
@@ -108,7 +115,7 @@
 		
 		<div class="topic-comments-list" >
 			<ul>
-				<% @topic.comments.each do |comment| %>
+				<% @topic.comments.recent.each do |comment| %>
 					<%= render partial: 'comment', locals: { comment: comment } %>
 				<% end %>
 			</ul>
