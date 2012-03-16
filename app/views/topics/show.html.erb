@@ -35,6 +35,20 @@
 					});
 				}
 			});
+			$('.invite-more-form').submit(function(){
+				if (check_emails('.invite-more-form') != true) {
+					$('.invite-more-form .error-message').show();	
+					return false;
+				}
+				$.fancybox.close();				
+			});
+			$('.topic-edit-form').submit(function(){
+				if (/^\s*$/.test($('.topic-edit-form input:text').val())){
+					$('.topic-edit-form .error-message').show();
+					return false;
+				}
+				$.fancybox.close();
+			});
 		});
 	</script>
 <% end %>
@@ -113,15 +127,15 @@
 	        </div> 
 	        <!-- Pop header ends-->
 	        <div class="pop-content-form pop-content-container clearfix">
-	        	<%= form_tag "#", method: :post, class: 'invite-more-form', remote: true do %>		        
+	        	<%= form_tag "#", method: :post, class: 'invite-more-form' do %>		        
 			        <div>
 				        <label>Invite more friends to join you</label>
 				        <%= text_area_tag 'invitees', nil, placeholder: "Enter their emails and separate the addresses by commas. (like 'me@klipt.com, you@klipt.com') "%>
 			        </div>
 			        <div class="content-divider"></div>
 			        <div>
- 				        <%= submit_tag "Invite", class: "pop-content-form-button", onclick: "$.fancybox.close();"%>
-				        <span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
+ 				        <%= submit_tag "Invite", class: "pop-content-form-button" %>
+				        <span class="error-message" style="display:none;"><i class="icon error-i"></i> Invalid email format, please check and try again!</span>
 			        </div>
 	       		 <% end %>	  
 	    	</div><!-- Pop content ends -->
@@ -136,15 +150,15 @@
 	        </div> 
 	        <!-- Pop header ends-->
 	        <div class="pop-content-form pop-content-container clearfix">
-		        <%= form_for @topic, method: :put, remote: true do |f| %>
+		        <%= form_for @topic, method: :put, remote: true, html: { class: "topic-edit-form" } do |f| %>
 			        <div>
 				        <label>Edit topic name</label>
 				        <%= f.text_field :name, placeholder: "For example 'Places to visit on vacation' ",maxlength: 35  %>
 			        </div>
 			        <div class="content-divider"></div>
 			        <div>
-				        <input type="submit" class="pop-content-form-button" value="Finish" onclick="$.fancybox.close();"/>
-				        <span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
+				        <input type="submit" class="pop-content-form-button" value="Finish" />
+				        <span class="error-message" style='display:none;'><i class="icon error-i"></i> Fill the name and try again!</span>
 			        </div>
 	        	<% end %> 
 	        </div><!-- Pop content ends -->
@@ -167,7 +181,7 @@
 			        <div class="content-divider"></div>			        
 			        <div>
 			        	<%= submit_tag "submit", onclick: "$.fancybox.close();", class: "pop-content-form-button" %>
-			       		<span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
+			       		<span class="error-message" style="display:none;"><i class="icon error-i"></i> Fill all the fields and try again!</span>
 			        </div>			        
 		        <% end %>
 	        </div><!-- Pop content ends -->       

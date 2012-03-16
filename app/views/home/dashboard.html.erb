@@ -20,13 +20,13 @@
 								<h3><a href="/topics/<%= topic.id %>"><%= topic.name %></a></h3> <!-- Topic title -->
 								<div class="count-clips"><span><%= topic.links.count %> </span><i class="icon clip-i"></i></div> <!-- Clips counter -->
 							</div>
-							
-							<div class="topic-preview-img-holder">
-								<% if topic.links.count > 0 %>
-									<%= image_tag topic.find_image_src, alt: "example-img.jpg", size: "200x110" %>
-								<% end %>
-							</div><!-- Topic preview img holder -->
-							
+							<a href="/topics/<%= topic.id %>" >
+								<div class="topic-preview-img-holder">
+									<% if topic.links.count > 0 %>
+										<%= image_tag topic.find_image_src, alt: "example-img.jpg", size: "200x110" %>
+									<% end %>
+								</div><!-- Topic preview img holder -->
+							</a>
 							<div>
 								<div class="count-comments"><i class="icon comment-i"></i><span><%= topic.comments.count %></span></div> <!-- Comments counter -->
 								<div class="count-invited">
@@ -82,10 +82,21 @@
 			        <div class="content-divider"></div>
 			        <div>				  
 				        <%= submit_tag "Invite", class: "pop-content-form-button" %>
-				        <span class="error-message" style="display:none;"><i class="icon error-i"></i> Fill all the fields and try again!</span>
+				        <span class="error-message" style="display:none;"><i class="icon error-i"></i> Invalid email format, please check and try again!</span>
 			        </div>
 			     <% end %>	       		         
 	    	</div><!-- Pop content ends -->
 		</div>
 	</div><!-- End popup window for inviting more people -->
+<% end %>
+<% content_for :head do %>
+	<script type="text/javascript">
+		$('.invite-more-form').submit(function(){			
+			if (check_emails('.invite-more-form') != true) {
+				$('.invite-more-form .error-message').show();	
+				return false;
+			}
+			$.fancybox.close();				
+		});
+	</script>
 <% end %>

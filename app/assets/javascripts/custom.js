@@ -31,7 +31,16 @@ function clean_up(ary, idx) {
 		$('.invite-more-form div:first-child').remove();
 	}
 }
-
+function check_emails(form){
+	var emails = $(form + ' textarea').val().split(',');	
+	var emailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	for(var i = 0; i <  emails.length; i++ ){
+		if ( !emailRegex.test($.trim(emails[i])) && !/^\s*$/.test(emails[i]) ){ 
+			return false;
+		}
+	}
+	return true;
+}
 function loading(me){
 	var p = $(me).parent();
 	p.hide();

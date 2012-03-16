@@ -26,8 +26,11 @@ class TopicsController < ApplicationController
 
   def update 
     respond_to do |format|
-      if @topic.update_attributes(name: params[:topic][:name])
+      if @topic.update_attributes!(name: params[:topic][:name])
         format.html { redirect_to @topic, notice: 'Topic name succesfully updated!' }
+        format.js
+      else
+        format.html { redirect_to @topic, notice: 'Topic name is not updated!' }
         format.js
       end
     end
@@ -42,7 +45,7 @@ class TopicsController < ApplicationController
   end
 
   def add_invitees
-    @topic.add_invitees(params[:invitees])
+    @topic.add_invitees params[:invitees]
 
     respond_to do |format|
       if @topic.save
@@ -72,6 +75,9 @@ class TopicsController < ApplicationController
     respond_to do |format|
       if @new_link.save
         format.html { redirect_to @topic, notice: 'Links added!' }
+        format.js
+      else
+        format.html { redirect_to @topic, notice: 'Link not added!' }
         format.js
       end
     end

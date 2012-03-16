@@ -17,10 +17,12 @@ class Link
   belongs_to :topic
   belongs_to :user
   
-  validates :url, presence: true, format: { with: /.*/ }
-  validate :check_url # custom validation
+  
+  validates :url, presence: true, format: { with: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \?=.-]*)*\/?$/i }
+  validate :check_url
 
-  before_create :extract_title, :extract_image_src
+  before_validation :format_url
+  before_create :format_url, :extract_title, :extract_image_src
 
   private
     def check_url 
@@ -28,34 +30,53 @@ class Link
         errors.add(:url, "Inaccessible URL")
       end
     end
+    
+    def format_url
+      if url !~ /https?/i
+        self.url = 'http://' + url              
+      end         
+    end
 
     def extract_title
       open(self.url) do |f|
-        f.each_line { |line|
+        f.each_line do |line|
           if line =~ /<title>(.*)<\/title>/i 
             self.title = $1.empty? ? make_title : $1
             break;
           end
-        }
+        end
       end
     end
 
     def extract_image_src
       open(self.url) do |f|
         begin
-          srcs = f.grep(/<img(.*?)>/)
+          srcs = f.grep(/<img(.*?)>/u)
         
           if srcs.empty?
-            self.image_src = 'rails.png'
-          else
-            src = srcs.first.match(/src="(.*?)"/)[1]
-            if src =~ /http:\/\/.*/
-              self.image_src = src 
-            else
-              self.image_src = self.url + (src[0] == '/' ? src : '/' + src)
+            self.image_src = default_image_src
+          else            
+            links = srcs.map do |src|
+              res = src.match(/src="(.*?)"/u)
+              if res
+                if res[1] !~ /https?:\/\/.*/i
+                  self.url + (src[0] == '/' ? src : '/' + src)
+                else
+                  res[1]
+                end 
+              end
+            end.compact
+            
+            links.take(10).each do |l|                                                        
+              size = FastImage.size(l)                                         
+              if size[0] > 100 && size[1] > 50
+                self.image_src = l
+                break;
+              end
             end
-          end
-        rescue
+          end           
+        rescue => e
+          logger.info e.inspect          
           self.image_src = default_image_src
         end
       end

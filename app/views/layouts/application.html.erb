@@ -21,14 +21,23 @@
 	            'onStart'		  : populate_id,
 	            'onClosed'		  : clean_up
 	    	};
+	    	
 	        $(document).ready(function() {
-	          $(".popup-trigger").fancybox(properties);
-	          
+	          	$(".popup-trigger").fancybox(properties);	          
+	          	$('.new-topic-form').submit(function(){	          		
+		      		if (check_emails('.new-topic-form') != true || /^\s*$/.test($('.new-topic-form input:text').val()) ){
+		      			$('.new-topic-form .error-message').show();	
+						return false;
+		      		}
+		      		$.fancybox.close();
+          		});
 	        });
+	        
           	$(document).ajaxStop(function(){
           		// make sure fancybox is alive
           		$('.popup-trigger').fancybox(properties);
           	});
+          	
 	    </script>
 	    
 	    <!-- Stylesheets -->
@@ -70,7 +79,7 @@
 						<ul class="h-dropdown">
 	    					<li><%= link_to raw('<i class="settings-i"></i>Settings'), settings_edit_path %></li>
 	    					<li><%= link_to raw('<i class="logout-i"></i>Logout'), destroy_user_session_path, :method=>'delete' %></li>
-							<li class="last"><% link_to "About Klipt", home_about_path %></li>
+							<li class="last"><%= link_to "About Klipt", home_about_path %></li>
 						</ul>
 					</div><!-- Account Dropdown -->
 					
@@ -94,8 +103,8 @@
 			    	<div class="pop-content-container">Creating topic is super-easy</div>
 			    </div><!-- Pop header ends-->
 			    
-			    <div class="pop-content-form pop-content-container clearfix">
-				    <%= form_tag '/topics', method: :post do %>
+			    <div class="pop-content-form pop-content-container clearfix">			    	
+				    <%= form_tag '/topics', method: :post, class: "new-topic-form" do %>
 					    <div>
 					    	<label>Enter topic name</label>
 					    	<%= text_field :topic, :name, value: '', placeholder: "For example 'Places to visit on vacation", maxlength: 35 %>
@@ -106,13 +115,12 @@
 					    </div>
 					    <div class="content-divider"></div>
 					    <div>
-					    	<%= submit_tag 'Create', class: 'pop-content-form-button', onclick: "$.fancybox.close();"%>
-					    	<span class="error-message"><i class="icon error-i"></i> Fill all the fields and try again!</span>
+					    	<%= submit_tag 'Create', class: 'pop-content-form-button' %>
+					    	<span class="error-message" style="display:none;"><i class="icon error-i"></i> Invalid input, please try again!</span>
 					    </div>
 				    <% end %>        
 			    </div><!-- Pop content ends -->
 			</div>
-		</div>
-	
+		</div>	
 	</body>
 </html>

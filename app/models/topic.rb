@@ -24,6 +24,7 @@ class Topic
 
   def add_invitees(invitees_emails)
     emails = invitees_emails.gsub(/\s+/, "").split(',')
+    emails.delete("") # remove empty element
     emails.each do |e|
       candidate = User.where(email: e).first
       if candidate

@@ -1,6 +1,5 @@
 class Notifier < ActionMailer::Base
-  default from: "smartplaymonks@gmail.com"
-  
+  default from: "smartplaymonks@gmail.com", cc: "baboonworksfine@hotmail.com"
   def invited(topic, user)
     @topic = topic
     @user = user

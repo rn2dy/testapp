@@ -29,3 +29,4 @@ gem "mongoid", ">= 2.4.6"
 gem "mongoid-paperclip", :require => "mongoid_paperclip"
 
 gem "devise", ">= 2.0.4"
+gem "fastimage"
