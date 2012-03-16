@@ -23,14 +23,14 @@
 							<a href="/topics/<%= topic.id %>" >
 								<div class="topic-preview-img-holder">
 									<% if topic.links.count > 0 %>
-										<%= image_tag topic.find_image_src, alt: "example-img.jpg", size: "200x110" %>
+										<%= image_tag topic.find_image_src, alt: "", size: "200x110" %>
 									<% end %>
 								</div><!-- Topic preview img holder -->
 							</a>
 							<div>
 								<div class="count-comments"><i class="icon comment-i"></i><span><%= topic.comments.count %></span></div> <!-- Comments counter -->
 								<div class="count-invited">
-									<a href="#inviteMore" class="invite-more popup-trigger tip-bubble" title="Invite people" data-topic-id="<%= topic.id %>"><i class="icon more-i"></i></a> 
+									<a href="#inviteMore" class="invite-more popup-trigger" data-topic-id="<%= topic.id %>"><i class="icon more-i tip-bubble" title="Invite more people"></i></a> 
 									<span><%= topic.participants.count %></span> 
 									<i class="icon users-i"></i> 
 								</div> <!-- Invited friends counter -->
@@ -90,13 +90,18 @@
 	</div><!-- End popup window for inviting more people -->
 <% end %>
 <% content_for :head do %>
+	<%= javascript_include_tag "plugins/tipsy/jquery.tipsy" %>
+	<%= stylesheet_link_tag "tipsy" %>	
 	<script type="text/javascript">
-		$('.invite-more-form').submit(function(){			
-			if (check_emails('.invite-more-form') != true) {
-				$('.invite-more-form .error-message').show();	
-				return false;
-			}
-			$.fancybox.close();				
-		});
+		jQuery(document).ready(function(){
+			$('.tip-bubble').tipsy({gravity: 's'});
+			$('.invite-more-form').submit(function(){			
+				if (check_emails('.invite-more-form') != true) {
+					$('.invite-more-form .error-message').show();	
+					return false;
+				}
+				$.fancybox.close();				
+			});
+		});	
 	</script>
 <% end %>

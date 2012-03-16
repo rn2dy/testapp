@@ -49,3 +49,8 @@ function loading(me){
 function capitalize(word){
 	return word[0].toUpperCase() + word.slice(1);
 }
+function autoUpdate(id){
+	setInterval(function(){
+		$.post('/topics/' + id + '/refresh.js');		
+	}, 30000);
+}

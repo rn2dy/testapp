@@ -12,7 +12,7 @@ class TopicsController < ApplicationController
 
   def create
     @topic = current_user.topics.new params[:topic].merge(starter_name: current_user.name, starter_id: current_user.id)
-    @topic.add_invitees(params[:invitees])
+    @topic.add_invitees(current_user, params[:invitees]) if params[:invitees].present?
     respond_to do |format|
       if @topic.save        
         format.html { redirect_to @topic, notice: 'Topic was successfully created.' }
@@ -45,7 +45,7 @@ class TopicsController < ApplicationController
   end
 
   def add_invitees
-    @topic.add_invitees params[:invitees]
+    @topic.add_invitees current_user, params[:invitees]
 
     respond_to do |format|
       if @topic.save
@@ -80,6 +80,14 @@ class TopicsController < ApplicationController
         format.html { redirect_to @topic, notice: 'Link not added!' }
         format.js
       end
+    end
+  end
+  
+  def refresh
+    @links = @topic.links.recent
+    @comments = @topic.comments.recent
+    respond_to do |format|
+      format.js      
     end
   end
   

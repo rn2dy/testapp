@@ -1,0 +1,6 @@
+<% if @links %>
+	$('.topic-links-list ul').html($("<%= escape_javascript( render @links )%>"));	
+<% end %>
+<% if @comments %>
+	$('.topic-comments-list ul').html($("<%= escape_javascript(render partial: 'comment', collection: @comments) %>"));	
+<% end %>

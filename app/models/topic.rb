@@ -22,18 +22,20 @@ class Topic
     comments.create!(content: content, user_name: commentor.name, user_id: commentor.id)
   end
 
-  def add_invitees(invitees_emails)
+  def add_invitees(current_user, invitees_emails)
     emails = invitees_emails.gsub(/\s+/, "").split(',')
     emails.delete("") # remove empty element
     emails.each do |e|
       candidate = User.where(email: e).first
       if candidate
+        Notifier.invited(current_user, candidate, self).deliver
         next if participants.include?(candidate)
         participants << candidate        
       else
+        Notifier.unknown_user_invited(current_user, e, self).deliver
         unavailable_users << e
       end
-      Notifier.invited(self, candidate).deliver
+      
     end
   end
   

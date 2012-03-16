@@ -49,6 +49,7 @@
 				}
 				$.fancybox.close();
 			});
+			autoUpdate("<%= @topic.id %>");			
 		});
 	</script>
 <% end %>
@@ -62,11 +63,10 @@
 		</div><!-- Topic actions -->
 		
 		<div class="topic-main-holder clearfix">
-		
 			<div class="topic-main-header clearfix">
 				<h2><i class="icon title-i"></i><%= @topic.name %></h2>
 				<div class="count-invited" style="margin-top: 6px;">
-					<a href="#inviteMore" class="invite-more tip-bubble popup-trigger" title="Invite people" data-topic-id="<%= @topic.id %>">
+					<a href="#inviteMore" class="invite-more popup-trigger" data-topic-id="<%= @topic.id %>">
 						<i class="icon more-i tip-bubble" title="Invite more people"></i>
 					</a> 
 					<span><%= @topic.participants.count %></span> 

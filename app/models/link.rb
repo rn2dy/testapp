@@ -9,7 +9,7 @@ class Link
   field :title, type: String
   field :notes, type: String
   field :clicks, type: Integer, default: 0
-  field :image_src, type: String, default: "example-img.jpg"
+  field :image_src, type: String, default: "p-img-bg.jpg"
   field :creator_name, type: String
 
   scope :recent, order_by(created_at: :desc)
@@ -96,6 +96,6 @@ class Link
     end
     
     def default_image_src
-      "example-img.jpg"
+      "p-img-bg.jpg"
     end
 end

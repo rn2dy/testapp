@@ -21,6 +21,7 @@ Testapp::Application.routes.draw do
       post 'add_invitees'
       post 'add_comments'
       post 'add_links'
+      post 'refresh'
     end
   end
 

@@ -1,9 +1,18 @@
 class Notifier < ActionMailer::Base
   default from: "smartplaymonks@gmail.com", cc: "baboonworksfine@hotmail.com"
-  def invited(topic, user)
+  
+  def invited(invitor, invitee, topic)
+    @invitor_name = invitor.name
+    @invitee_name = invitee.name
     @topic = topic
-    @user = user
-    mail to: user.email, :subject => "Klipt message - You are invited to the topic: #{ @topic.name.upcase }!"
+    mail to: invitee.email, :subject => "Klipt message - You are invited to the topic: #{ topic.name.upcase }!"
+  end
+  
+  def unknown_user_invited(invitor, invitee_email, topic)
+    @invitor_name = invitor.name
+    @invitee_email = invitee_email
+    @topic = topic
+    mail to: invitee_email, :subject => "Klipt message - You are invited to the topic: #{ topic.name.upcase }!"
   end
 
   def resend_password(email, user)
