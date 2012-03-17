@@ -51,7 +51,9 @@ class Link
     def extract_image_src
       open(self.url, 'User-Agent' => 'ruby') do |f|
         begin
-          srcs = f.grep(/<img(.*?)>/u)
+          srcs = f.each_line.select do |s|
+            s.force_encoding('UTF-8') =~ /<img(.*?)>/u
+          end
         
           if srcs.empty?
             self.image_src = default_image_src
@@ -66,7 +68,6 @@ class Link
                 end 
               end
             end.compact
-            logger.info ">>>>> #{links.inspect}"
             links.take(10).each do |l|                                                        
               size = FastImage.size(l)                                         
               if size[0] > 100 && size[1] > 50
@@ -91,7 +92,6 @@ class Link
         open(self.url, 'User-Agent' => 'ruby') {}
       rescue => e
         logger.info e.inspect
-        puts e.inspect
         return true
       end
       false

@@ -40,12 +40,12 @@ class Topic
   
   def find_image_src
     res = links.select do |link|
-      link.image_src != 'example-img.jpg'
+      link.image_src != 'p-img-bg.jpg'
     end
     if res.empty?
-      "example-img.jpg"
+      return false
     else
-      res.first.image_src
+      return res.first.image_src
     end
   end
 

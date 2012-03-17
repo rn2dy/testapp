@@ -21,9 +21,10 @@
 								<div class="count-clips"><span><%= topic.links.count %> </span><i class="icon clip-i"></i></div> <!-- Clips counter -->
 							</div>
 							<a href="/topics/<%= topic.id %>" >
-								<div class="topic-preview-img-holder">
+                <div class="topic-preview-img-holder">
 									<% if topic.links.count > 0 %>
-										<%= image_tag topic.find_image_src, alt: "", size: "200x110" %>
+                    <% img = topic.find_image_src %>
+										<%= image_tag(img, alt: "", size: "200x110") if img %>
 									<% end %>
 								</div><!-- Topic preview img holder -->
 							</a>
