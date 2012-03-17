@@ -40,7 +40,7 @@ class Link
     def extract_title
       open(self.url, 'User-Agent' => 'ruby') do |f|
         f.each_line do |line|
-          if line =~ /<title>(.*)<\/title>/i 
+          if line.force_encoding('UTF-8') =~ /<title>(.*)<\/title>/u 
             self.title = $1.empty? ? make_title : $1
             break;
           end
@@ -59,18 +59,22 @@ class Link
             self.image_src = default_image_src
           else            
             links = srcs.map do |src|
-              res = src.match(/src="(.*?)"/u)
-              if res
-                if res[1] !~ /https?:\/\/.*/i
-                  self.url + (src[0] == '/' ? src : '/' + src)
+              res = src.match /src="(.*?)"/u
+              img_url = res[1]
+              if img_url 
+                if img_url !~ /https?:\/\//u
+                  'http://' + extract_domain + (img_url[0] == '/' ? img_url : '/' + img_url)
                 else
-                  res[1]
+                  img_url
                 end 
+              else
+                nil
               end
             end.compact
+
             links.take(10).each do |l|                                                        
-              size = FastImage.size(l)                                         
-              if size[0] > 100 && size[1] > 50
+              size = FastImage.size l                                         
+              if size && size[0] > 100 && size[1] > 50
                 self.image_src = l
                 break;
               end
@@ -79,12 +83,14 @@ class Link
         rescue => e
           logger.info e.inspect          
           self.image_src = default_image_src
+        ensure
+          self.image_src ||= default_image_src  
         end
       end
     end
 
     def make_title
-      url[/http:\/\/(.*)\.com/, 1] || "Unknown"
+      extract_domain || "Unknown"
     end
 
     def is_broken?(uri)
@@ -97,6 +103,10 @@ class Link
       false
     end
     
+    def extract_domain
+      URI.parse(self.url).host
+    end
+
     def default_image_src
       "p-img-bg.jpg"
     end
