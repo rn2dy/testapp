@@ -30,12 +30,11 @@ class Topic
       if candidate
         Notifier.invited(current_user, candidate, self).deliver
         next if participants.include?(candidate)
-        participants << candidate        
+        participants << candidate
       else
         Notifier.unknown_user_invited(current_user, e, self).deliver
         unavailable_users << e
       end
-      
     end
   end
   

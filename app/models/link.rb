@@ -66,7 +66,7 @@ class Link
                 end 
               end
             end.compact
-            
+            logger.info ">>>>> #{links.inspect}"
             links.take(10).each do |l|                                                        
               size = FastImage.size(l)                                         
               if size[0] > 100 && size[1] > 50
@@ -89,7 +89,9 @@ class Link
     def is_broken?(uri)
       begin
         open(self.url) {}
-      rescue
+      rescue => e
+        logger.info e.inspect
+        puts e.inspect
         return true
       end
       false
