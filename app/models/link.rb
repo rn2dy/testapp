@@ -38,7 +38,7 @@ class Link
     end
 
     def extract_title
-      open(self.url) do |f|
+      open(self.url, 'User-Agent' => 'ruby') do |f|
         f.each_line do |line|
           if line =~ /<title>(.*)<\/title>/i 
             self.title = $1.empty? ? make_title : $1
@@ -49,7 +49,7 @@ class Link
     end
 
     def extract_image_src
-      open(self.url) do |f|
+      open(self.url, 'User-Agent' => 'ruby') do |f|
         begin
           srcs = f.grep(/<img(.*?)>/u)
         
@@ -88,7 +88,7 @@ class Link
 
     def is_broken?(uri)
       begin
-        open(self.url) {}
+        open(self.url, 'User-Agent' => 'ruby') {}
       rescue => e
         logger.info e.inspect
         puts e.inspect
