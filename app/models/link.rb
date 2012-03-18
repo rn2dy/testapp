@@ -60,16 +60,16 @@ class Link
           else            
             links = srcs.map do |src|
               res = src.match /src="(.*?)"/u
-              img_url = res[1]
-              if img_url 
+              if res
+                img_url = res[1]
                 if img_url !~ /https?:\/\//u
                   'http://' + extract_domain + (img_url[0] == '/' ? img_url : '/' + img_url)
                 else
                   img_url
-                end 
+                end
               else
                 nil
-              end
+              end              
             end.compact
 
             links.take(10).each do |l|                                                        
@@ -81,7 +81,8 @@ class Link
             end
           end           
         rescue => e
-          logger.info e.inspect          
+          logger.info e.inspect
+          logger.info e.backtrace
           self.image_src = default_image_src
         ensure
           self.image_src ||= default_image_src  
