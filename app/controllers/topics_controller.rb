@@ -4,10 +4,6 @@ class TopicsController < ApplicationController
 
   def show
     @email_list = { @topic.id => @topic.participants.map { |p| p.email } }
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @topic }
-    end
   end
 
   def create
@@ -16,10 +12,8 @@ class TopicsController < ApplicationController
     respond_to do |format|
       if @topic.save        
         format.html { redirect_to @topic, notice: 'Topic was successfully created.' }
-        format.json { render json: @topic, status: :created, location: @topic }
       else
-        format.html { render action: "new" }
-        format.json { render json: @topic.errors, status: :unprocessable_entity }
+        format.html { redirect_to home_dashboard_url }
       end
     end
   end
@@ -27,10 +21,6 @@ class TopicsController < ApplicationController
   def update 
     respond_to do |format|
       if @topic.update_attributes!(name: params[:topic][:name])
-        format.html { redirect_to @topic, notice: 'Topic name succesfully updated!' }
-        format.js
-      else
-        format.html { redirect_to @topic, notice: 'Topic name is not updated!' }
         format.js
       end
     end
@@ -62,7 +52,6 @@ class TopicsController < ApplicationController
   def add_comments
     @comment = @topic.add_comments(current_user, params[:content])
     respond_to do |format|
-      format.html { redirect_to @topic, notice: 'New comment added!' }
       format.js
     end
   end
@@ -74,10 +63,6 @@ class TopicsController < ApplicationController
     
     respond_to do |format|
       if @new_link.save
-        format.html { redirect_to @topic, notice: 'Links added!' }
-        format.js
-      else
-        format.html { redirect_to @topic, notice: 'Link not added!' }
         format.js
       end
     end

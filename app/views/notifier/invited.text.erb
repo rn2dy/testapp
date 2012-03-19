@@ -1,8 +1,6 @@
-Dear <%= @invitee_name %>,
+Dear <%= @invitee_name.titleize %>,
 
-Awesome! You are now invited by your Klipt friend <%= @invitor_name %> to the topic <%= @topic.name %>.
-
-Check out the new topic in your topic-list at <%= home_dashboard_url %> now.
+<%= @invitor_name.titleize %> has invited you to join the topic <%= @topic.name %> (<%= topic_path(@topic) %>).
 
 Have fun!
 
