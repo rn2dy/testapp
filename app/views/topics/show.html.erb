@@ -49,7 +49,7 @@
 				}
 				$.fancybox.close();
 			});
-			autoUpdate("<%= @topic.id %>");			
+      		autoUpdate("<%= @topic.id %>");			
 		});
 	</script>
 <% end %>
@@ -92,7 +92,7 @@
 			
 			
 			<div class="content-divider"></div>
-		
+			<div id="linkCreatedAt" style="display: none;"><%= @topic.latest_link_date %></div>
 			<div class="topic-links-list">
 				<ul>
 					<%= render @topic.links.recent %>
@@ -112,7 +112,7 @@
 			<%= image_tag "loading.gif", alt: "loading..." %>
 		</div>
 		<div class="content-divider"></div>
-		
+		<div id="comtCreatedAt" style="display: none;"><%= @topic.latest_comt_date %></div>
 		<div class="topic-comments-list" >
 			<ul>
 				<% @topic.comments.recent.each do |comment| %>
@@ -125,6 +125,7 @@
 <% end %>
 
 <% content_for :hidden_content do %>
+  <div id="notification" class="notification" style="display:none;"></div>  
 	<%= content_tag "div", class: "invited-list", data: { participants: @email_list } do %><% end %>
 	<!-- Popup window for inviting more people -->
 	<div style="display: none;">
@@ -194,7 +195,6 @@
 	        </div><!-- Pop content ends -->       
 		</div>
 	</div>
-
 <% end %>
 
 

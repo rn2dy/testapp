@@ -18,8 +18,11 @@ class Topic
   
   ## API 
   def add_comments(commentor, content)
-    raise unless participants.include? commentor 
-    comments.create!(content: content, user_name: commentor.name, user_id: commentor.id)
+    raise unless participants.include? commentor
+    if res = comments.create!(content: content, user_name: commentor.name, user_id: commentor.id)      
+      Notifier.new_comment(participants.excludes(id: commentor.id), commentor.name, self).deliver
+    end
+    res
   end
 
   def add_invitees(current_user, invitees_emails)
@@ -46,6 +49,22 @@ class Topic
       return false
     else
       return res.first.image_src
+    end
+  end
+
+  def latest_link_date
+    if links.empty?
+      Time.now
+    else
+      links.desc(:created_at).first.created_at
+    end
+  end
+
+  def latest_comt_date
+    if comments.empty?
+      Time.now
+    else
+      comments.desc(:created_at).first.created_at 
     end
   end
 

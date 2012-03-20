@@ -1,3 +1,4 @@
+require 'date'
 class TopicsController < ApplicationController
   layout 'fluid', only: [:show]
   before_filter :find_topic, except: [:create]
@@ -60,15 +61,21 @@ class TopicsController < ApplicationController
   def add_links
     @new_link = @topic.links.build url: params[:url], creator_name: current_user.name
     @new_link.user = current_user
-    
     respond_to do |format|
       if @new_link.save
+        Notifier.new_link(@topic.participants.excludes(id: current_user.id), current_user.name, @topic).deliver
         format.js
       end
     end
   end
-  
+
+  # refresh view in every 30 sec  
   def refresh
+    @new_links = @topic.links.check_new(current_user.id, 
+      DateTime.strptime(params[:lld], '%Y-%m-%d %H:%M:%S %z'))
+    @new_comments = @topic.comments.check_new(current_user.id,
+      DateTime.strptime(params[:lcd], '%Y-%m-%d %H:%M:%S %z'))
+
     @links = @topic.links.recent
     @comments = @topic.comments.recent
     respond_to do |format|

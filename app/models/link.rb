@@ -3,7 +3,6 @@ require 'open-uri'
 class Link
   include Mongoid::Document
   include Mongoid::Timestamps
-  #include Mongoid::Paperclip
 
   field :url, type: String
   field :title, type: String
@@ -13,6 +12,7 @@ class Link
   field :creator_name, type: String
 
   scope :recent, order_by(created_at: :desc)
+  scope :check_new, ->(user_id, since) { excludes(user_id: user_id).where(:created_at.gt => since) } 
 
   belongs_to :topic
   belongs_to :user
@@ -73,7 +73,7 @@ class Link
             end.compact
 
             links.take(10).each do |l|                                                        
-              size = FastImage.size l                                         
+              size = FastImage.size l
               if size && size[0] > 100 && size[1] > 50
                 self.image_src = l
                 break;
@@ -85,6 +85,7 @@ class Link
           logger.info e.backtrace
           self.image_src = default_image_src
         ensure
+          logger.info ">>> ensure!!!"
           self.image_src ||= default_image_src  
         end
       end

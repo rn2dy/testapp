@@ -31,6 +31,7 @@ function clean_up(ary, idx) {
 		$('.invite-more-form div:first-child').remove();
 	}
 }
+
 function check_emails(form){
 	var emails = $(form + ' textarea').val().split(',');	
 	var emailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -41,16 +42,21 @@ function check_emails(form){
 	}
 	return true;
 }
+
 function loading(me){
 	var p = $(me).parent();
 	p.hide();
 	p.next().show();
 }
+
 function capitalize(word){
 	return word[0].toUpperCase() + word.slice(1);
 }
+
 function autoUpdate(id){
-	setInterval(function(){
-		$.post('/topics/' + id + '/refresh.js');		
+	setInterval(function(){		
+		var latestLinkDate = $('#linkCreatedAt').text();
+		var latestComtDate = $('#comtCreatedAt').text();
+		$.post('/topics/' + id + '/refresh.js', {lld: latestLinkDate, lcd: latestComtDate });		
 	}, 30000);
 }

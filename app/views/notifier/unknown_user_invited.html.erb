@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <p>Dear <%= @invitee_email %>,</p>   
+    <br />
+    <p>Your are invited by your Klipt friend <%= @invitor_name  %> to the topic <%= @topic.name  %></p>
+    <br/>
+    <p>Signup and at <%= link_to "Sign up", root_url %> and check out the new topic in your topic-list at <%= link_to "Your Dashboard", home_dashboard_url %>.</p>
+    <br />
+    <p>Have fun!</p>
+    <br />
+    <p>-Klipt Team-</p>
+  </body>
+</html>

@@ -22,7 +22,24 @@ class Notifier < ActionMailer::Base
   
   def registered(email)
     @user_name = email 
-    mail to: email, :subject => "Thank you for using Klipt! Wondering what to do next?"
+    mail to: email, :subject => "Klipt message - Thank you for using Klipt! Wondering what to do next?"
   end
 
+  def new_link recievers, creator_name, topic
+    @topic = topic
+    @creator_name = creator_name
+    recievers.each do |reciever|
+      @reciever_name = reciever.name
+      mail to: reciever.email, :subject => "Klipt message - There a new link for topic #{topic.name}"
+    end
+  end
+  
+  def new_comment recievers, commentor_name, topic
+    @topic = topic
+    @commentor_name = commentor_name
+    recievers.each do |reciever|
+      @reciever_name = reciever.name
+      mail to: reciever.email, :subject => "Klipt message - There a new comment for topic #{topic.name}"
+    end
+  end
 end

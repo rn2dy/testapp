@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <p>Dear <%= @invitee_name %>,</p>   
+    <br />
+    <p><%= @invitor_name %> has invited you to join the topic <%= link_to @topic.name, topic_path(@topic) %></p>
+    <br/>
+    <p>Have fun!</p>
+    <br />
+    <p>-Klipt Team-</p>
+  </body>
+</html>

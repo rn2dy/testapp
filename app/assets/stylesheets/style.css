@@ -1771,3 +1771,32 @@ i.delete-i {
 	background-position: -272px 0;
 	
 }
+
+.notification {
+	position: absolute;
+	z-index: 101;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #fde073;
+	text-align: center;
+	font-size: 16px;
+	line-height: 1.8;
+	text-shadow: 0 1px white;
+	overflow: hidden;
+	-webkit-box-shadow: 0 0 5px black;
+	-moz-box-shadow: 0 0 5px black;
+	box-shadow: 0 0 5px black;
+}
+/* not applicable for now */
+a#close {
+	position: absolute;
+	right: 10px;
+	top: 9px;
+	text-indent: -9999px;
+	/*background: url(images/close.png);*/
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+}
+
