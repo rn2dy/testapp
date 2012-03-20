@@ -6,11 +6,11 @@
   <body>
     <p>Dear <%= @invitee_email %>,</p>   
     <br />
-    <p>Your are invited by your Klipt friend <%= @invitor_name  %> to the topic <%= @topic.name  %></p>
+    <p><%= @invitor_name  %> has invited you to the Klipt topic <%= @topic.name  %></p>
     <br/>
-    <p>Signup and at <%= link_to "Sign up", root_url %> and check out the new topic in your topic-list at <%= link_to "Your Dashboard", home_dashboard_url %>.</p>
+    <p>Sign up at <%= link_to "Sign up", root_url %> to contribute your ideas and findings.</p>
     <br />
-    <p>Have fun!</p>
+    <p>Happy Klipping!</p>
     <br />
     <p>-Klipt Team-</p>
   </body>
