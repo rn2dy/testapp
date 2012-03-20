@@ -104,7 +104,7 @@ class Link
       rescue => e
         logger.info ">>>>> #{e.inspect}"
         self.image_src = default_image_src
-        self.title = extract_domain
+        self.title = self.url
         self.skip = true
       end
     end

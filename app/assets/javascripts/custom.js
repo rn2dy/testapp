@@ -11,7 +11,8 @@ function populate_id(ary, idx){
 	
 	if (actor == '#linkNotePopup'){
 		var link_id = $(ary[idx]).data('link-id');
-		$('.add-notes-form').attr('action', '/links/' + link_id + '/add_notes');		
+		$('.add-notes-form').attr('action', '/links/' + link_id + '/add_notes');
+		$('.add-notes-form').data('link-id', link_id);		
 		$('.add-notes-form textarea').val($('a[data-link-id='+ link_id +']').next().text());
 	}
 }

@@ -49,6 +49,16 @@
 				}
 				$.fancybox.close();
 			});
+			$('.add-notes-form').submit(function(){
+				var newText = $(this).find('textarea').val();				
+				if(/^\s*$/.test(newText)){
+					$(this).find('.error-message').show();
+					return false;
+				}				
+				var link_id = $(this).data('link-id');
+				$('a[data-link-id='+ link_id +']').next().text(newText).css('background-color', '#FFFACD');				
+				$.fancybox.close();
+			});
       		autoUpdate("<%= @topic.id %>");			
 		});
 	</script>
@@ -74,7 +84,7 @@
 				</div> <!-- Invited friends counter -->
 				<div class="topic-author">
 					<i class="icon user-i"></i>
-					<span>Started by: <%= @topic.starter_name %></span>
+					<span>Started by: <%= @topic.starter_name.truncate(10) %></span>
 				</div>
 			</div> <!-- Header of main topic info -->
 		
@@ -188,8 +198,8 @@
 			        </div>			       			        
 			        <div class="content-divider"></div>			        
 			        <div>
-			        	<%= submit_tag "submit", onclick: "$.fancybox.close();", class: "pop-content-form-button" %>
-			       		<span class="error-message" style="display:none;"><i class="icon error-i"></i> Fill all the fields and try again!</span>
+			        	<%= submit_tag "submit", class: "pop-content-form-button" %>
+			       		<span class="error-message" style="display:none;"><i class="icon error-i"></i> Blank notes?!</span>
 			        </div>			        
 		        <% end %>
 	        </div><!-- Pop content ends -->       
