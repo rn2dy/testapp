@@ -25,7 +25,11 @@
 		        </div>
 		        <div>			        
 			        <%= f.submit "Save", class: "settings-form-button" %>
-			        <span class="error-message"><i class="icon error-i"></i>Fill all the fields and try again!</span>
+			        <% if @user && @user.errors.any? %>
+			        	<span class="error-message"><i class="icon error-i"></i>
+			        		<%= @user.errors.full_messages.join(". ") %>			        		
+			        	</span>
+			        <% end %>
 		        </div>		        
 			<% end %>  
 		</div>	

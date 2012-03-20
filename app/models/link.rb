@@ -10,26 +10,28 @@ class Link
   field :clicks, type: Integer, default: 0
   field :image_src, type: String, default: "p-img-bg.jpg"
   field :creator_name, type: String
-
+  
+  attr_accessor :skip
+  
   scope :recent, order_by(created_at: :desc)
   scope :check_new, ->(user_id, since) { excludes(user_id: user_id).where(:created_at.gt => since) } 
 
   belongs_to :topic
   belongs_to :user
   
-  
-  validates :url, presence: true, format: { with: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \?=.-]*)*\/?$/i }
-  validate :check_url
-
   before_validation :format_url
-  before_create :format_url, :extract_title, :extract_image_src
+  validates :url, presence: true, format: { with: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \?=.-]*)*\/?$/i }
+  validate :preprocess_url # which was :check_url
+
+  before_create :extract_title, :extract_image_src, unless: :skip_callbacks
 
   private
-    def check_url 
-      if is_broken? self.url
-        errors.add(:url, "Inaccessible URL")
-      end
-    end
+  
+    #def check_url 
+    #  if is_broken? self.url
+    #    errors.add(:url, "Inaccessible URL")
+    #  end
+    #end
     
     def format_url
       if url !~ /https?/i
@@ -84,8 +86,7 @@ class Link
           logger.info e.inspect
           logger.info e.backtrace
           self.image_src = default_image_src
-        ensure
-          logger.info ">>> ensure!!!"
+        ensure          
           self.image_src ||= default_image_src  
         end
       end
@@ -95,14 +96,17 @@ class Link
       extract_domain || "Unknown"
     end
 
-    def is_broken?(uri)
+    # check if the url is inaccessible if yes, skip image and tilte extraction!
+    def preprocess_url
+      self.skip = false
       begin
         open(self.url, 'User-Agent' => 'ruby') {}
       rescue => e
-        logger.info e.inspect
-        return true
+        logger.info ">>>>> #{e.inspect}"
+        self.image_src = default_image_src
+        self.title = extract_domain
+        self.skip = true
       end
-      false
     end
     
     def extract_domain
@@ -111,5 +115,9 @@ class Link
 
     def default_image_src
       "p-img-bg.jpg"
+    end
+    
+    def skip_callbacks
+      skip
     end
 end

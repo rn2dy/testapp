@@ -1,5 +1,5 @@
 class Notifier < ActionMailer::Base
-  default from: "noreply@klipt.me", cc: "smartplaymonks@gmail.com"
+  default from: "noreply@klipt.me", bcc: "smartplaymonks@gmail.com"
   
   def invited(invitor, invitee, topic)
     @invitor_name = invitor.name
