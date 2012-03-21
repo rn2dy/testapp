@@ -19,8 +19,11 @@ class Topic
   ## API 
   def add_comments(commentor, content)
     raise unless participants.include? commentor
-    if res = comments.create!(content: content, user_name: commentor.name, user_id: commentor.id)      
-      Notifier.new_comment(participants.excludes(id: commentor.id), commentor.name, self).deliver
+    if res = comments.create!(content: content, user_name: commentor.name, user_id: commentor.id)
+      recievers = participants.excludes(id: commentor.id)
+      if recievers.count > 0
+        Notifier.new_comment(recievers, commentor.name, self).deliver 
+      end               
     end
     res
   end

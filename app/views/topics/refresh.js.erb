@@ -11,13 +11,11 @@
 
 
 <% if @new_links.count > 0 && @new_comments.count > 0 %>	
-	<% @message = "Newly added: #{pluralize(@new_links.count, "link")} and #{pluralize(@new_comments.count, "comment")}." %>
-	
+	<% @message = "Newly added: #{pluralize(@new_links.count, "link")} and #{pluralize(@new_comments.count, "comment")} to topic #{@topic.name}." %>	
 <% elsif @new_links.count > 0 %>
-	<% @message = "Newly added: #{pluralize(@new_links.count, "link")}." %>
-	
+	<% @message = "Newly added: #{pluralize(@new_links.count, "link")} to topic #{@topic.name}." %>
 <% elsif @new_comments.count > 0 %>
-	<% @message = "Newly added: #{pluralize(@new_comments.count, "comment")}." %>
+	<% @message = "Newly added: #{pluralize(@new_comments.count, "comment")} to topic #{@topic.name}." %>
 <% else %>
 	<% @message = "" %>
 <% end %>

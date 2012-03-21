@@ -8,10 +8,10 @@ class TopicsController < ApplicationController
   end
 
   def create
-    @topic = current_user.topics.new params[:topic].merge(starter_name: current_user.name, starter_id: current_user.id)
-    @topic.add_invitees(current_user, params[:invitees]) if params[:invitees].present?
+    @topic = current_user.topics.new params[:topic].merge(starter_name: current_user.name, starter_id: current_user.id)    
     respond_to do |format|
-      if @topic.save        
+      if @topic.save
+        @topic.add_invitees(current_user, params[:invitees]) if params[:invitees].present?        
         format.html { redirect_to @topic, notice: 'Topic was successfully created.' }
       else
         format.html { redirect_to home_dashboard_url }

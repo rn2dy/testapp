@@ -20,7 +20,7 @@ class User
 
   
   has_and_belongs_to_many :topics, inverse_of: :participants, dependent: :nullify
-  has_many :links                          
+  has_many :links        
   
   
   validates_uniqueness_of :name, :email, :case_sensitive => false
