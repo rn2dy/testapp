@@ -1,7 +1,11 @@
 <li id="link-<%= link.id %>"><!-- Single link info -->	
-	<div class="link-preview-img-holder">
-		<%= image_tag(link.image_src, alt: "", size: "150x75") unless link.image_src == "p-img-bg.jpg" %>
-	</div>
+	<% if link.image_src == 'p-img-bg.jpg' %>
+		<div class="link-preview-img-holder"></div>		
+	<% else %>
+		<div class="link-preview-img-holder" style="background:none;">
+			<%= image_tag link.image_src, alt: "", size: "150x75" %>
+		</div>
+	<% end %>
 	<div class="link-text-info">
 	
 		<div class="link-title">
