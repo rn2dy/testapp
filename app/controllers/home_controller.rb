@@ -17,4 +17,10 @@ class HomeController < ApplicationController
     end       
   end
   
+  def sys_notify
+    @user = current_user
+    @user.notifications.where(:created_at.lt => 1.hour.ago).delete
+    render json: @user.notifications
+  end
+  
 end

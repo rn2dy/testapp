@@ -1,7 +1,8 @@
 Testapp::Application.routes.draw do
 
-  match 'home/dashboard' => 'home#dashboard'
-  match 'home/about'     => 'home#about'
+  match 'home/dashboard'  => 'home#dashboard'
+  match 'home/about'      => 'home#about'
+  match 'home/sys_notify' => 'home#sys_notify'
 
   authenticated :user do
     root :to => 'home#dashboard'

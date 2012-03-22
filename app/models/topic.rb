@@ -22,8 +22,12 @@ class Topic
     if res = comments.create!(content: content, user_name: commentor.name, user_id: commentor.id)
       recievers = participants.excludes(id: commentor.id)
       if recievers.count > 0
-        Notifier.new_comment(recievers, commentor.name, self).deliver 
-      end               
+        recievers.each do |reciever|
+          reciever.notifications.create message: "#{commentor.name} commented on topic #{self.name}", 
+            link: "/topics/#{self.id}"
+        end
+        #Notifier.new_comment(recievers, commentor.name, self).deliver 
+      end
     end
     res
   end

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   	<head>
 	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	    <title>Klipt</title>
+	    <title>KKK..Klipt</title>
 	    <!-- jQuery -->    
 	    <%= javascript_include_tag "jquery", "jquery_ujs" %>
 			    
@@ -30,22 +30,27 @@
 						return false;
 		      		}
           		});
+          		<% if user_signed_in? %>
+          			fireNotifications();          			
+          			$('#moreNotifications').click(expandNotifications);
+          			$('#lessNotifications').click(collapseNotifications);
+          		<% end %>
 	        });
 	        
           	$(document).ajaxStop(function(){
           		// make sure fancybox is alive
           		$('.popup-trigger').fancybox(properties);
           	});
-         var uvOptions = {};
-        (function(){
-          var uv = document.createElement('script');
-          uv.type = 'text/javascript';
-          uv.async = true;
-          uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 
-            'widget.uservoice.com/lS2ySvjybF3YiH81TL2rJw.js';
-          var s = document.getElementsByTagName('script')[0]; 
-          s.parentNode.insertBefore(uv,s);
-         })();
+        	var uvOptions = {};
+	        (function(){
+	          var uv = document.createElement('script');
+	          uv.type = 'text/javascript';
+	          uv.async = true;
+	          uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 
+	            'widget.uservoice.com/lS2ySvjybF3YiH81TL2rJw.js';
+	          var s = document.getElementsByTagName('script')[0]; 
+	          s.parentNode.insertBefore(uv,s);
+	         })();
           	
 	    </script>
 	    
@@ -97,10 +102,26 @@
 					<%= link_to "Login", "#loginPopup", class: "login-btn popup-trigger" %>
 					<span>Already a member?</span>
 				<% end %>
-			
-			</div>
+				
+			</div>			
 		</div><!-- Header ends -->
-		
+		<% if user_signed_in? %>
+			<div class="notification-holder">			  
+				<div id="sysNotifications" style="<%= 'display:none;' if current_user.notifications.count == 0 %>">					
+					<ul>
+						<% if (records = current_user.notifications).any? %>												
+							<% records.each do |notification| %>
+								<li><%= notification.message %> <a href="<%= notification.link %>">Go</a></li>
+							<% end %>
+						<% end %>																				
+					</ul>
+				</div>
+				<% if current_user.notifications.count > 2 %>					
+					<div class="more-notifications"><a href="#" id="moreNotifications" >-more-</a></div>
+					<div class="less-notifications" style="display:none;"><a href="#" id="lessNotifications">-less-</a></div>
+				<% end %>
+			</div>				
+		<% end %>
 		<!-- Content -->
 		<%= content_for?(:content) ? yield(:content) : yield %>
 		

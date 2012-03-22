@@ -51,7 +51,7 @@ class TopicsController < ApplicationController
   
   # add_comments.js.erb
   def add_comments
-    @comment = @topic.add_comments(current_user, params[:content])
+    @comment = @topic.add_comments(current_user, params[:content])    
     respond_to do |format|
       format.js
     end
