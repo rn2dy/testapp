@@ -59,13 +59,9 @@ class TopicsController < ApplicationController
   
   # add_links.js.erb
   def add_links
-    @new_link = @topic.links.build url: params[:url], creator_name: current_user.name
-    @new_link.user = current_user
+    @new_link = @topic.add_links(current_user, params[:url])
     respond_to do |format|
-      if @new_link.save
-        Notifier.new_link(@topic.participants.excludes(id: current_user.id), current_user.name, @topic).deliver
-        format.js
-      end
+      format.js
     end
   end
 

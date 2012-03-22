@@ -20,7 +20,7 @@ class Link
   belongs_to :user
   
   before_validation :format_url
-  validates :url, presence: true, format: { with: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \?=.-]*)*\/?$/i }
+  validates :url, presence: true, format: { with: /^https?:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?$/i }
   validate :preprocess_url # which was :check_url
 
   before_create :extract_title, :extract_image_src, unless: :skip_callbacks
@@ -40,7 +40,7 @@ class Link
     end
 
     def extract_title
-      open(self.url, 'User-Agent' => 'ruby') do |f|
+      open(self.url) do |f|
         f.each_line do |line|
           if line.force_encoding('UTF-8') =~ /<title>(.*)<\/title>/u 
             self.title = $1.empty? ? make_title : $1
@@ -51,7 +51,7 @@ class Link
     end
 
     def extract_image_src
-      open(self.url, 'User-Agent' => 'ruby') do |f|
+      open(self.url) do |f|
         begin
           srcs = f.each_line.select do |s|
             s.force_encoding('UTF-8') =~ /<img(.*?)>/u
@@ -100,7 +100,7 @@ class Link
     def preprocess_url
       self.skip = false
       begin
-        open(self.url, 'User-Agent' => 'ruby') {}
+        open(self.url) {}
       rescue => e
         logger.info ">>>>> #{e.inspect}"
         self.image_src = default_image_src

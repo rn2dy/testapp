@@ -17,32 +17,50 @@ class Topic
   validates :name, presence: true
   
   ## API 
+  def add_links(author, url)
+    link = links.build url: url, creator_name: author.name
+    link.user = author
+    if link.save
+      bundle_notify author, "#{author.name} created a link on topic #{self.name}", :new_link
+    end
+    return link 
+  end
+  
   def add_comments(commentor, content)
     raise unless participants.include? commentor
     if res = comments.create!(content: content, user_name: commentor.name, user_id: commentor.id)
-      recievers = participants.excludes(id: commentor.id)
-      if recievers.count > 0
-        recievers.each do |reciever|
-          reciever.notifications.create message: "#{commentor.name} commented on topic #{self.name}", 
-            link: "/topics/#{self.id}"
-        end
-        #Notifier.new_comment(recievers, commentor.name, self).deliver 
+      bundle_notify commentor, "#{commentor.name} commented on topic #{self.name}", :new_comment
+    end
+    return res
+  end
+  
+  def bundle_notify author, message, type 
+    recievers = participants.excludes(id: author.id)
+    if recievers.count > 0
+      recievers.each do |reciever|
+        reciever.notifications.create message: message, link: "/topics/#{self.id}"
+      end
+      case type
+      when :new_comment
+        Notifier.new_comment(recievers, author.name, self).deliver
+      when :new_link
+        Notifier.new_link(recievers, author.name, self).deliver
       end
     end
-    res
   end
-
-  def add_invitees(current_user, invitees_emails)
+  
+  def add_invitees(invitor, invitees_emails)
     emails = invitees_emails.gsub(/\s+/, "").split(',')
-    emails.delete("") # remove empty element
+    emails.delete("")
     emails.each do |e|
       candidate = User.where(email: e).first
       if candidate
-        Notifier.invited(current_user, candidate, self).deliver
         next if participants.include?(candidate)
+        candidate.notifications.create message: "#{invitor.name} invited you to the topic #{self.name}", link: "/topics/#{self.id}"        
+        Notifier.invited(invitor, candidate, self).deliver        
         participants << candidate
       else
-        Notifier.unknown_user_invited(current_user, e, self).deliver
+        Notifier.unknown_user_invited(invitor, e, self).deliver
         unavailable_users << e
       end
     end

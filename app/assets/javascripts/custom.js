@@ -56,21 +56,23 @@ function capitalize(word){
 }
 
 function autoUpdate(id){
-	setInterval(function(){		
+	//setInterval(function(){		
 		//var latestLinkDate = $('#linkCreatedAt').text();
 		//var latestComtDate = $('#comtCreatedAt').text();
 		//$.post('/topics/' + id + '/refresh.js', {lld: latestLinkDate, lcd: latestComtDate });		
-	}, 30000);
+	//}, 30000);
 }
 
 function fireNotifications(){
+	$('#moreNotifications').click(expandNotifications);
+	$('#lessNotifications').click(collapseNotifications);
 	setInterval(function(){
 		$.ajax('/home/sys_notify.json', {
 			type: 'get',
 			cache: false,
 			success: function(json){
 				var result = "";
-				for (var i=0; i < json.length; i++){				
+				for (var i=json.length-1; i >= 0; i--){				
 					result += "<li>" + json[i].message + "<a href='"+ json[i].link +"'>Go</a></li>";
 				}				
 				addToNotifications(result, json.length);
@@ -79,15 +81,19 @@ function fireNotifications(){
 	}, 30000);
 }
 
-function addToNotifications(record, count){
-	// police is always keep 3 old notification in the list
+function addToNotifications(record, count){	
 	if (record == ""){
 		$('#sysNotifications').hide();
-	}
-	$('#sysNotifications').show();
-	$('#sysNotifications ul li').remove();
-	$(record).hide().prependTo('#sysNotifications ul').slideDown("slow");
+	} else {
+	    $('#sysNotifications').show();
+	    $('#sysNotifications ul li').remove();
+	    $(record).hide().prependTo('#sysNotifications ul').slideDown("slow");
+	    if (count > 2 && !$('.less-notifications').is(':visible')){	    	
+	    	$('.more-notifications').show();
+	    }
+  	}
 }
+
 function expandNotifications(){
 	var contentHeight = 0;
 	$('#sysNotifications').children().each(function(){
@@ -99,6 +105,7 @@ function expandNotifications(){
 	$(this).parent().hide();
 	$('.less-notifications').show();
 }
+
 function collapseNotifications(){
 	$('#sysNotifications').animate({
 		height: '30px'

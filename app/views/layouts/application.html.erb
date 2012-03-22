@@ -32,8 +32,6 @@
           		});
           		<% if user_signed_in? %>
           			fireNotifications();          			
-          			$('#moreNotifications').click(expandNotifications);
-          			$('#lessNotifications').click(collapseNotifications);
           		<% end %>
 	        });
 	        
@@ -115,11 +113,13 @@
 							<% end %>
 						<% end %>																				
 					</ul>
+				</div>				
+				<div class="more-notifications" style="<%= 'display:none;' unless current_user.notifications.count > 2 %>">
+					<a href="#" id="moreNotifications" >-more-</a>
 				</div>
-				<% if current_user.notifications.count > 2 %>					
-					<div class="more-notifications"><a href="#" id="moreNotifications" >-more-</a></div>
-					<div class="less-notifications" style="display:none;"><a href="#" id="lessNotifications">-less-</a></div>
-				<% end %>
+				<div class="less-notifications" style="display:none;">
+					<a href="#" id="lessNotifications">-less-</a>					
+				</div>			
 			</div>				
 		<% end %>
 		<!-- Content -->

@@ -30,3 +30,6 @@ gem "mongoid-paperclip", :require => "mongoid_paperclip"
 
 gem "devise", ">= 2.0.4"
 gem "fastimage"
+
+gem "SystemTimer", :require => "system_timer", :platforms => :ruby_18
+gem "rack-timeout"

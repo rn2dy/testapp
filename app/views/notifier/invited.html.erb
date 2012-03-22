@@ -4,11 +4,11 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
   </head>
   <body>
-    <p>Dear <%= @invitee_name %>,</p>   
+    <p>Dear <%= @invitee_email %>,</p>   
     <br />
-    <p><%= @invitor_name %> has invited you to join and contribute to the topic <%= link_to @topic.name, topic_url(@topic) %></p>
+    <p><%= @invitor_name.titleize %> has invited you to join the Klipt topic <%= link_to @topic.name, topic_url(@topic) %></p>
     <br/>
-    <p>Happy Klipping!</p>
+    <p>Klip away!</p>
     <br />
     <p>-Klipt Team-</p>
   </body>

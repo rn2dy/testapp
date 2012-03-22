@@ -3,7 +3,7 @@ class Notifier < ActionMailer::Base
   
   def invited(invitor, invitee, topic)
     @invitor_name = invitor.name
-    @invitee_name = invitee.name
+    @invitee_email = invitee.email
     @topic = topic
     mail to: invitee.email, :subject => "Klipt message - You are invited to the topic: #{ topic.name.upcase }!"
   end
