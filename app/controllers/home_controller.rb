@@ -6,7 +6,26 @@ class HomeController < ApplicationController
   
   def about
   end
-  
+
+  def bookmarklet
+    @bookmarklet_js = <<HERE 
+javascript:(function(){
+  f = 'http://localhost:3000/bookmarklet/new_link?url=' + encodeURIComponent(window.location.href) + 
+      '&title=' + encodeURIComponent(document.title);
+  a = function(){
+    if(!window.open(f,'_klipt_bookmarklet','location=yes,links=no,scrollbars=yes,toolbar=no,width=600,height=400'))
+        location.href=f+'jump=yes'
+      };
+      if(/Firefox/.test(navigator.userAgent)){
+        setTimeout(a,0)
+      } else { 
+        a() 
+      }
+})();
+HERE
+  @bookmarklet_js.squish!
+  end
+
   def dashboard
     @topics = current_user.topics
     if @topics

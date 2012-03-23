@@ -33,3 +33,6 @@ gem "fastimage"
 
 gem "SystemTimer", :require => "system_timer", :platforms => :ruby_18
 gem "rack-timeout"
+
+gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+gem 'cancan'

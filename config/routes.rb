@@ -1,8 +1,11 @@
 Testapp::Application.routes.draw do
 
-  match 'home/dashboard'  => 'home#dashboard'
-  match 'home/about'      => 'home#about'
-  match 'home/sys_notify' => 'home#sys_notify'
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+
+  match 'home/dashboard'    => 'home#dashboard'
+  match 'home/about'        => 'home#about'
+  match 'home/sys_notify'   => 'home#sys_notify'
+  match 'home/bookmarklet'  => 'home#bookmarklet'
 
   authenticated :user do
     root :to => 'home#dashboard'
@@ -29,5 +32,13 @@ Testapp::Application.routes.draw do
   resources :links do
     post 'add_notes', on: :member
   end
+
+  # Bookmarklet
+  get   'bookmarklet/index'      => 'bookmarklet#index'
+  get   'bookmarklet/new_link'   => 'bookmarklet#new_link'
+  get   'bookmarklet/new_topic'  => 'bookmarklet#new_topic'
+  post  'bookmarklet/add_link'   => 'bookmarklet#add_link'
+  post  'bookmarklet/login'    => 'bookmarklet#login'
+  post  'bookmarklet/add_topic'  => 'bookmarklet#add_topic'
 
 end

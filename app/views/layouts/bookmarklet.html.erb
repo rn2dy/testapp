@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Klipt</title>
+    <%= stylesheet_link_tag "application" %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <div id="header">
+        <div class="header-container clearfix">
+          <a id="logo" href="#"></a> <!-- Logo -->
+          <div id="header-info">
+            Don't have account? <a href="#">Sign up!</a>
+          </div>
+        </div>
+      </div><!-- Container ends -->
+    </div><!-- Header ends -->
+
+    <div class="content clearfix">
+      <div class="block">
+        <p class="klip-info">You're about to klip <br /> <a href="#">Google Launches Feature to Find Hotels by Travel Time, Landmarks</a></p>
+      </div>
+
+      <div class="content-divider"></div>
+
+      <div class="block white login clearfix">
+        <div class="login-info">
+          <h2>Log into your account first...</h2>
+          <p>Don't worry, this will only take a couple of seconds.</p>
+          <p>Forgot password? <a href="#">Retrieve!</a></p>
+        </div>
+        <form>
+          <span class="error">Wrong username or password. Try again!</span>
+          <label>Username/Email</label>
+          <input type="text" class="field" />
+          <label>Password</label>
+          <input type="password" class="field" />
+          <input type="checkbox" class="field" />
+          <label style="margin-left: 2px;" >Remember me</label>
+          <input type="submit" class="submit" value="Log me in" />
+        </form>
+      </div>
+      
+    </div> <!-- Content Ends -->
+  </body>
+</html>
+

@@ -1,7 +1,9 @@
 require 'date'
 class TopicsController < ApplicationController
-  layout 'fluid', only: [:show]
+  before_filter :authenticate_user!
   before_filter :find_topic, except: [:create]
+
+  layout 'fluid', only: [:show]
 
   def show
     @email_list = { @topic.id => @topic.participants.map { |p| p.email } }

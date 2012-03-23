@@ -1,0 +1,441 @@
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background:url(body-bg.jpg);
+	
+}
+
+
+/******** LOGGED IN ********/
+
+a { color: inherit; }
+a:hover { color: #e4a623 !important; }
+a.new-topic-btn:hover { color: #222 }
+
+/** clearfix **/
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+
+/** clearfix end **/
+
+.content-divider {
+	width: 100%;
+	height: 1px;
+	background:url(horizontal-stitched-border.png) repeat-x;
+	margin-bottom: 30px;
+	
+}
+
+.block .content-divider {
+	float: left;
+	
+}
+
+#header {
+	width: 100%;
+	height: 93px;
+	display: block;
+	background: url(header-bg.png) repeat-x ;
+	min-width: 460px;
+	
+}
+
+.header-container {
+	width: 460px;
+	margin: 0 auto;
+	position: relative;
+	
+}
+
+#header #logo {
+	width: 192px;
+	height: 93px;
+	display: block;
+	position: relative;
+	background:url(logo.png);
+	float: left;
+	
+}
+
+#header #header-info {
+	float: right;
+	margin-top: 20px;
+	color: #b5b1ac;
+	font-size: 12px;
+	font-weight: normal;
+	text-shadow: 0 1px 1px #000;
+}
+
+#header #header-info a {
+	margin-left: 5px;
+	font-weight: bold;
+	
+}
+
+#header #header-info > span {
+	color: #fff;
+	
+}
+
+#header #header-info span {
+	font-weight: bold;
+	
+}
+
+.content {
+	width: 460px;
+	margin: 15px auto 30px auto;
+	position: relative;
+	
+}
+
+.content .block {
+	padding: 0 30px 30px 30px;
+	width: 400px;
+	
+}
+
+.content .block.white {
+	background: #fff;
+	border: solid 1px #ccc;
+	box-shadow: 0 0 5px #ddd;
+	padding: 30px;
+	
+}
+
+.field {
+	padding: 8px;
+	border: solid 1px #bbb;
+	box-shadow:inset 0 0 5px #e8e8e8;
+	color: #333;
+	
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	
+	font: 14px Arial, Helvetica, sans-serif;
+}
+
+p.klip-info {
+	width: 360px;
+	padding-left: 40px;
+	background: url(clip-icon.png) left center no-repeat;
+	line-height: 24px;
+	font-weight: bold;
+	color: #666;
+	font-size: 18px;
+	
+}
+
+p.klip-info a {
+	color: #aaa;
+	
+}
+	
+	
+.login .login-info {
+	float: left;
+	width: 170px;
+
+}
+
+.login .login-info h2 {
+	font-size: 18px;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 10px;
+	line-height: 22px;
+}
+
+.login .login-info p {
+	font-size: 12px;
+	color: #888;
+	margin-bottom: 15px;
+	line-height: 18px;
+}
+
+.login .login-info p a {
+	font-weight: bold;
+	color: #666;
+	
+}
+
+.login form {
+	float: right;
+	width: 170px;
+	font-size: 12px;
+	color: #444;
+	font-weight: bold;
+	
+	padding-left: 30px;
+	border-left: dashed 1px #ccc;
+}
+
+
+label {
+	margin: 3px 0 5px 0;
+	float: left;
+	color: #666;
+}
+
+form input {	
+	float: left;
+	
+}
+
+form input.field {
+	margin-bottom: 15px;
+	
+}
+
+.login form input.submit,
+.finish-btn {
+	color: #333;
+	height: 30px;
+	float: right;	
+	width: 100%;
+	font-weight: bold;
+	
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.25);
+	text-shadow: 0 1px #fff;	
+	border: solid 1px #9b731e;
+	
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	
+	background: #ffdc66; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffdc66 0%, #ffbe36 75%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffdc66), color-stop(75%,#ffbe36)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* IE10+ */
+	background: linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffdc66', endColorstr='#ffbe36',GradientType=0 ); /* IE6-9 */
+	
+	cursor: pointer;
+}
+
+.login form input.submit:hover,
+.finish-btn:hover {
+	background: #ffe693; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffe693 0%, #ffca60 88%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffe693), color-stop(88%,#ffca60)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffe693 0%,#ffca60 88%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffe693 0%,#ffca60 88%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffe693 0%,#ffca60 88%); /* IE10+ */
+	background: linear-gradient(top,  #ffe693 0%,#ffca60 88%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffe693', endColorstr='#ffca60',GradientType=0 ); /* IE6-9 */
+	
+	color: #333 !important;
+		
+}
+
+.login form span.error {
+	float: left;
+	padding: 10px;
+	background: #fcf2f1;
+	border: dashed 1px #bfadac;
+	color: #876e6d;
+	line-height: 16px;
+	margin-bottom: 10px;
+	
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	
+}
+
+
+
+.note form label {
+	float: left;
+	width: 80px;
+	font-weight: bold;
+	font-size: 16px;
+	color: #666;
+	line-height: 20px;
+	
+}
+
+.note form textarea {
+	float: right;
+	width: 260px;
+	max-width: 260px;
+	min-width: 260px;
+	height: 60px;
+	max-height: 60px;
+	min-height: 60px;
+	resize: none;
+	
+}
+
+.block .block-header {
+	margin-bottom: 30px;
+	float: left;
+	width: 100%;
+	
+}
+
+.block .block-header h2 {
+	float: left;
+	font: bold 24px Arial, Helvetica, sans-serif;
+	color: #666;
+	margin-top: 4px;
+}
+
+.content-btn {
+	color: #666;
+	padding: 8px 12px;
+	height: 16px;
+	font-weight: bold;
+	font-size: 14px;
+	
+	cursor: pointer;
+	
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	
+	background: #f7f7f7; /* Old browsers */
+	background: -moz-linear-gradient(top,  #f7f7f7 0%, #ededed 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f7f7f7), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #f7f7f7 0%,#ededed 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #f7f7f7 0%,#ededed 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #f7f7f7 0%,#ededed 100%); /* IE10+ */
+	background: linear-gradient(top,  #f7f7f7 0%,#ededed 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+	
+	border: solid 1px #bcbcbc;
+	text-shadow: 0 1px 0 #fff;	
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.1);
+	
+	
+	position: relative;
+}
+
+.content-btn:hover {
+	color: #444 !important;
+	
+	background: #ffffff; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffffff 0%, #e6e6e6 89%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(89%,#e6e6e6)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#e6e6e6 89%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffffff 0%,#e6e6e6 89%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffffff 0%,#e6e6e6 89%); /* IE10+ */
+	background: linear-gradient(top,  #ffffff 0%,#e6e6e6 89%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e6e6e6',GradientType=0 ); /* IE6-9 */
+	
+	border: solid 1px #999;
+	
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
+		
+}
+
+.block .block-header .content-btn {
+	float: right;
+	
+}
+
+.block .content-divider {
+	margin: 0 0 25px 0;
+	
+}
+
+.block ol.themes-list {
+	float: left;
+	width: 370px;
+	padding: 1px 30px 0 0;
+	max-height: 170px;
+	height: 170px;
+	min-height: 170px;
+	overflow: auto;
+}
+
+.block ol.themes-list input {
+	float: left;
+	
+}
+
+
+.block ol.themes-list li {
+	padding: 10px;
+	width: 100%;
+	margin-top: -1px;
+	font-size: 14px;
+	color: #666;
+	font-weight: bold;
+	
+	float: left;
+	
+	border-bottom: dashed 1px #ccc;
+}
+
+.block ol.themes-list li a {
+	margin: 2px 0 0 5px;
+	float: left;
+	
+}
+
+.finish-btn {
+	height: auto;
+	width: 400px;
+	float: left;
+	text-align: center;
+	padding: 12px 0;
+	margin: 20px 0 0 30px;
+	
+}
+
+
+
+.newtopic form {
+	font-size: 12px;
+	color: #444;
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+}
+
+.newtopic form label {
+	width: 100%;
+	padding-bottom: 5px;
+	
+	
+}
+	
+.newtopic form input,
+.newtopic form textarea {
+	width: 382px;
+	resize: none;
+	
+}
+
+.newtopic form textarea {
+	height: 100px;
+	max-height: 100px;
+	
+}

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   	<head>
 	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	    <title>KKK..Klipt</title>
+	    <title>Klipt</title>
 	    <!-- jQuery -->    
 	    <%= javascript_include_tag "jquery", "jquery_ujs" %>
 			    
@@ -109,18 +109,21 @@
 					<ul>
 						<% if (records = current_user.notifications).any? %>												
 							<% records.each do |notification| %>
-								<li><%= notification.message %> <a href="<%= notification.link %>">Go</a></li>
+              <li><%= notification.message %> <a href="<%= notification.link %>">Go</a></li>
 							<% end %>
 						<% end %>																				
 					</ul>
 				</div>				
+        <!--
 				<div class="more-notifications" style="<%= 'display:none;' unless current_user.notifications.count > 2 %>">
 					<a href="#" id="moreNotifications" >-more-</a>
 				</div>
 				<div class="less-notifications" style="display:none;">
 					<a href="#" id="lessNotifications">-less-</a>					
 				</div>			
-			</div>				
+        -->
+			</div>
+
 		<% end %>
 		<!-- Content -->
 		<%= content_for?(:content) ? yield(:content) : yield %>

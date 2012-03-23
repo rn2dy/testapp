@@ -55,17 +55,28 @@ function capitalize(word){
 	return word[0].toUpperCase() + word.slice(1);
 }
 
-function autoUpdate(id){
-	//setInterval(function(){		
-		//var latestLinkDate = $('#linkCreatedAt').text();
-		//var latestComtDate = $('#comtCreatedAt').text();
-		//$.post('/topics/' + id + '/refresh.js', {lld: latestLinkDate, lcd: latestComtDate });		
-	//}, 30000);
-}
+//function autoUpdate(id){
+//  setInterval(function(){		
+//    var latestLinkDate = $('#linkCreatedAt').text();
+//    var latestComtDate = $('#comtCreatedAt').text();
+//    $.post('/topics/' + id + '/refresh.js', {lld: latestLinkDate, lcd: latestComtDate });		
+//  }, 30000);
+//}
 
 function fireNotifications(){
-	$('#moreNotifications').click(expandNotifications);
-	$('#lessNotifications').click(collapseNotifications);
+  $('#sysNotifications').hover(function(){
+    var contentHeight = 0;
+    $(this).children().each(function(){
+      contentHeight += $(this).height();
+    });
+    $(this).animate({
+      height: contentHeight
+    }, 300);  
+  }, function(){
+    $(this).animate({
+      height: '30px'
+	  }, 300);
+  });
 	setInterval(function(){
 		$.ajax('/home/sys_notify.json', {
 			type: 'get',
@@ -94,22 +105,22 @@ function addToNotifications(record, count){
   	}
 }
 
-function expandNotifications(){
-	var contentHeight = 0;
-	$('#sysNotifications').children().each(function(){
-		contentHeight += $(this).height();
-	});
-	$('#sysNotifications').animate({
-		height: contentHeight
-	}, 300);
-	$(this).parent().hide();
-	$('.less-notifications').show();
-}
+//function expandNotifications(){
+//  var contentHeight = 0;
+//  $('#sysNotifications').children().each(function(){
+//    contentHeight += $(this).height();
+//  });
+//  $('#sysNotifications').animate({
+//    height: contentHeight
+//  }, 300);
+//  $(this).parent().hide();
+//  $('.less-notifications').show();
+//}
 
-function collapseNotifications(){
-	$('#sysNotifications').animate({
-		height: '30px'
-	}, 300);
-	$(this).parent().hide();
-	$('.more-notifications').show();
-}
+//function collapseNotifications(){
+//  $('#sysNotifications').animate({
+//    height: '30px'
+//  }, 300);
+//  $(this).parent().hide();
+//  $('.more-notifications').show();
+//}

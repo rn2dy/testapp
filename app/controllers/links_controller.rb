@@ -1,4 +1,5 @@
 class LinksController < ApplicationController
+  before_filter :authenticate_user!
 
   def destroy
     link = Link.find(params[:id])

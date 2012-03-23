@@ -1681,7 +1681,7 @@ i.delete-i {
 
 /* Styling about Klipt page */
 
-.about-klipt {
+.about-klipt, .bookmarklet-klipt {
 	float: left;
 	width: 640px;
 	padding: 30px;
@@ -1694,6 +1694,10 @@ i.delete-i {
 	-o-border-radius: 3px;
 	border-radius: 3px;
 	
+}
+
+.bookmarklet-klipt {
+  width: 550px;
 }
 
 .about-klipt h3 {
@@ -1727,11 +1731,15 @@ i.delete-i {
 	
 }
 
-.social-klipt {
+.social-klipt, .drag-klipt {
 	float: right;
 	width: 230px;
 	padding-top: 30px;
 	
+}
+
+.drag-klipt {
+  width: 320px;
 }
 
 .social-klipt h3 {
@@ -1754,12 +1762,26 @@ i.delete-i {
 	float: left;
 	width: 100%;
 	margin: 0 0 8px 0;
-	
 }
 
 .social-klipt div a {
 	float: left;
-	
+}
+
+.drag-klipt h3 {
+  font-size: 18px;
+  text-align: center;
+}
+.drag-klipt div {
+  float:none;
+  text-align: center;
+  margin-top: 35px;
+}
+.drag-klipt div a {
+  float: none;
+  font-size: 22px;
+  padding: 10px 20px;
+  text-align: center;
 }
 
 .social-klipt i.facebook-i {
@@ -1802,13 +1824,19 @@ a#close {
 }
 
 .notification-holder {
+  position: relative;
 	text-align: center;
 	height: 30px; /*offset -34px*/
+  width: 960px;
+  margin: 0 auto;
 	margin-top: -34px;
 }
 
 #sysNotifications {
-	display: inline-block;
+  position: absolute;
+  top: 5px;
+  left: -50px;
+  z-index: 9999;
 	margin-left: 750px;
 	padding: 5px;
 	width: 300px;
@@ -1830,9 +1858,12 @@ a#close {
 	line-height: 16px;	
 	padding-right: 5px;
 }
+
 #sysNotifications ul li a {
 	float:right;
 }
+
+/*
 .more-notifications, .less-notifications {
 	display: inline-block;
 	margin-left: 750px;
@@ -1841,3 +1872,4 @@ a#close {
 .more-notifications a, .less-notifications a{
 	float:right;
 }
+*/

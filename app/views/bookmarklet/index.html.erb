@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Klipt</title>
+    <%= stylesheet_link_tag "bookmarklet_style" %>
+  </head>
+  <body>
+    <div id="header">
+      <div class="header-container clearfix">
+        <a id="logo" href="#"></a> <!-- Logo -->
+        <div id="header-info">
+          Don't have account? <a href="#">Sign up!</a>
+        </div>
+      </div>
+    </div><!-- Container ends -->
+  </div><!-- Header ends -->
+  <div class="content clearfix">
+    <div class="block">
+      <p class="klip-info">You're about to klip <br /> <a href="#">Google Launches Feature to Find Hotels by Travel Time, Landmarks</a></p>
+    </div>
+    <div class="content-divider"></div>
+    <div class="block white login clearfix">
+      <div class="login-info">
+        <h2>Log into your account first...</h2>
+        <p>Don't worry, this will only take a couple of seconds.</p>
+        <p>Forgot password? <a href="#">Retrieve!</a></p>
+      </div>
+      <%= form_for "user", url: bookmarklet_login_path do |f| %>
+        <% if @user.errors.any? %>
+		    <span class="error">		    
+	        	<% @user.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>	    	
+		    </span>
+        <% end %>
+        <label>Username/Email</label>        
+        <%= f.email_field :email, class: 'field', size: nil %>        
+        <label>Password</label>
+        <%= f.password_field :password, class: 'field', size: nil %>
+        <%= f.check_box :remember_me, class: 'field' %>        
+        <label style="margin-left: 2px;" >Remember me</label>
+        <input type="submit" class="submit" value="Log me in" />
+      <% end %>
+    </div>
+  </div> <!-- Content Ends -->
+</body>
+</html>
