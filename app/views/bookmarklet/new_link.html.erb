@@ -1,2 +1,74 @@
-<p>add new link</p>
-<p><%= bookmarklet_index_path %></p>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Klipt</title>
+	<%= javascript_include_tag "jquery", "jquery_ujs" %>
+	<%= stylesheet_link_tag "bookmarklet_style", "reset" %>
+	<script>
+		$(document).ready(function(){
+			$('.finish-btn').click(function(){
+				var topic_id = $('ol.themes-list input:checked').val();
+				if ( typeof(topic_id) != "undefined" ){					
+					// call /bookmarklet/add_link										
+					var data = { topic: topic_id, 
+								 url:   $('.klip-info a').attr('href'), 
+								 title: $('.klip-info a').text(), 
+								 note:  $('textarea#linkNote').val() };																			 
+					$.post( '/bookmarklet/add_link', data, function(){ 
+						var ans = confirm("You have successfully added the link. Close this bookmarklet?");
+						if ( ans == true ) {
+							window.close(); 
+						}
+					});
+					
+				} else {
+					alert("You haven't selected a topic yet!");
+				}
+			});					
+		});
+	</script>
+    <%= csrf_meta_tags %>
+</head>
+	
+<body>
+	<div id="header">
+		<div class="header-container clearfix">
+			<a id="logo" href="#"></a> <!-- Logo -->
+			<div id="header-info">
+				<span><%= @user.email %></span>
+				<%= link_to "Logout", destroy_user_session_path, method: :delete %>				
+			</div>
+		</div>
+	</div><!-- Header ends -->
+	<div class="content clearfix">
+		<div class="block">
+			<p class="klip-info">You're about to klip <br />
+				 <%= link_to @target_title, @target_url %>
+			</p>
+		</div>
+		<div class="content-divider"></div>
+		<div class="block clearfix note">
+			<form>
+			<label>Add Note (Optional)</label>
+			<textarea class="field" id="linkNote"></textarea>
+			</form>
+		</div>
+		<div class="block white login clearfix">
+			<div class="block-header"><h2>Klip to...</h2> 
+				<%= link_to "Add New Topic", bookmarklet_new_topic_path(url:@target_url,title:@target_title),class: "content-btn" %>
+			</div>
+			<div class="content-divider"></div>			
+			<ol class="themes-list">				
+				<% @topics.each do |topic| %>
+					<li><%= check_box_tag topic.name, topic.id %><%= link_to topic.name, topic %></li>
+				<% end %>
+			</ol>
+		</div>
+		<a href="#" class="finish-btn">Klip it</a>
+		
+	</div> <!-- Content Ends -->
+	<!--<%= debug(params) if Rails.env.development? %>-->
+</body>
+</html>

@@ -1,1 +1,81 @@
-<p>Add new topic</p>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Klipt</title>
+	<%= javascript_include_tag "jquery", "jquery_ujs" %>
+	<%= stylesheet_link_tag "bookmarklet_style", "reset" %>
+	<%= javascript_include_tag "custom" %>
+	<script>
+		$(document).ready(function(){
+			$('.finish-btn').click(submitForm);
+		});		
+		function submitForm(e){
+			e.preventDefault();
+			if (check_emails('.new-topic-form') != true || /^\s*$/.test($('.new-topic-form input:text').val()) ){
+  				$('.error').show();
+	      	} else {
+	      		$(this).unbind('click');
+	      		$(this).text("Adding...");
+	      		$('.new-topic-form #note').val($('textarea#linkNote').val());
+	      		var data = $('.new-topic-form').serialize();		      		
+	      		$.post('/bookmarklet/add_topic', data, function(response){ 
+	      			$('.finish-btn').bind('click', submitForm);
+	      			$('.finish-btn').text("Klip it");
+  			 	});
+	      	}
+		}		
+	</script>
+	<%= csrf_meta_tags %>
+</head>
+<body>
+	<div id="header">
+		<div class="header-container clearfix">
+			<a id="logo" href="#"></a> <!-- Logo -->
+			<div id="header-info">
+				<span><%= @user.email %></span>
+				<%= link_to "Logout", destroy_user_session_path, method: :delete %>				
+			</div>
+		</div>
+	</div><!-- Header ends -->
+	<div class="content clearfix">
+		<div class="block">
+			<p class="klip-info">You're about to klip <br />
+				 <%= link_to @target_title, @target_url %>
+			</p>
+		</div>
+		<div class="content-divider"></div>
+		<div class="block clearfix note">
+			<form>
+				<label>Add Note (Optional)</label>				
+				<textarea class="field" id="linkNote"></textarea>
+			</form>
+		</div>
+		<div class="block white newtopic clearfix">
+			<div class="block-header">
+				<h2>Create new topic...</h2> 
+				<%= link_to "Back", bookmarklet_new_link_path(url: @target_url,title: @target_title), class: "content-btn" %>				
+			</div>
+			<div class="content-divider"></div>			
+			<%= form_tag '#', class: "new-topic-form" do %>			    
+			    <div>
+			    	<label>Enter topic name</label>			    	
+			    	<%= text_field_tag :name, "", 
+			    		placeholder: "For example 'Places to visit on vacation", maxlength: 35, class: "field" %>
+			    </div>
+			    <div>
+			    	<label>Invite friends to discuss it with you</label>
+			    	<%= text_area_tag :invitees, nil, class: 'field',
+			    		placeholder: "Enter their emails and separate the addresses by commas. (like 'me@klipt.com, you@klipt.com') " %>
+			    </div>
+			    <%= hidden_field_tag "url", @target_url %>
+			    <%= hidden_field_tag "title", @target_title %>
+			    <%= hidden_field_tag "note", "" %>
+		    <% end %>  
+		    
+		    <span class="error" style="display:none;"> Invalid input, please try again!</span>		    
+		</div>
+		<a href="#" class="finish-btn">Klip it</a>
+	</div> <!-- Content Ends -->
+</body>
+</html>

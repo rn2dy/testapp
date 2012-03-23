@@ -21,17 +21,23 @@ class Link
   
   before_validation :format_url
   validates :url, presence: true, format: { with: /^https?:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?$/i }
-  validate :preprocess_url # which was :check_url
-
-  before_create :extract_title, :extract_image_src, unless: :skip_callbacks
-
+  
+  before_create :do_extraction
+  
   private
   
-    #def check_url 
-    #  if is_broken? self.url
-    #    errors.add(:url, "Inaccessible URL")
-    #  end
-    #end
+    def do_extraction
+      if skip_extract_title
+        extract_image_src
+      else
+        if is_ugly_url?
+          lazy_extraction
+        else
+          extract_title
+          extract_image_src
+        end
+      end
+    end
     
     def format_url
       if url !~ /https?/i
@@ -96,17 +102,20 @@ class Link
       extract_domain || "Unknown"
     end
 
-    # check if the url is inaccessible if yes, skip image and tilte extraction!
-    def preprocess_url
-      self.skip = false
+    def is_ugly_url?      
       begin
         open(self.url) {}
       rescue => e
-        logger.info ">>>>> #{e.inspect}"
-        self.image_src = default_image_src
-        self.title = self.url
-        self.skip = true
+        logger.info "<UNEXPECTED IS_UGLY_URL> #{e.inspect}"        
+        return true
+      else
+        return false            
       end
+    end
+    
+    def lazy_extraction
+      self.image_src = default_image_src
+      self.title = self.url
     end
     
     def extract_domain
@@ -117,7 +126,7 @@ class Link
       "p-img-bg.jpg"
     end
     
-    def skip_callbacks
-      skip
+    def skip_extract_title
+      return self.title.present? ? true : false        
     end
 end

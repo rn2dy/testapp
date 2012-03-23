@@ -4,7 +4,6 @@ class BookmarkletController < ApplicationController
 
   # sign in page
   def index
-    @user = User.new
   end
 
   def login
@@ -12,16 +11,32 @@ class BookmarkletController < ApplicationController
   end
 
   def new_link
+    @user = current_user
+    @topics = current_user.topics
+    @target_url = params[:url]
+    @target_title = params[:title]    
   end
 
   def add_link
+    @topic = Topic.find params[:topic]
+    @new_link = @topic.add_links current_user, params[:url], params[:title], params[:note]
+    head :ok
   end
 
 
   def new_topic
+    @user = current_user
+    @target_url = params[:url]
+    @target_title = params[:title]    
   end
 
-  def add_new_topic
+  def add_topic
+    @topic = current_user.topics.new name: params[:name], starter_name: current_user.name, starter_id: current_user.id
+    if @topic.save
+      @topic.add_invitees(current_user, params[:invitees]) if params[:invitees].present?
+      @topic.add_links current_user, params[:url], params[:title], params[:note]
+    end    
+    head :ok
   end
 
   private

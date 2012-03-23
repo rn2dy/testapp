@@ -4,13 +4,26 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Klipt</title>
     <%= stylesheet_link_tag "bookmarklet_style" %>
+    <%= javascript_include_tag "jquery","jquery_ujs" %>
+    <script type="text/javascript">
+        $(document).ready(function(){
+        	$('#bookmarkletLoginForm').bind("ajax:success", function(e, data, status, xhr){				
+				if (data.success){					
+					window.location = data.redirect;
+				} else {
+					$('#bookmarkletLoginForm .error').show();	
+				}
+			});	
+        });
+    </script>
+    <%= csrf_meta_tags %>
   </head>
   <body>
     <div id="header">
       <div class="header-container clearfix">
         <a id="logo" href="#"></a> <!-- Logo -->
         <div id="header-info">
-          Don't have account? <a href="#">Sign up!</a>
+          Don't have account? <%= link_to "Sign up!", root_path %>
         </div>
       </div>
     </div><!-- Container ends -->
@@ -26,14 +39,14 @@
         <p>Don't worry, this will only take a couple of seconds.</p>
         <p>Forgot password? <a href="#">Retrieve!</a></p>
       </div>
-      <%= form_for "user", url: bookmarklet_login_path do |f| %>
-        <% if @user.errors.any? %>
-		    <span class="error">		    
-	        	<% @user.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>	    	
-		    </span>
-        <% end %>
+      <%= form_for "user", url: new_user_session_path, remote: true, format: :json, html: { id: "bookmarkletLoginForm" } do |f| %>      
+        
+	    <span class="error" style="display:none;">
+	    	 Incorrect combination of email and password! Try again.		    	        		    	
+	    </span>
+        
         <label>Username/Email</label>        
-        <%= f.email_field :email, class: 'field', size: nil %>        
+        <%= f.email_field :email, class: 'field', size: nil %> 
         <label>Password</label>
         <%= f.password_field :password, class: 'field', size: nil %>
         <%= f.check_box :remember_me, class: 'field' %>        
@@ -41,6 +54,8 @@
         <input type="submit" class="submit" value="Log me in" />
       <% end %>
     </div>
+    
   </div> <!-- Content Ends -->
+  <!--<%= debug(params) if Rails.env.development? %>-->
 </body>
 </html>

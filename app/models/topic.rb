@@ -17,8 +17,8 @@ class Topic
   validates :name, presence: true
   
   ## API 
-  def add_links(author, url)
-    link = links.build url: url, creator_name: author.name
+  def add_links(author, url, the_title="", the_note="")
+    link = links.build url: url, creator_name: author.name, title: the_title, notes: the_note 
     link.user = author
     if link.save
       bundle_notify author, "#{author.name} created a link on topic #{self.name}", :new_link

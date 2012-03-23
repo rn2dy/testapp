@@ -1440,7 +1440,7 @@ i.delete-i {
 .topic-comments .topic-comments-list ul {
 	float: left;
 	margin-top: -15px;
-	
+	width: 230px;
 }
 
 .topic-comments .topic-comments-list ul li {
