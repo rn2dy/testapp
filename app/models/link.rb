@@ -11,8 +11,6 @@ class Link
   field :image_src, type: String, default: "p-img-bg.jpg"
   field :creator_name, type: String
   
-  attr_accessor :skip
-  
   scope :recent, order_by(created_at: :desc)
   scope :check_new, ->(user_id, since) { excludes(user_id: user_id).where(:created_at.gt => since) } 
 
