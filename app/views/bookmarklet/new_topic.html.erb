@@ -14,16 +14,20 @@
 			e.preventDefault();
 			if (check_emails('.new-topic-form') != true || /^\s*$/.test($('.new-topic-form input:text').val()) ){
   				$('.error').show();
-	      	} else {
-	      		$(this).unbind('click');
-	      		$(this).text("Adding...");
-	      		$('.new-topic-form #note').val($('textarea#linkNote').val());
-	      		var data = $('.new-topic-form').serialize();		      		
-	      		$.post('/bookmarklet/add_topic', data, function(response){ 
-	      			$('.finish-btn').bind('click', submitForm);
-	      			$('.finish-btn').text("Klip it");
-  			 	});
-	      	}
+      } else {
+        $(this).unbind('click');
+        $(this).text("Adding...");
+        $('.new-topic-form #note').val($('textarea#linkNote').val());
+        var data = $('.new-topic-form').serialize();		      		
+        $.post('/bookmarklet/add_topic', data, function(response){ 
+          $('.finish-btn').bind('click', submitForm);
+          $('.finish-btn').text("Klip it");
+          var ans = confirm("You have successfully added the topic and the link. Close this bookmarklet?");
+          if (ans == true){
+            window.close();
+          }
+        });
+      }
 		}		
 	</script>
 	<%= csrf_meta_tags %>
