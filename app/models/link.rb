@@ -55,9 +55,8 @@ class Link
     end
 
     def extract_image_src
-      logger.info ">>>>> #{self.url}"
-      open(self.url) do |f|
-        begin
+      begin
+        open(self.url) do |f|
           srcs = f.each_line.select do |s|
             s.force_encoding('UTF-8') =~ /<img(.*?)>/u
           end
@@ -87,13 +86,13 @@ class Link
               end
             end
           end           
-        rescue => e
-          logger.info e.inspect
-          logger.info e.backtrace
-          self.image_src = default_image_src
-        ensure          
-          self.image_src ||= default_image_src  
         end
+      rescue => e
+        logger.info e.inspect
+        logger.info e.backtrace
+        self.image_src = default_image_src
+      ensure          
+        self.image_src ||= default_image_src  
       end
     end
 
