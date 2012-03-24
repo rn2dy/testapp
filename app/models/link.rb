@@ -55,6 +55,7 @@ class Link
     end
 
     def extract_image_src
+      logger.info ">>>>> #{self.url}"
       open(self.url) do |f|
         begin
           srcs = f.each_line.select do |s|
