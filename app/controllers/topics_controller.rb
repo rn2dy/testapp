@@ -14,9 +14,11 @@ class TopicsController < ApplicationController
     respond_to do |format|
       if @topic.save
         @topic.add_invitees(current_user, params[:invitees]) if params[:invitees].present?        
-        format.html { redirect_to @topic, notice: 'Topic was successfully created.' }
+        format.html { redirect_to @topic }
+        format.json { render json: { success: true, redirect: topic_path(@topic) } } 
       else
         format.html { redirect_to home_dashboard_url }
+        format.json { render json: { success: false, errors: "Same topic already exist!" } }
       end
     end
   end
@@ -32,7 +34,10 @@ class TopicsController < ApplicationController
   def destroy
     respond_to do |format|
       if current_user.topics.delete(@topic)
-        format.html { redirect_to home_dashboard_path, notice: 'Left the topic...' }
+        if @topic.participants.empty?
+          @topic.delete
+        end
+        format.html { redirect_to home_dashboard_path }
       end
     end
   end
@@ -42,7 +47,7 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.save
-        format.html { redirect_to @topic, notice: 'Invitees added!' }
+        format.html { redirect_to @topic }
         format.json { render json: @topic, status: :created, location: @topic }
       else
         format.html { render action: "new" }

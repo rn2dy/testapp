@@ -70,19 +70,20 @@
 	        	<%= form_for "user", url: new_user_session_path, remote: true, format: :json, html: { id: "loginForm" } do |f| %>
 			        <div>
 				        <label>Enter account e-mail</label>
-				        <%= f.email_field :email %>
+				        <%= f.email_field :email, id: "login_email" %>
 			        </div>   
 			        
 			        <div>
-				        <label>Enter account password <a href="#retrievePassPopup" class="popup-trigger">Forgot password?</a></label>
-				        <%= f.password_field :password %>
+                <label>Enter account password 
+                  <!--<a href="#retrievePassPopup" class="popup-trigger">Forgot password?</a>--></label>
+				        <%= f.password_field :password, id: "login_password" %>
 			        </div>     
 			        
 			        <div class="remember-login">
 				        <%= f.check_box :remember_me %>
 				        <p>Remember me</p>
 			        </div>    			        
-					<%= hidden_field_tag "src", 'site' %>					
+					    <%= hidden_field_tag "src", 'site' %>					
 			        <div class="content-divider"></div>
 			        
 			        <div>
@@ -107,7 +108,8 @@
 				        <div class="content-divider"></div>
 				        <div>				        
 					        <%= submit_tag "Send", class: "pop-content-form-button" %>
-					        <span class="error-message" style="display:none;"><i class="icon error-i"></i> Invalid email address, try again!</span>
+                  <span class="error-message" style="display:none;">
+                    <i class="icon error-i"></i> Invalid email address. Try again!</span>
 				        </div>
 			        </div>
 			        <div id="resendPassFormConfirm" style="display:none;">
@@ -116,8 +118,8 @@
 			        	</div>
 			        	<div class="content-divider"></div>
 			        	<div>
-						  <%= button_tag "Ok", type: "button", onclick: "$.fancybox.close(); return false;", class: "pop-content-form-button" %>
-						</div>
+						      <%= button_tag "Ok", type: "button", onclick: "$.fancybox.close(); return false;", class: "pop-content-form-button" %>
+						    </div>
 			        </div>			        
 		        <% end %>  
 	        </div><!-- Pop content ends -->

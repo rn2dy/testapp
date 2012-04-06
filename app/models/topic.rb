@@ -11,10 +11,10 @@ class Topic
 
   default_scope :order => "created_at DESC"
   has_and_belongs_to_many :participants, class_name: 'User'
-  has_many :links                        
+  has_many :links, dependent: :delete                        
   embeds_many :comments
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   
   ## API 
   def add_links(author, url, the_title="", the_note="")
@@ -57,7 +57,7 @@ class Topic
       if candidate
         next if participants.include?(candidate)
         candidate.notifications.create message: "#{invitor.name} invited you to the topic #{self.name}", link: "/topics/#{self.id}"        
-        Notifier.invited(invitor, candidate, self).deliver        
+        Notifier.invited(invitor, candidate, self).deliver 
         participants << candidate
       else
         Notifier.unknown_user_invited(invitor, e, self).deliver

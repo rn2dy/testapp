@@ -7,7 +7,7 @@ describe Topic do
     @topic = @user.topics.create(@attr.merge(starter_id: @user.id, starter_name: @user.name))
   end
 
-  it "should create a new instance given a valid attribute" do
+  it "should create a new Topic given a valid attribute" do
     Topic.create! @attr
   end
 
@@ -49,7 +49,4 @@ describe Topic do
       @topic.add_comment(visiter, "comment...")
     end.should raise_error
   end
-
-
-
 end

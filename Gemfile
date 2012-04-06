@@ -21,6 +21,7 @@ group :test do
   gem "email_spec", ">= 1.2.1"
   gem "cucumber-rails", ">= 1.3.0"
   gem "capybara", ">= 1.1.2"
+  gem "capybara-webkit", "~> 0.11.0"
   gem "launchy", ">= 2.0.5"
 end
 

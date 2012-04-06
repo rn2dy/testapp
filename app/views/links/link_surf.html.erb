@@ -1,0 +1,36 @@
+<% content_for :head do %>
+  <style type="text/css" media="screen">
+    .fullscreen {
+      position: absolute;
+      top: 58px;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+    }
+  </style>
+
+  <%= javascript_include_tag "iframe" %>
+  <%= javascript_include_tag "http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.6/underscore-min.js" %>
+  <%= javascript_include_tag "http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js" %>
+  <%= javascript_include_tag "navigator" %>
+
+  <script type="text/javascript" charset="utf-8">
+    var currentLinkPosition = <%= @current_link_idx %>;
+    var allLinks = <%= raw @all_links %>;
+    var template = "<div class='fullscreen'>" + 
+                      "<iframe name='pane'></iframe>" + 
+                   "</div>";
+    $(document).ready(function(){
+      $('div.content').remove();
+      $('div.notification-holder').after(template);
+      $("iframe").src("<%= @current_link %>");
+    });
+  </script> 
+<% end %>
+

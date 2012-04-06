@@ -727,7 +727,7 @@ i.btn-icon.arrow { right: 5px; left: auto; }
 	top: 0;
 	left: 50%;
 	margin-left: -96px;
-	
+  z-index: 9999;	
 }
 
 #header span {

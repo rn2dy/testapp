@@ -31,6 +31,7 @@ Testapp::Application.routes.draw do
 
   resources :links do
     post 'add_notes', on: :member
+    get 'link_surf', as: :surf 
   end
 
   # Bookmarklet

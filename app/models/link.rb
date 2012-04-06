@@ -12,6 +12,7 @@ class Link
   field :creator_name, type: String
   
   scope :recent, order_by(created_at: :desc)
+  default_scope order_by(created_at: :desc)
   scope :check_new, ->(user_id, since) { excludes(user_id: user_id).where(:created_at.gt => since) } 
 
   belongs_to :topic
@@ -23,7 +24,7 @@ class Link
   before_create :do_extraction
   
   private
-  
+     
     def do_extraction
       if skip_extract_title
         extract_image_src
@@ -45,12 +46,8 @@ class Link
 
     def extract_title
       open(self.url) do |f|
-        f.each_line do |line|
-          if line.force_encoding('UTF-8') =~ /<title>(.*)<\/title>/u 
-            self.title = $1.empty? ? make_title : $1
-            break;
-          end
-        end
+        f.read.force_encoding('UTF-8') =~ /<title>(.*)<\/title>/m
+        self.title = $1.empty? ? make_title : $1
       end
     end
 
@@ -58,17 +55,17 @@ class Link
       begin
         open(self.url) do |f|
           srcs = f.each_line.select do |s|
-            s.force_encoding('UTF-8') =~ /<img(.*?)>/u
+            s.force_encoding('UTF-8') =~ /<img(.*?)>/m
           end
         
           if srcs.empty?
             self.image_src = default_image_src
           else            
             links = srcs.map do |src|
-              res = src.match /src="(.*?)"/u
+              res = src.match /src="(.*?)"/m
               if res
                 img_url = res[1]
-                if img_url !~ /https?:\/\//u
+                if img_url !~ /https?:\/\//m
                   'http://' + extract_domain + (img_url[0] == '/' ? img_url : '/' + img_url)
                 else
                   img_url

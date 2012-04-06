@@ -3,6 +3,7 @@
   	<head>
 	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	    <title>Klipt</title>
+      <%= favicon_link_tag 'favicon.ico' %>
 	    <!-- jQuery -->    
 	    <%= javascript_include_tag "jquery", "jquery_ujs" %>
 			    
@@ -24,12 +25,21 @@
 	    	
 	        $(document).ready(function() {
 	          	$(".popup-trigger").fancybox(properties);	          
+
 	          	$('.new-topic-form').submit(function(){	          		
-		      		if (check_emails('.new-topic-form') != true || /^\s*$/.test($('.new-topic-form input:text').val()) ){
-		      			$('.new-topic-form .error-message').show();	
-						return false;
-		      		}
+		      		  if (check_emails('.new-topic-form') != true || /^\s*$/.test($('.new-topic-form input:text').val()) ){
+		      			  $('.new-topic-form .error-message').html("<i class='icon error-i'></i>" + "Invalid input, please try again!").show();	
+						      return false;
+		      		  }
           		});
+              $('.new-topic-form').bind("ajax:success", function(e, data, status, xhr){
+                if(data.success) {
+                  window.location = data.redirect;
+                } else {
+                  $('.new-topic-form .error-message').html("<i class='icon error-i'></i>" + data.errors).show();
+                }
+              });
+
           		<% if user_signed_in? %>
           			fireNotifications();          			
           		<% end %>
@@ -49,15 +59,14 @@
 	          var s = document.getElementsByTagName('script')[0]; 
 	          s.parentNode.insertBefore(uv,s);
 	         })();
-          	
 	    </script>
 	    
 	    <!-- Stylesheets -->
-		<%= stylesheet_link_tag "application" %>
+		  <%= stylesheet_link_tag "application" %>
 		
-		<!-- rails stuff -->
+		  <!-- rails stuff -->
 	    <%= csrf_meta_tags %>
-		<%= yield(:head) %>
+		  <%= yield(:head) %>
   	</head>
   
   	<body id="<%= controller.action_name == "index" ? "intro" : "loggedin" %>">
@@ -137,7 +146,7 @@
 			    </div><!-- Pop header ends-->
 			    
 			    <div class="pop-content-form pop-content-container clearfix">			    	
-				    <%= form_tag '/topics', method: :post, class: "new-topic-form" do %>
+				    <%= form_tag '/topics.json', remote: true, class: "new-topic-form" do %>
 					    <div>
 					    	<label>Enter topic name</label>
 					    	<%= text_field :topic, :name, value: '', placeholder: "For example 'Places to visit on vacation", maxlength: 35 %>
