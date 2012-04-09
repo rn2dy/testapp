@@ -1863,13 +1863,28 @@ a#close {
 	float:right;
 }
 
-/*
-.more-notifications, .less-notifications {
-	display: inline-block;
-	margin-left: 750px;
-	width: 300px;
+span#next, span#prev {
+  cursor: pointer;
+  color: #333;
+  padding: 5px;
+  margin-top: 15px;
+  margin-left: 10px;
+  float: left;
+
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.25);
+	text-shadow: 0 1px #fff;	
+
+  background: #ffdc66; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffdc66 0%, #ffbe36 75%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffdc66), color-stop(75%,#ffbe36)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* IE10+ */
+	background: linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffdc66', endColorstr='#ffbe36',GradientType=0 ); /* IE6-9 */
 }
-.more-notifications a, .less-notifications a{
-	float:right;
-}
-*/

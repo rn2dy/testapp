@@ -21,7 +21,7 @@
   <%= javascript_include_tag "navigator" %>
 
   <script type="text/javascript" charset="utf-8">
-    var currentLinkPosition = <%= @current_link_idx %>;
+    var currentLinkPosition = <%= @current_link_idx + 1%>;
     var allLinks = <%= raw @all_links %>;
     var template = "<div class='fullscreen'>" + 
                       "<iframe name='pane'></iframe>" + 
@@ -30,7 +30,10 @@
       $('div.content').remove();
       $('div.notification-holder').after(template);
       $("iframe").src("<%= @current_link %>");
+      $("span#prev").click(window.linknav.loadPrevPage);
+      $("span#next").click(window.linknav.loadNextPage);
     });
+    
   </script> 
 <% end %>
 

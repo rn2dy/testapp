@@ -39,6 +39,7 @@ class Link
     end
     
     def format_url
+      url.strip!
       if url !~ /https?/i
         self.url = 'http://' + url              
       end         

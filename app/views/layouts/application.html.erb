@@ -74,21 +74,34 @@
 		<div id="header">
 			<div class="header-container clearfix">
 				<% if user_signed_in? %>
-					<div id="topics-quick">
-						<% if current_user.topics.count > 0 %>
-							<div class="topics-btn"><i class="btn-icon topics-i"></i> My Topics <i class="btn-icon arrow down"></i></div>
-							<ul class="h-dropdown">
-								<% current_user.topics.each do |topic| %>
-									<li><%= link_to topic.name, topic %></li>	
-								<% end %>
-								<li class="last"><%= link_to "See All Topics", home_dashboard_path %></li>
-							</ul>
-						<% else %>
-							<div class="topics-btn"><i class="btn-icon topics-i"></i> No Topics </div>
-						<% end %>
-					</div><!-- Quick Topics Dropdown -->
+
+          <% if controller.action_name == "link_surf" %>
+            <!-- Links Quick Access -->
+            <div id="topics-quick">
+              <div class="topics-btn"><i class="btn-icon topics-i"></i> All Links <i class="btn-icon arrow down"></i></div>
+            </div>
+            <span id='prev'>Prev</span>
+            <span id='next'>Next</span>
+            <!-- End - Links Quick Access -->
+          <% else %>
+            <!-- Topics Quick Access -->
+            <div id="topics-quick">
+              <% if current_user.topics.count > 0 %>
+                <div class="topics-btn"><i class="btn-icon topics-i"></i> My Topics <i class="btn-icon arrow down"></i></div>
+                <ul class="h-dropdown">
+                  <% current_user.topics.each do |topic| %>
+                    <li><%= link_to topic.name, topic %></li>	
+                  <% end %>
+                  <li class="last"><%= link_to "See All Topics", home_dashboard_path %></li>
+                </ul>
+              <% else %>
+                <div class="topics-btn"><i class="btn-icon topics-i"></i> No Topics </div>
+              <% end %>
+            </div>
+            <!-- End - Topic Quick Access -->
+					  <a class="new-topic-btn popup-trigger" href="#newTopicPopup" ><i class="btn-icon new-topic-i"></i>New Topic</a>
+          <% end %>
 					
-					<a class="new-topic-btn popup-trigger" href="#newTopicPopup" ><i class="btn-icon new-topic-i"></i>New Topic</a>
 				<% end %>
 				<a id="logo"></a> <!-- Logo -->
 				<% if user_signed_in? %>
