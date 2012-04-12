@@ -41,7 +41,7 @@ html[xmlns] .clearfix {
 	width: 100%;
 	height: 1px;
 	background:url(horizontal-stitched-border.png) repeat-x;
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 	
 }
 
@@ -109,7 +109,7 @@ html[xmlns] .clearfix {
 }
 
 .content .block {
-	padding: 0 30px 30px 30px;
+	padding: 0 30px 20px 30px;
 	width: 400px;
 	
 }
@@ -123,7 +123,7 @@ html[xmlns] .clearfix {
 }
 
 .field {
-	padding: 8px;
+	padding: 6px 8px;
 	border: solid 1px #bbb;
 	box-shadow:inset 0 0 5px #e8e8e8;
 	color: #333;
@@ -140,15 +140,15 @@ p.klip-info {
 	width: 360px;
 	padding-left: 40px;
 	background: url(clip-icon.png) left center no-repeat;
-	line-height: 24px;
+	line-height: 20px;
 	font-weight: bold;
 	color: #666;
-	font-size: 18px;
+	font-size: 14px;
 	
 }
 
 p.klip-info a {
-	color: #aaa;
+	display: block;
 	
 }
 	
@@ -204,7 +204,7 @@ form input {
 }
 
 form input.field {
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 	
 }
 
@@ -254,12 +254,13 @@ form input.field {
 
 .login form span.error {
 	float: left;
-	padding: 10px;
+	padding: 8px;
 	background: #fcf2f1;
 	border: dashed 1px #bfadac;
 	color: #876e6d;
-	line-height: 16px;
+	line-height: 14px;
 	margin-bottom: 10px;
+	font-size: 11px;
 	
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -296,6 +297,7 @@ form input.field {
 	margin-bottom: 30px;
 	float: left;
 	width: 100%;
+	
 	
 }
 
@@ -355,6 +357,43 @@ form input.field {
 		
 }
 
+.content-btn.orange {
+	color: #333;
+	border: solid 1px #9B731E;	
+	font: bold 14px Arial, Helvetica, sans-serif;
+	
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	
+	background: #ffdc66; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffdc66 0%, #ffbe36 75%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffdc66), color-stop(75%,#ffbe36)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* IE10+ */
+	background: linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffdc66', endColorstr='#ffbe36',GradientType=0 ); /* IE6-9 */
+	
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.25);
+	
+	text-shadow: 0 1px #fff;	
+}
+
+.content-btn.orange:hover {
+	background: #ffe693; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffe693 0%, #ffca60 88%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffe693), color-stop(88%,#ffca60)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffe693 0%,#ffca60 88%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffe693 0%,#ffca60 88%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffe693 0%,#ffca60 88%); /* IE10+ */
+	background: linear-gradient(top,  #ffe693 0%,#ffca60 88%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffe693', endColorstr='#ffca60',GradientType=0 ); /* IE6-9 */
+		
+}
+
+
 .block .block-header .content-btn {
 	float: right;
 	
@@ -365,38 +404,25 @@ form input.field {
 	
 }
 
-.block ol.themes-list {
-	float: left;
-	width: 370px;
-	padding: 1px 30px 0 0;
-	max-height: 170px;
-	height: 170px;
-	min-height: 170px;
-	overflow: auto;
+.select-topic {
+	padding: 12px;
+	border: solid 1px #bbb;
+	box-shadow:inset 0 0 5px #e8e8e8;
+	color: #333;
+	width: 278px;
+	float: right;
+	
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	
+	font: 14px Arial, Helvetica, sans-serif;
 }
 
-.block ol.themes-list input {
-	float: left;
-	
-}
-
-
-.block ol.themes-list li {
-	padding: 10px;
-	width: 100%;
-	margin-top: -1px;
-	font-size: 14px;
-	color: #666;
-	font-weight: bold;
-	
-	float: left;
-	
-	border-bottom: dashed 1px #ccc;
-}
-
-.block ol.themes-list li a {
-	margin: 2px 0 0 5px;
-	float: left;
+.new-topic {
+	float: right;
+	margin-top: 10px;
 	
 }
 
@@ -406,7 +432,7 @@ form input.field {
 	float: left;
 	text-align: center;
 	padding: 12px 0;
-	margin: 20px 0 0 30px;
+	margin: 0 0 0 30px;
 	
 }
 
@@ -437,5 +463,15 @@ form input.field {
 .newtopic form textarea {
 	height: 100px;
 	max-height: 100px;
+	
+}
+
+.newtopic a {
+	float: left;
+	margin-top: 10px;
+}
+
+.newtopic a.back-btn {
+	margin-left: 10px;
 	
 }

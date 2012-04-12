@@ -5,11 +5,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Klipt</title>
 	<%= javascript_include_tag "jquery", "jquery_ujs" %>
-	<%= stylesheet_link_tag "bookmarklet_style", "reset" %>
+	<%= stylesheet_link_tag "reset", "bookmarklet_style"%>
 	<script>
 		$(document).ready(function(){
 			$('.finish-btn').click(function(){
-				var topic_id = $('ol.themes-list input:checked').val();
+				var topic_id = $('select option:selected').val();
 				if ( typeof(topic_id) != "undefined" ){					
 					// call /bookmarklet/add_link										
 					var data = { topic: topic_id, 
@@ -55,17 +55,17 @@
 				<textarea class="field" id="linkNote"></textarea>
 			</form>
 		</div>
-		<div class="block white login clearfix">
-			<div class="block-header"><h2>Klip to...</h2> 
-				<%= link_to "Add New Topic", bookmarklet_new_topic_path(url:@target_url,title:@target_title),class: "content-btn" %>
-			</div>
-			<div class="content-divider"></div>			
-			<ol class="themes-list">				
-				<% @topics.each do |topic| %>
-					<li><%= check_box_tag topic.name, topic.id %><%= link_to topic.name, topic %></li>
-				<% end %>
-			</ol>
+		
+		<div class="block clearfix note">
+			<form>
+				<label>Select Topic</label>
+				<select class="select-topic">
+					<%= options_for_select @topics.map { |t| [t.name, t.id] } %>					
+				</select>
+				<%= link_to "New Topic", bookmarklet_new_topic_path(url:@target_url,title:@target_title),class: "content-btn new-topic" %>				
+			</form>
 		</div>
+		<div class="content-divider"></div>				
 		<a href="#" class="finish-btn">Klip it</a>
 		
 	</div> <!-- Content Ends -->

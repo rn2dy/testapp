@@ -12,6 +12,8 @@ class SessionsController < Devise::SessionsController
     scope = Devise::Mapping.find_scope!(resource_or_scope)
     resource ||= resource_or_scope
     sign_in(scope, resource) unless warden.user(scope) == resource    
+    logger.info "!!!!!!!! #{after_sign_in_path_for(resource)}"
+    logger.info "!!!!!!!! #{stored_location_for(scope)}"
     return render :json => { :success => true, :redirect => ( from_site? ? after_sign_in_path_for(resource) : stored_location_for(scope) ) }    
   end
 

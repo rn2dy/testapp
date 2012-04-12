@@ -1,3 +1,4 @@
+<!--
 <div class="content clearfix">
    <div class="bookmarklet-klipt about-klipt">
       <h3>Using the Bookmarklet</h3>  
@@ -16,3 +17,92 @@
       <div><a href="<%= @bookmarklet_js %>" class="new-topic-btn bookmarklet">Klipt</a></div>
    </div>
 </div>
+-->
+
+<div class="content clearfix">
+	<div class="klip-btn-promo">
+		<h2>"Klip it" Browser Button</h2>
+		<div class="content-divider"></div>
+		<div class="klipt-btn-browser">
+			<a href="<%= @bookmarklet_js %>" class="btn-drag">Klip it</a>
+			<span class="hw-text"></span>
+		</div>
+		<div class="content-divider"></div>
+
+		<div class="klip-btn-promo-description">
+			<p><strong>How to install "Klip it" button to your browser:</strong></p>			
+			<ol>
+				<li>Display your Bookmarks by clicking the Wrench Icon > Tools > Always Show Bookmarks Bar</li>
+				<li>Drag the "Klip It" button to your Bookmarks bar</li>
+				<li>When you are browsing the web, push the "Klip It" button to link the page</li>
+			</ol>			
+			<p>Once installed in your browser, the "Klip It" button lets you link any webpage or image from any website and add it to one of your topics.</p>		
+		</div>
+	</div><!-- -->
+
+	<div class="klip-btn-promo" style="float: right" >
+		<h2>"Klip it" Websites Button</h2>
+		<div class="content-divider"></div>
+
+		<div class="klipt-btn-websites clearfix">
+			<form>
+				<label>URL of the webpage the button will be on</label>
+				<input type="text" />
+			
+				<label>Select button style</label>
+			
+				<select>
+					<option>Horizontal Count</option>
+					<option>Vertical Count</option>
+					<option>No Count</option>
+				</select>
+			
+				<div class="klip-button-styles" >
+					<div class="style-block" style="margin: 0;">
+						<h3>Horizontal Count</h3>				
+						<div class="klip-btn-hcount">				
+							<a href="#" class="klip-btn">Klip it</a>				
+							<div class="klip-btn-counter">
+								<i></i>
+								<span>16</span>
+							</div><!-- Counter -->				
+						</div> <!-- Klip button horizontal -->			
+					</div> <!-- style block -->
+					<div class="style-block" style="margin-left: 40px;">
+						<h3>Horizontal Count</h3>			
+						<div class="klip-btn-vcount">			
+							<div class="klip-btn-counter">
+								<i></i>
+								<span>16</span>
+							</div><!-- Counter -->			
+							<a href="#" class="klip-btn">Klip it</a>			
+						</div> <!-- Klip button horizontal -->			
+					</div> <!-- style block -->			
+					<div class="style-block" style="width: 80px;">
+						<h3>No Count</h3>				
+						<div class="klip-btn-ncount">				
+							<a href="#" class="klip-btn">Klip it</a>				
+						</div> <!-- Klip button horizontal -->			
+					</div> <!-- style block -->			
+				</div>		
+			<!-- Previews of klip button end -->		
+			</form>
+		</div>
+
+		<div class="klip-code-output">		
+			<form>
+				<div>
+					<input type="radio" name="code-output" value="basic" checked="checked" /> <label>Basic</label>
+					<input type="radio" name="code-output" value="advanced" /> <label>Advanced</label>
+				</div>
+			
+				<textarea><a href="http://pinterest.com/pin/create/button/" class="pin-it-button" count-layout="vertical">Pin It</a><script type="text/javascript" src="http://assets.pinterest.com/js/pinit.js"></script></textarea>				
+				<span class="hw-text" style="background-position: bottom; margin: 0;"></span>				
+			</form>	
+		</div>	
+		<div class="content-divider"></div>	
+		<div class="klip-btn-promo-description">
+			<p>The Klip It button is made to look like and function similarly to both Facebook's and Twitter's buttons. Placing them together will increase the social awareness of your products.</p>
+		</div>
+	</div><!-- -->
+</div> <!-- Content Ends -->
