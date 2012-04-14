@@ -4,8 +4,6 @@ class BookmarkletController < ApplicationController
 
   # sign in page
   def index
-    @title = session[:title]
-    @url = session[:url]
   end
 
   def login
