@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
   def store_location
     if params[:controller] == 'bookmarklet'
       session[:user_return_to] ||= request.url
-      session[:title] ||= params[:title] 
-      session[:url]   ||= params[:url]
+      session[:title] = params[:title] 
+      session[:url]   = params[:url]
     end
   end
 
