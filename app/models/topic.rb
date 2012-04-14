@@ -21,9 +21,9 @@ class Topic
     link = links.build url: url, creator_name: author.name, title: the_title, notes: the_note 
     link.user = author
     if link.save
-      bundle_notify author, "#{author.name} created a link on topic #{self.name}", :new_link
+      bundle_notify author, "#{author.name} created a link on topic #{self.name}", :new_link      
     end
-    return link 
+    return link
   end
   
   def add_comments(commentor, content)

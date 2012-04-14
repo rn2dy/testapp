@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  #before_filter :authenticate_user!
   protect_from_forgery
   layout "default"
 
@@ -8,6 +7,8 @@ class ApplicationController < ActionController::Base
   def store_location
     if params[:controller] == 'bookmarklet'
       session[:user_return_to] ||= request.url
+      session[:title] ||= params[:title] 
+      session[:url]   ||= params[:url]
     end
   end
 

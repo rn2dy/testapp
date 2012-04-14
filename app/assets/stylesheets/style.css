@@ -2170,4 +2170,14 @@ div.klip-btn-vcount .klip-btn-counter i {
 	
 }
 
+/* header klipt promo button */
+#header a.klip-btn-h {
+  text-indent: -9999px;
+  width:80px;
+  height:24px;
+  display:block;
+  float:right;
+  margin:16px 40px 0 0;
+  background: url(klipit-btn-promotion.png) center top no-repeat;
+}
 
