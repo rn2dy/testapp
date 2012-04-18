@@ -41,7 +41,7 @@
               });
 
           		<% if user_signed_in? %>
-          			fireNotifications();          			
+          			window.timerId = fireNotifications();          			
           		<% end %>
 	        });
 	        
@@ -152,7 +152,7 @@
               </li>
 							<% end %>
 						<% end %>																				
-            <li style="text-align:center;"><a href="#" onclick="$('#sysNotifications').toggle();">Close</a></li>
+            <li style="text-align:center;"><a href="#" onclick="$('#sysNotifications').toggle();clearInterval(window.timerId);">Close</a></li>
 					</ul>
 				</div>				
       </div>

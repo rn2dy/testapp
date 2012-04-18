@@ -69,7 +69,7 @@ function fireNotifications(){
     $(this).animate({height: '30px'}, 300);
   });
 
-	setInterval(function(){
+	return setInterval(function(){
 		$.ajax('/home/sys_notify.json', {
 			type: 'get',
 			cache: false,
