@@ -56,19 +56,19 @@ function capitalize(word){
 }
 
 function fireNotifications(){
+  
   $('#sysNotifications').hover(function(){
     var contentHeight = 0;
     $(this).children().each(function(){
       contentHeight += $(this).height();
     });
     $(this).animate({
-      height: contentHeight
-    }, 300);  
-  }, function(){
-    $(this).animate({
-      height: '30px'
-	  }, 300);
+      height: contentHeight 
+    }, 300);
+  },function(){
+    $(this).animate({height: '30px'}, 300);
   });
+
 	setInterval(function(){
 		$.ajax('/home/sys_notify.json', {
 			type: 'get',
@@ -76,24 +76,27 @@ function fireNotifications(){
 			success: function(json){
 				var result = "";
 				for (var i=json.length-1; i >= 0; i--){				
-					result += "<li>" + json[i].message + "<a href='"+ json[i].link +"'>Go</a></li>";
+					result += "<li><span>" + json[i].message + "</span><a class='go-nav' href='"+ json[i].link +"'>Go</a></li>";
 				}				
+				result += "<li style='text-align:center;'><a href=\"#\" onclick=\"$('#sysNotifications').toggle();\">Close</a></li>";
 				addToNotifications(result, json.length);
 			}
 		});
 	}, 30000);
 }
 
-function addToNotifications(record, count){	
-	if (record == ""){
+function addToNotifications(records, count){	
+	if (count == 0){
 		$('#sysNotifications').hide();
 	} else {
 	    $('#sysNotifications').show();
 	    $('#sysNotifications ul li').remove();
-	    $(record).hide().prependTo('#sysNotifications ul').slideDown("slow");
-	    if (count > 2 && !$('.less-notifications').is(':visible')){	    	
-	    	$('.more-notifications').show();
-	    }
-  	}
+	    $(records).hide().prependTo('#sysNotifications ul').slideDown("slow");
+  }
 }
 
+function update(topic_id){
+  setInterval(function(){
+    $.post('/topics/'+ topic_id +'/refresh.js');
+  }, 20000);
+}

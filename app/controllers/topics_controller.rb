@@ -6,6 +6,8 @@ class TopicsController < ApplicationController
   layout 'fluid', only: [:show]
 
   def show
+    @hide_notify = true if params[:notifications] == "off" 
+
     @email_list = { @topic.id => @topic.participants.map { |p| p.email } }
   end
 
@@ -74,11 +76,6 @@ class TopicsController < ApplicationController
 
   # refresh view in every 30 sec  
   def refresh
-    @new_links = @topic.links.check_new(current_user.id, 
-      DateTime.strptime(params[:lld], '%Y-%m-%d %H:%M:%S %z'))
-    @new_comments = @topic.comments.check_new(current_user.id,
-      DateTime.strptime(params[:lcd], '%Y-%m-%d %H:%M:%S %z'))
-
     @links = @topic.links.recent
     @comments = @topic.comments.recent
     respond_to do |format|

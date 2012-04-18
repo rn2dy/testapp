@@ -117,7 +117,7 @@
           <% end %>
 					
 				<% end %>
-				<a id="logo"></a> <!-- Logo -->
+				<a id="logo" href="/home/dashboard"></a> <!-- Logo -->
 				<% if user_signed_in? %>
 					<div id="profile">
 					
@@ -142,25 +142,20 @@
 		</div><!-- Header ends -->
 		<% if user_signed_in? %>
 			<div class="notification-holder">			  
-				<div id="sysNotifications" style="<%= 'display:none;' if current_user.notifications.count == 0 %>">					
-					<ul>
+        <div id="sysNotifications" style="<%= 'display:none;' if current_user.notifications.count==0 || @hide_notify==true %>">					
+          <ul>
 						<% if (records = current_user.notifications).any? %>												
 							<% records.each do |notification| %>
-              <li><%= notification.message %> <a href="<%= notification.link %>">Go</a></li>
+              <li>
+                <span><%= notification.message %></span> 
+                <a class="go-nav" href="<%= "#{notification.link}?notifications=off" %>">Go</a>
+              </li>
 							<% end %>
 						<% end %>																				
+            <li style="text-align:center;"><a href="#" onclick="$('#sysNotifications').toggle();">Close</a></li>
 					</ul>
 				</div>				
-        <!--
-				<div class="more-notifications" style="<%= 'display:none;' unless current_user.notifications.count > 2 %>">
-					<a href="#" id="moreNotifications" >-more-</a>
-				</div>
-				<div class="less-notifications" style="display:none;">
-					<a href="#" id="lessNotifications">-less-</a>					
-				</div>			
-        -->
-			</div>
-
+      </div>
 		<% end %>
 		<!-- Content -->
 		<%= content_for?(:content) ? yield(:content) : yield %>

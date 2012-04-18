@@ -1859,8 +1859,15 @@ a#close {
 	padding-right: 5px;
 }
 
-#sysNotifications ul li a {
+#sysNotifications li span{
+  display: inline-block;
+  width: 270px;
+}
+
+
+#sysNotifications ul li a.go-nav {
 	float:right;
+  color: #444;
 }
 
 span#next, span#prev {

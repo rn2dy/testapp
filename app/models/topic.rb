@@ -21,7 +21,7 @@ class Topic
     link = links.build url: url, creator_name: author.name, title: the_title, notes: the_note 
     link.user = author
     if link.save
-      bundle_notify author, "#{author.name} created a link on topic #{self.name}", :new_link      
+      bundle_notify author, "#{author.name.titleize} created a link on topic #{self.name}", :new_link      
     end
     return link
   end
@@ -29,7 +29,7 @@ class Topic
   def add_comments(commentor, content)
     raise unless participants.include? commentor
     if res = comments.create!(content: content, user_name: commentor.name, user_id: commentor.id)
-      bundle_notify commentor, "#{commentor.name} commented on topic #{self.name}", :new_comment
+      bundle_notify commentor, "#{commentor.name.titleize} commented on topic #{self.name}", :new_comment
     end
     return res
   end
