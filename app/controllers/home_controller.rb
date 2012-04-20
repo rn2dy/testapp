@@ -41,5 +41,10 @@ HERE
     @user.notifications.where(:created_at.lt => 1.hour.ago).delete
     render json: @user.notifications
   end
+
+  def cancel_notifications
+    current_user.notifications.where(:created_at.lt => Time.now).delete
+    head :ok
+  end
   
 end

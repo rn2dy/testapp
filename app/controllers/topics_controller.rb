@@ -82,7 +82,7 @@ class TopicsController < ApplicationController
       format.js      
     end
   end
-  
+
   private 
   
   def find_topic

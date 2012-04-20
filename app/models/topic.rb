@@ -14,7 +14,7 @@ class Topic
   has_many :links, dependent: :delete                        
   embeds_many :comments
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true
   
   ## API 
   def add_links(author, url, the_title="", the_note="")

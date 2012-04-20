@@ -78,7 +78,7 @@ function fireNotifications(){
 				for (var i=json.length-1; i >= 0; i--){				
 					result += "<li><span>" + json[i].message + "</span><a class='go-nav' href='"+ json[i].link +"'>Go</a></li>";
 				}				
-				result += "<li style='text-align:center;'><a href=\"#\" onclick=\"$('#sysNotifications').toggle();\">Close</a></li>";
+				result += "<li style='text-align:center;'><a href=\"#\" onclick=\"$('#sysNotifications').toggle();cancelNotifications();\">Close</a></li>";
 				addToNotifications(result, json.length);
 			}
 		});
@@ -97,6 +97,12 @@ function addToNotifications(records, count){
 
 function update(topic_id){
   setInterval(function(){
-    $.post('/topics/'+ topic_id +'/refresh.js');
+    $.post('/topics/' + topic_id + '/refresh.js');
   }, 20000);
 }
+
+function cancelNotifications(){
+  clearInterval(window.timerId);
+  $.post('/home/cancel_notifications');
+}
+

@@ -6,6 +6,7 @@ Testapp::Application.routes.draw do
   match 'home/about'        => 'home#about'
   match 'home/sys_notify'   => 'home#sys_notify'
   match 'home/bookmarklet'  => 'home#bookmarklet'
+  match 'home/cancel_notifications' => 'home#cancel_notifications'
 
   authenticated :user do
     root :to => 'home#dashboard'
