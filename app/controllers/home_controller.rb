@@ -13,7 +13,7 @@ javascript:(function(){
   f = 'http://www.klipt.me/bookmarklet/new_link?url=' + encodeURIComponent(window.location.href) + 
       '&title=' + encodeURIComponent(document.title);
   a = function(){
-    if(!window.open(f,'_klipt_bookmarklet','location=yes,links=no,scrollbars=yes,toolbar=no,width=600,height=400'))
+    if(!window.open(f,'_klipt_bookmarklet','location=yes,links=no,scrollbars=yes,toolbar=no,width=520,height=450'))
         location.href=f+'jump=yes'
       };
       if(/Firefox/.test(navigator.userAgent)){
@@ -23,7 +23,7 @@ javascript:(function(){
       }
 })();
 HERE
-  @bookmarklet_js.squish!
+    @bookmarklet_js.squish!
   end
 
   def dashboard

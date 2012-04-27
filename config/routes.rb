@@ -40,7 +40,7 @@ Testapp::Application.routes.draw do
   get   'bookmarklet/new_link'   => 'bookmarklet#new_link'
   get   'bookmarklet/new_topic'  => 'bookmarklet#new_topic'
   post  'bookmarklet/add_link'   => 'bookmarklet#add_link'
-  post  'bookmarklet/login'    => 'bookmarklet#login'
+  post  'bookmarklet/login'      => 'bookmarklet#login'
   post  'bookmarklet/add_topic'  => 'bookmarklet#add_topic'
 
 end
