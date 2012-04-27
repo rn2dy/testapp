@@ -1,0 +1,100 @@
+<% content_for :head do %>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#loginForm').bind("ajax:success", function(e, data, status, xhr){				
+				if(data.success){
+					window.location = data.redirect;
+				}else{				
+					$('#loginForm .error-message').show();	
+				}
+			});
+    });
+  </script>
+<% end %>
+
+<div class="content clearfix">
+
+	<div class="intro-content how">
+
+	  <div class="intro-text">It's easier to use than you think...</div>
+
+	  <div class="intro-feature clearfix">
+      <%= image_tag 'f1.png' %>
+      <div class="intro-feature-text">
+        <b>Create Topics</b>
+        <p>Just type in a topic name that you want to start adding your link to. The most difficult part is probably thinking of an interesting topic to start =).</p>
+      </div><!-- Intro feature text -->
+    </div><!-- Intro feature -->
+
+    <div class="intro-feature clearfix">
+      <%= image_tag 'f2.png' %>
+      <div class="intro-feature-text">
+        <b>Submit to Topic</b>
+        <p>Just copy and paste your link into the bar to add the link to the topic, or better yet.. use the bookmarklet.</p>
+      </div><!-- Intro feature text -->
+    </div><!-- Intro feature -->
+
+    <div class="intro-feature clearfix">
+      <%= image_tag 'f3.png' %>
+      <div class="intro-feature-text">
+        <b>Simple Klipping</b>
+        <p>As you're surfing and come across stuff you want to save or share, just click Klipt on your bookmark bar/favorites to add the link to a topic.</p>
+      </div><!-- Intro feature text -->
+    </div><!-- Intro feature -->
+
+    <div class="intro-feature clearfix">
+      <%= image_tag 'f4.png' %>
+      <div class="intro-feature-text">
+        <b>Invite and Discuss</b>
+        <p>Invite others to view your topics and to add links of their own and share your thoughts.</p>
+      </div><!-- Intro feature text -->
+    </div><!-- Intro feature -->
+
+	  <div class="outro-block clearfix">
+	    <div>
+        <%= link_to 'Sign up', root_path, class: 'signup-btn' %>
+        <span>or</span>
+        <a href="#loginPopup" class="login-btn popup-trigger" >Login</a>
+      </div>
+	  </div> 
+
+  </div><!-- Intro cotnent -->
+
+</div> <!-- Content Ends -->
+
+<% content_for :hidden_content do %>
+	<!-- login form -->
+	<div style="display: none;">
+		<div id="loginPopup" class="pop-content">
+	        <div class="pop-content-header"><div class="pop-content-container">Welcome back!</div></div> 
+	        <!-- Pop header ends-->
+	        
+	        <div class="pop-content-form pop-content-container clearfix">
+	        	<%= form_for "user", url: new_user_session_path, remote: true, format: :json, html: { id: "loginForm" } do |f| %>
+			        <div>
+				        <label>Enter account e-mail</label>
+				        <%= f.email_field :email, id: "login_email" %>
+			        </div>   
+			        
+			        <div>
+                <label>Enter account password 
+                  <!--<a href="#retrievePassPopup" class="popup-trigger">Forgot password?</a>--></label>
+				        <%= f.password_field :password, id: "login_password" %>
+			        </div>     
+			        
+			        <div class="remember-login">
+				        <%= f.check_box :remember_me %>
+				        <p>Remember me</p>
+			        </div>    			        
+					    <%= hidden_field_tag "src", 'site' %>					
+			        <div class="content-divider"></div>
+			        
+			        <div>
+				        <%= f.submit "Login", class: "pop-content-form-button" %>
+				        <span class="error-message" style="display:none;"><i class="icon error-i"></i> Incorrect combination of email and password! Try again.</span>
+			        </div>
+		        <% end %>
+	        </div><!-- Pop content ends -->
+		</div>
+	</div>
+<% end %>

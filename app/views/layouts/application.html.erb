@@ -83,7 +83,7 @@
 			</script>
   	</head>
   
-  	<body id="<%= controller.action_name == "index" ? "intro" : "loggedin" %>">
+  	<body id="<%= ["index", "intro_how"].include?(controller.action_name) ? "intro" : "loggedin" %>">
 		<!-- Header -->
 		<div id="header">
 			<div class="header-container clearfix">
@@ -134,6 +134,22 @@
           <!--<span>Logged in as</span>-->
           <a href="/home/bookmarklet" class="klip-btn-h">Klipt it</a>
 				<% else %>
+          <ul>
+            <li>
+              <% if controller.action_name == 'index' %>
+                <a class='active' href="#">Home</a>
+              <% else %>
+                <a href="/">Home</a>
+              <% end %>
+            </li>
+            <li>
+              <% if controller.action_name == 'intro_how' %>
+                <a class='active' href="#">How it Works</a>
+              <% else %>
+                <a href="/home/intro_how">How it Works</a>
+              <% end %>
+            </li>
+          </ul>
 					<%= link_to "Login", "#loginPopup", class: "login-btn popup-trigger" %>
 					<span>Already a member?</span>
 				<% end %>

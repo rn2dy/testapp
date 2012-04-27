@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_filter :authenticate_user!, except: [:index]
+  before_filter :authenticate_user!, except: [:index, :intro_how, :bookmarklet]
   
   def index
   end
@@ -45,6 +45,9 @@ HERE
   def cancel_notifications
     current_user.notifications.where(:created_at.lt => Time.now).delete
     head :ok
+  end
+
+  def intro_how
   end
   
 end

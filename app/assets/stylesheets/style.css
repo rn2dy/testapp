@@ -32,6 +32,26 @@ body#intro #header #logo {
 	
 }
 
+body#intro #header ul {
+  float: left;
+  color: #fff;
+  font-size: 14px;
+  margin: 20px 0 0 200px;
+  text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+
+body#intro #header ul li {
+  display: inline;
+  margin-right: 15px;
+}
+
+body#intro #header ul li a.active {
+  color: #ffcc4c;
+}
+
+
 body#intro #header .login-btn {
 	color: #333;
 	padding: 7px 12px 9px 12px;
@@ -265,6 +285,168 @@ body#intro .pop-content-form div.remember-login p {
 	
 }
 
+body#intro .content .intro-content.how {
+	background: #fff;
+	
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	-o-border-radius: 0px;
+	border-radius: 0px;
+	
+	box-shadow: none;
+}
+
+body#intro .content .intro-content.how .intro-text {
+	width: 100%;
+	text-align: center;
+	text-shadow: none;
+	color: #aaa;
+	font-size: 24px;
+	padding-bottom: 40px;
+	margin-bottom: 40px;
+	border-bottom: dashed 1px #ccc;
+	letter-spacing: -1px;
+}
+
+body#intro .content .intro-content.how .intro-feature {
+	width: 100%;
+	padding-bottom: 40px;
+	margin-bottom: 40px;
+	border-bottom: dashed 1px #ccc;
+	
+}
+
+body#intro .content .intro-content.how .intro-feature .intro-feature-text {
+	width: 340px;
+	line-height: 28px;
+}
+
+body#intro .content .intro-content.how .intro-feature .intro-feature-text b {
+	padding-bottom: 20px;
+	float: left;
+	color: #444;
+	font-size: 30px;
+	letter-spacing: -1px;
+	
+}
+
+body#intro .content .intro-content.how .intro-feature .intro-feature-text p {
+	font-size: 16px;
+	float: left;
+	color: #777;
+	
+}
+
+body#intro .content .intro-content.how .intro-feature .intro-feature-text {
+	float: right;
+	
+}
+
+body#intro .content .intro-content.how .intro-feature img {
+	float: left;
+	
+}
+
+body#intro .content .intro-content.how .outro-block {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	
+}
+
+body#intro .content .intro-content.how .outro-block div {
+	float: left;
+	margin-left: 160px;
+}
+
+body#intro .content .intro-content.how .outro-block .signup-btn {
+	color: #fff;
+	padding: 10px 0 10px 0;
+	width: 150px;
+	text-align: center;
+	border: solid 1px #3a6915;
+	font: bold 14px Arial, Helvetica, sans-serif;
+	
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	
+	background: #ffdc66; /* Old browsers */
+	background: -moz-linear-gradient(top,  #8cae32 0%, #4b891a 75%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8cae32), color-stop(75%,#4b891a)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #8cae32 0%,#4b891a 75%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #8cae32 0%,#4b891a 75%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #8cae32 0%,#4b891a 75%); /* IE10+ */
+	background: linear-gradient(top,  #8cae32 0%,#4b891a 75%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8cae32', endColorstr='#4b891a',GradientType=0 ); /* IE6-9 */
+	
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.25);
+	text-shadow: 0 1px #385f13;	
+	cursor: pointer;
+	display: block;
+	float: left;
+}
+
+body#intro .content .intro-content.how .outro-block .signup-btn:hover {
+	background: #ffdc66; /* Old browsers */
+	background: -moz-linear-gradient(top,  #a4cd3b 0%, #58a11f 75%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a4cd3b), color-stop(75%,#58a11f)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #a4cd3b 0%,#58a11f 75%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #a4cd3b 0%,#58a11f 75%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #a4cd3b 0%,#58a11f 75%); /* IE10+ */
+	background: linear-gradient(top,  #a4cd3b 0%,#58a11f 75%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a4cd3b', endColorstr='#58a11f',GradientType=0 ); /* IE6-9 */
+		
+}
+
+body#intro .content .intro-content.how .outro-block .login-btn {
+	color: #333;
+	padding: 10px 0 10px 0;
+	width: 150px;
+	text-align: center;
+	border: solid 1px #835e0c;
+	font: bold 14px Arial, Helvetica, sans-serif;
+	
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	
+	background: #ffdc66; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffdc66 0%, #ffbe36 75%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffdc66), color-stop(75%,#ffbe36)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* IE10+ */
+	background: linear-gradient(top,  #ffdc66 0%,#ffbe36 75%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffdc66', endColorstr='#ffbe36',GradientType=0 ); /* IE6-9 */
+	
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.25);
+	text-shadow: 0 1px #fff;	
+	cursor: pointer;
+	display: block;
+	float: left;
+}
+
+body#intro .content .intro-content.how .outro-block .login-btn:hover {
+	background: #ffe693; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffe693 0%, #ffca60 88%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffe693), color-stop(88%,#ffca60)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffe693 0%,#ffca60 88%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffe693 0%,#ffca60 88%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffe693 0%,#ffca60 88%); /* IE10+ */
+	background: linear-gradient(top,  #ffe693 0%,#ffca60 88%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffe693', endColorstr='#ffca60',GradientType=0 ); /* IE6-9 */
+			
+}
+
+body#intro .content .intro-content.how .outro-block span {
+	float: left;
+	margin: 10px 21px;
+	color: #aaa;
+	
+}
 /******** INTRO ENDS ********/
 
 /******** LOGGED IN ********/
@@ -718,6 +900,7 @@ i.btn-icon.arrow { right: 5px; left: auto; }
 }
 
 
+
 #header #logo {
 	width: 192px;
 	height: 93px;
@@ -729,6 +912,8 @@ i.btn-icon.arrow { right: 5px; left: auto; }
 	margin-left: -96px;
   z-index: 9999;	
 }
+
+
 
 #header span {
 	float: right;
