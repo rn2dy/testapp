@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_filter :authenticate_user!, except: [:index, :intro_how, :bookmarklet]
+  before_filter :authenticate_user!, except: [:index, :intro_how]
   
   def index
   end
