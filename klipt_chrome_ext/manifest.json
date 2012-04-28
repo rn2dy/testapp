@@ -1,0 +1,10 @@
+{
+  "name": "Klipt Bookmarklet Extension",
+  "version": "1.0",
+  "description": "Klipt Bookmarklet Extension",
+  "browser_action": {
+    "default_popup": "page_loader.html",
+    "default_icon": "png.png"
+  }
+
+}

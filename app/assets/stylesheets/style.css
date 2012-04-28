@@ -26,13 +26,13 @@ body#intro .header-container {
 	
 }
 
-body#intro #header #logo {
+body#intro #header #logo, div.bookmarklet #logo {
 	left: 0 !important;
 	margin: 0 !important;
 	
 }
 
-body#intro #header ul {
+body#intro #header ul, div.bookmarklet ul {
   float: left;
   color: #fff;
   font-size: 14px;
@@ -41,18 +41,17 @@ body#intro #header ul {
 }
 
 
-
-body#intro #header ul li {
+body#intro #header ul li, div.bookmarklet ul li {
   display: inline;
   margin-right: 15px;
 }
 
-body#intro #header ul li a.active {
+body#intro #header ul li a.active, div.bookmarklet ul li a.active {
   color: #ffcc4c;
 }
 
 
-body#intro #header .login-btn {
+body#intro #header .login-btn, div.bookmarklet .login-btn {
 	color: #333;
 	padding: 7px 12px 9px 12px;
 	height: 16px;
@@ -82,7 +81,7 @@ body#intro #header .login-btn {
 	position: relative;
 }
 
-body#intro #header .login-btn:hover {
+body#intro #header .login-btn:hover, div.bookmarklet .login-btn:hover {
 	background: #ffe693; /* Old browsers */
 	background: -moz-linear-gradient(top,  #ffe693 0%, #ffca60 88%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffe693), color-stop(88%,#ffca60)); /* Chrome,Safari4+ */
@@ -267,17 +266,20 @@ body#intro .content .intro-signup form .error-message i.icon.error-i {
 	
 }
 
-body#intro .pop-content-form div.remember-login {
+body#intro .pop-content-form div.remember-login, 
+div.bookmarklet-login {
 	padding: 5px 0 0 0 !important;
 	
 }
 
-body#intro .pop-content-form div.remember-login input {
+body#intro .pop-content-form div.remember-login input, 
+div.bookmarklet-login input {
 	width: 16px;
 	
 }
 
-body#intro .pop-content-form div.remember-login p {
+body#intro .pop-content-form div.remember-login p,
+div.bookmarklet-login p {
 	display: inline;
 	color: #999;
 	font-weight: bold;

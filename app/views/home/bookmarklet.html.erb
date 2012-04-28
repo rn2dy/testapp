@@ -1,3 +1,17 @@
+<% content_for :head do %>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#loginForm').bind("ajax:success", function(e, data, status, xhr){				
+				if(data.success){
+					window.location = data.redirect;
+				}else{				
+					$('#loginForm .error-message').show();	
+				}
+			});
+    });
+  </script>
+<% end %>
+
 <div class="content clearfix">
 	<div class="klip-btn-promo">
 		<h2>"Klip it" Browser Button</h2>
@@ -85,3 +99,40 @@
 		</div>
 	</div><!-- -->
 </div> <!-- Content Ends -->
+
+<% content_for :hidden_content do %>
+	<!-- login form -->
+	<div style="display: none;">
+		<div id="loginPopup" class="pop-content">
+	        <div class="pop-content-header"><div class="pop-content-container">Welcome back!</div></div> 
+	        <!-- Pop header ends-->
+	        
+	        <div class="pop-content-form pop-content-container clearfix">
+	        	<%= form_for "user", url: new_user_session_path, remote: true, format: :json, html: { id: "loginForm" } do |f| %>
+			        <div>
+				        <label>Enter account e-mail</label>
+				        <%= f.email_field :email, id: "login_email" %>
+			        </div>   
+			        
+			        <div>
+                <label>Enter account password 
+                  <!--<a href="#retrievePassPopup" class="popup-trigger">Forgot password?</a>--></label>
+				        <%= f.password_field :password, id: "login_password" %>
+			        </div>     
+			        
+			        <div class="remember-login bookmarklet-login">
+				        <%= f.check_box :remember_me %>
+				        <p>Remember me</p>
+			        </div>    			        
+					    <%= hidden_field_tag "src", 'site' %>					
+			        <div class="content-divider"></div>
+			        
+			        <div>
+				        <%= f.submit "Login", class: "pop-content-form-button" %>
+				        <span class="error-message" style="display:none;"><i class="icon error-i"></i> Incorrect combination of email and password! Try again.</span>
+			        </div>
+		        <% end %>
+	        </div><!-- Pop content ends -->
+		</div>
+	</div>
+<% end %>
