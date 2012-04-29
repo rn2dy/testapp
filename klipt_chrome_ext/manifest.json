@@ -1,10 +1,12 @@
 {
-  "name": "Klipt Bookmarklet Extension",
+  "name": "Klipt Bookmarklet Tool",
+  "description": "This plugin allows user to quick add links to their collections",
   "version": "1.0",
-  "description": "Klipt Bookmarklet Extension",
+  "background": { "scripts": ["background.js"] },
+  "permissions": [ "tabs", "http://*/*", "https://*/*" ],
   "browser_action": {
-    "default_popup": "page_loader.html",
-    "default_icon": "png.png"
-  }
-
+    "default_popup": "popup.html",
+    "default_icon": "favicon.png"
+  },
+  "manifest_version": 2
 }

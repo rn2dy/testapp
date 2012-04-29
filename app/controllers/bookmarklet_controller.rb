@@ -1,4 +1,5 @@
 class BookmarkletController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   before_filter :authenticate, except: [:index, :login]
   layout false
 
@@ -19,7 +20,7 @@ class BookmarkletController < ApplicationController
 
   def add_link
     @topic = Topic.find params[:topic]
-    @new_link = @topic.add_links current_user, params[:url], params[:title], params[:note]
+    @new_link = @topic.add_links current_user, params[:url], params[:title], "" 
     head :ok
   end
 
@@ -42,8 +43,17 @@ class BookmarkletController < ApplicationController
   private
 
   def authenticate
-    unless user_signed_in? 
-      redirect_to bookmarklet_index_path
+    if params[:plugin] ## plugin access only 
+      if user_signed_in?
+        render json: { logged_in: true, 
+                       topics: current_user.topics.map { |topic| [topic.name, topic.id] } }
+      else
+        render json: { logged_in: false } 
+      end
+    else
+      unless user_signed_in? 
+        redirect_to bookmarklet_index_path
+      end
     end
   end
 end

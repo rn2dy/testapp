@@ -1,29 +1,178 @@
-<!doctype html>
 <html>
-  <head>
-    <title>Klipt Extension's Popup</title>
-    <style type="text/css" media="screen">
-      body {
-        width: 200px;
-        height: 200px;
-      }
-    </style>
 
-    <!-- JavaScript and HTML must be in separate files for security. -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
-      $(document).ready(function(){
-        $('.popup').text("Hello World!");  
-        $('#toggle').click(function(){
-          $('.popup').toggle();
-        });
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <style type="text/css">
+    body {
+      width: 300px;
+      height: 200px;
+    }
+    div.main { 
+      display: none; 
+    } 
+    .klip-info { 
+      display: none; 
+    }
+    span.btn {
+      display: inline-block;
+      cursor: pointer;
+      color: blue;
+      text-decoration: underline;
+    }
+    span.error {
+      color: red;
+      display: none; 
+    }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      chrome.tabs.getSelected(null, function(tab) {
+        setTitleAndUrl(tab.title, tab.url);
+        sendRequest();
       });
-    </script>
-  </head>
-  <body>
-    <div class="popup">
-       Bad Request!
-    </div>
-    <a href="#" id="toggle">Show/Hide</a>
-  </body>
+
+      $(".new-topic-btn").click(function(){
+        $('div.main').hide(); 
+        $('.new-topic').show();
+      });
+
+      $(".add-link-btn").click(function(){
+        var topic_id = $("select option:selected").val();
+        if ( typeof(topic_id) != "undefined" ) {
+          var data = {
+            topic: topic_id, 
+            url: $('.klip-info').data('link'),    
+            title: $('.klip-info').data('title') 
+          };
+          $.post("http://klipt.me/bookmarklet/add_link", data, function() {
+            alert("You have succesfully added the link to Klipt!");
+            window.close();
+          });
+        } else {
+          alert( "You haven't select a topic to add this link!");
+        }
+      });
+
+      $(".back-btn").click(function(){
+        $('div.main').hide();
+        $('.new-link').show();
+      });
+
+      $(".create-topic-btn").click(submitForm);
+    });
+
+    function showLoading(){
+      $('div.main').hide();
+      $('.loading').show();
+      loopDots();
+    }
+
+    function submitForm(e){
+      e.preventDefault();
+      if (check_emails('.new-topic-form') != true || /^\s*$/.test($('.new-topic-form input:text').val())){
+        $('span.error').show();
+      } else {
+        var data = $('.new-topic-form').serialize();
+        showLoading();
+        $.post('http://klipt.me/bookmarklet/add_topic', data, function(){
+          alert("Successfully created topic {" + $('input#title')  + "}."); 
+          window.close();
+        });
+      }
+    }
+
+    function setTitleAndUrl(title, url) {
+      $(".klip-info").data( { link: url, title: title } );
+      $("input#title").val(title);
+      $("input#url").val(url);
+    }
+
+    function sendRequest(){
+      $.get("http://klipt.me/bookmarklet/new_link?plugin=true", function(json){
+        if ( json["logged_in"] == true ) {
+          var topics_options = getTopicList(json["topics"]);
+          $(".topic-select").html(topics_options);
+          $(".new-link").show();
+        } else {
+          $(".loggin").show(); 
+        }
+      });
+    }
+
+    function getTopicList(topics) {
+      var topic_list = "<select>"; 
+      for (var i=0; i<topics.length; i++) {
+        topic_list += "<option value='" + topics[i][1]+ "'>" + topics[i][0] + "</option>";
+      }
+      topic_list += "</select>";
+      return topic_list;
+    }
+
+    function check_emails(form){
+      var emails = $(form + ' textarea').val().split(',');  
+      var emailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      for(var i = 0; i <  emails.length; i++ ) {
+        if ( !emailRegex.test($.trim(emails[i])) && !/^\s*$/.test(emails[i]) ) { 
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function loopDots(){
+      var count = 0;
+      setInterval(function(){
+        if (count == 0) {
+          $('span.dots').text('.');count++;
+        } else if (count == 1) {
+          $('span.dots').text('..');count++;
+        } else if (count == 2) {
+          $('span.dots').text('...');count++;
+        } else {
+          $('span.dots').text('');
+          count = 0;
+        }
+      }, 700);
+    }
+
+
+  </script>
+</head>
+
+<body>
+  <div class="loggin main">
+    <h3>Klipt</h3>
+    <p><a href="http://klipt.me" target="_blank">Loggin</a></p>
+  </div>
+
+  <div class="new-link main">
+    <span class="klip-info"></span>
+    <p>Select a topic to Klipt!</p>
+    <div class="topic-select"></div>
+    <span class="btn add-link-btn">Add Link</span>
+    <span class="btn new-topic-btn">New Topic</span>
+  </div>
+
+  <div class="new-topic main">
+    <span class="error">Invalid input, please check your input and try again!</span>
+    <form class="new-topic-form">
+      <label>New Topic Name</label>
+      <input type="text" name="name" id="name"/>
+      <label>invitees</label>
+      <textarea name="invitees" id="invitees"/></textarea>
+      <input type="hidden" name="title" id="title"/>
+      <input type="hidden" name="url" id="url"/>
+    </form>
+    <span class="btn create-topic-btn">Create</span>
+    <span class="btn back-btn">Back</span>
+  </div>
+
+  <div class="loading main">
+    <p>loading<span class="dots"><span></p>    
+  </div>
+
+</body>
+
 </html>
