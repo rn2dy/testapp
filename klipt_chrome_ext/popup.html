@@ -46,6 +46,7 @@
             url: $('.klip-info').data('link'),    
             title: $('.klip-info').data('title') 
           };
+          showLoading();
           $.post("http://klipt.me/bookmarklet/add_link", data, function() {
             alert("You have succesfully added the link to Klipt!");
             window.close();
