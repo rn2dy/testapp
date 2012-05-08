@@ -28,6 +28,7 @@ end
 gem "bson_ext", ">= 1.5.2"
 gem "mongoid", ">= 2.4.6"
 gem "mongoid-paperclip", :require => "mongoid_paperclip"
+gem "mongoid_slug"
 
 gem "devise", ">= 2.0.4"
 gem "fastimage"

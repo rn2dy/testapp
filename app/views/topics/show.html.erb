@@ -168,7 +168,7 @@
 	        </div> 
 	        <!-- Pop header ends-->
 	        <div class="pop-content-form pop-content-container clearfix">
-		        <%= form_for @topic, method: :put, remote: true, html: { class: "topic-edit-form" } do |f| %>
+		        <%= form_for @topic, method: :put, html: { class: "topic-edit-form" } do |f| %>
 			        <div>
 				        <label>Edit topic name</label>
 				        <%= f.text_field :name, placeholder: "For example 'Places to visit on vacation' ",maxlength: 35  %>

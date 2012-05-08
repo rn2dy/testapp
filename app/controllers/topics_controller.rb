@@ -28,7 +28,8 @@ class TopicsController < ApplicationController
   def update 
     respond_to do |format|
       if @topic.update_attributes!(name: params[:topic][:name])
-        format.js
+        #format.js
+        format.html { redirect_to topic_path @topic }
       end
     end
   end
@@ -86,7 +87,7 @@ class TopicsController < ApplicationController
   private 
   
   def find_topic
-    @topic ||= current_user.topics.find(params[:id])
+    @topic ||= current_user.topics.find_by_slug params[:id]
   end
 
 end

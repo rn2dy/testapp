@@ -1,13 +1,16 @@
 class Topic
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Slug
 
   field :name, type: String, null: false
+  slug  :name
   field :notes, type: String
   field :is_public, type: Boolean, default: false
   field :starter_id, type: String
   field :starter_name, type: String
   field :unavailable_users, type: Array, default: []
+
 
   default_scope :order => "created_at DESC"
   has_and_belongs_to_many :participants, class_name: 'User'

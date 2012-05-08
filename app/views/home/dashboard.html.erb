@@ -17,17 +17,17 @@
 					<div class="topics-list-item">
 						<div class="topics-list-item-holder">		
 							<div>
-								<h3><a href="/topics/<%= topic.id %>"><%= topic.name %></a></h3> <!-- Topic title -->
+								<h3><%= link_to topic.name, topic %></h3> <!-- Topic title -->
 								<div class="count-clips"><span><%= topic.links.count %> </span><i class="icon clip-i"></i></div> <!-- Clips counter -->
 							</div>
-							<a href="/topics/<%= topic.id %>" >
+              <%= link_to topic do %>
                 <div class="topic-preview-img-holder">
 									<% if topic.links.count > 0 %>
                     <% img = topic.find_image_src %>
 										<%= image_tag(img, alt: "", size: "200x110") if img %>
 									<% end %>
 								</div><!-- Topic preview img holder -->
-							</a>
+						  <% end  %>
 							<div>
 								<div class="count-comments"><i class="icon comment-i"></i><span><%= topic.comments.count %></span></div> <!-- Comments counter -->
 								<div class="count-invited">
