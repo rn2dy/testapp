@@ -15,7 +15,7 @@ RailsAdmin.config do |config|
   # Or with a PaperTrail: (you need to install it first)
   # config.audit_with :paper_trail, User
 
-  #config.authorize_with :cancan
+  config.authorize_with :cancan
 
   # Set the admin name here (optional second array element will appear in a beautiful RailsAdmin red ©)
   config.main_app_name = ['Testapp', 'Admin']

@@ -2,6 +2,11 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.0'
 
+gem "bson_ext", ">= 1.5.2"
+gem "mongoid", ">= 2.4.6"
+gem "mongoid-paperclip", :require => "mongoid_paperclip"
+gem "mongoid_slug"
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -24,11 +29,6 @@ group :test do
   gem "capybara-webkit", "~> 0.11.0"
   gem "launchy", ">= 2.0.5"
 end
-
-gem "bson_ext", ">= 1.5.2"
-gem "mongoid", ">= 2.4.6"
-gem "mongoid-paperclip", :require => "mongoid_paperclip"
-gem "mongoid_slug"
 
 gem "devise", ">= 2.0.4"
 gem "fastimage"
